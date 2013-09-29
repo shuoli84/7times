@@ -10,7 +10,6 @@
 
 
 @implementation SLSharedConfig {
-
 }
 +(SLSharedConfig *)sharedInstance{
     static SLSharedConfig *sharedInstance;
@@ -22,13 +21,38 @@
     return sharedInstance;
 }
 
+-(NSString*)googleNewsFeedURL {
+    return @"https://news.google.com/news?pz=1&num=14&cf=all&ned=us&output=rss&q=%@";
+}
+
 -(id)init{
     self = [super init];
     if (self){
         self.wordLimitPerHour = 20;
         self.googleNewsFeedURL = @"https://news.google.com/news?q=%@&output=rss";
+        _colors =@[
+            [UIColor colorWithRed:231.f/255.f green:76/255.f blue:60/255.f alpha:1.f],
+            [UIColor colorWithRed:255.f/255.f green:128/255.f blue:0/255.f alpha:1.f],
+            [UIColor colorWithRed:241.f/255.f green:196/255.f blue:15/255.f alpha:1.f],
+            [UIColor colorWithRed:39.f/255.f green:174/255.f blue:96/255.f alpha:1.f],
+            [UIColor colorWithRed:52.f/255.f green:73/255.f blue:94/255.f alpha:1.f],
+            [UIColor colorWithRed:52.f/255.f green:152/255.f blue:219/255.f alpha:1.f],
+            [UIColor colorWithRed:155.f/255.f green:89/255.f blue:182/255.f alpha:1.f],
+            ];
     }
 
     return self;
+}
+
+-(UIColor*)colorForCount:(int)count{
+    if(count >= _colors.count){
+        count = _colors.count - 1;
+    }
+
+    if(count < 0){
+        count = 0;
+    }
+
+    return _colors[count];
 }
 @end

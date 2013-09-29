@@ -19,7 +19,7 @@
 		9C1C9C1C17DF081900BCC341 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */; };
 		9C1C9C1F17DF081900BCC341 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */; };
 		9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C2017DF081900BCC341 /* MainStoryboard_iPad.storyboard */; };
-		9C1C9C2517DF081900BCC341 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C2417DF081900BCC341 /* ViewController.m */; };
+		9C1C9C2517DF081900BCC341 /* IPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C2417DF081900BCC341 /* IPadViewController.m */; };
 		9C1C9C2D17DF081900BCC341 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C2C17DF081900BCC341 /* SenTestingKit.framework */; };
 		9C1C9C2E17DF081900BCC341 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C0517DF081900BCC341 /* UIKit.framework */; };
 		9C1C9C2F17DF081900BCC341 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C0717DF081900BCC341 /* Foundation.framework */; };
@@ -29,12 +29,14 @@
 		9C1C9C4817E1CBBF00BCC341 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4717E1CBBF00BCC341 /* Check.m */; };
 		9C1C9C4B17E1CBBF00BCC341 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4A17E1CBBF00BCC341 /* Word.m */; };
 		9C1C9C5117E1CE3D00BCC341 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C5017E1CE3D00BCC341 /* Post.m */; };
-		B9637D1AB0DC4790977DE579 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
-		BE48E413058C8A4EE869ECF1 /* SLWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E3C3A0DAF3A94242DE69 /* SLWordManager.m */; };
-		BE48E57136F9864FE2C62EE0 /* SLWordItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E487BC9418F10D815A49 /* SLWordItem.m */; };
+		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
+		BE48E59F1E3853FB9761BC10 /* a.html in Resources */ = {isa = PBXBuildFile; fileRef = BE48EC461A71270ACB60923B /* a.html */; };
+		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
+		BE48E9F0ADB5C5B52C6F58C3 /* a.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE48E485FE7D4AA74D13C749 /* a.xml */; };
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
+		BE48ED36873C62B8ACB299D9 /* SLPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */; };
+		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
-		BE48EE8401D1F24C1A2973EA /* ContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECB02DBE70C80B032701 /* ContentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,8 +68,8 @@
 		9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9C1C9C1E17DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		9C1C9C2117DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		9C1C9C2317DF081900BCC341 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9C1C9C2417DF081900BCC341 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9C1C9C2317DF081900BCC341 /* IPadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPadViewController.h; sourceTree = "<group>"; };
+		9C1C9C2417DF081900BCC341 /* IPadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPadViewController.m; sourceTree = "<group>"; };
 		9C1C9C2B17DF081900BCC341 /* 7timesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 7timesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C1C9C2C17DF081900BCC341 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9C1C9C3417DF081900BCC341 /* 7timesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "7timesTests-Info.plist"; sourceTree = "<group>"; };
@@ -81,17 +83,20 @@
 		9C1C9C4A17E1CBBF00BCC341 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C1C9C4F17E1CE3D00BCC341 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		9C1C9C5017E1CE3D00BCC341 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE48E3040B8C29F9767C91EB /* SLWordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLWordManager.h; sourceTree = "<group>"; };
-		BE48E379F5067398486D4065 /* ContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentView.h; sourceTree = "<group>"; };
-		BE48E3C3A0DAF3A94242DE69 /* SLWordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLWordManager.m; sourceTree = "<group>"; };
-		BE48E487BC9418F10D815A49 /* SLWordItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLWordItem.m; sourceTree = "<group>"; };
+		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
+		BE48E485FE7D4AA74D13C749 /* a.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = a.xml; sourceTree = "<group>"; };
+		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
+		BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPostManager.m; sourceTree = "<group>"; };
 		BE48E7CC2B7021E380FDFC5C /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
+		BE48EA2F8A83E5038FAEF779 /* SLPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPostManager.h; sourceTree = "<group>"; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
-		BE48EBACB330EA799638907D /* SLWordItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLWordItem.h; sourceTree = "<group>"; };
-		BE48ECB02DBE70C80B032701 /* ContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentView.m; sourceTree = "<group>"; };
+		BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FindFirstResponder.m"; sourceTree = "<group>"; };
+		BE48EC461A71270ACB60923B /* a.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = a.html; sourceTree = "<group>"; };
+		BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhoneViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +107,7 @@
 				9C1C9C0617DF081900BCC341 /* UIKit.framework in Frameworks */,
 				9C1C9C0817DF081900BCC341 /* Foundation.framework in Frameworks */,
 				9C1C9C0A17DF081900BCC341 /* CoreGraphics.framework in Frameworks */,
-				B9637D1AB0DC4790977DE579 /* libPods.a in Frameworks */,
+				B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,23 +169,26 @@
 		9C1C9C0B17DF081900BCC341 /* 7times */ = {
 			isa = PBXGroup;
 			children = (
+				9CFB492617E715E9005755B6 /* 7times.entitlements */,
 				9C1C9C1417DF081900BCC341 /* AppDelegate.h */,
 				9C1C9C1517DF081900BCC341 /* AppDelegate.m */,
 				9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */,
 				9C1C9C2017DF081900BCC341 /* MainStoryboard_iPad.storyboard */,
-				9C1C9C2317DF081900BCC341 /* ViewController.h */,
-				9C1C9C2417DF081900BCC341 /* ViewController.m */,
+				9C1C9C2317DF081900BCC341 /* IPadViewController.h */,
+				9C1C9C2417DF081900BCC341 /* IPadViewController.m */,
 				9C1C9C0C17DF081900BCC341 /* Supporting Files */,
-				BE48E487BC9418F10D815A49 /* SLWordItem.m */,
-				BE48EBACB330EA799638907D /* SLWordItem.h */,
-				BE48E3C3A0DAF3A94242DE69 /* SLWordManager.m */,
-				BE48E3040B8C29F9767C91EB /* SLWordManager.h */,
 				BE48EA0106C59259FE320B37 /* SLSharedConfig.m */,
 				BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */,
-				BE48ECB02DBE70C80B032701 /* ContentView.m */,
-				BE48E379F5067398486D4065 /* ContentView.h */,
 				BE48E7CC2B7021E380FDFC5C /* DotView.m */,
 				BE48EA2354CA3EBD5481DFC9 /* DotView.h */,
+				BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */,
+				BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */,
+				BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */,
+				BE48EA2F8A83E5038FAEF779 /* SLPostManager.h */,
+				BE48E485FE7D4AA74D13C749 /* a.xml */,
+				BE48EC461A71270ACB60923B /* a.html */,
+				BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */,
+				BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -269,6 +277,16 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Li Shuo";
+				TargetAttributes = {
+					9C1C9C0117DF081900BCC341 = {
+						DevelopmentTeam = Q658KUUNJA;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 9C1C9BFD17DF081800BCC341 /* Build configuration list for PBXProject "7times" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -299,6 +317,8 @@
 				9C1C9C1C17DF081900BCC341 /* Default-568h@2x.png in Resources */,
 				9C1C9C1F17DF081900BCC341 /* MainStoryboard_iPhone.storyboard in Resources */,
 				9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */,
+				BE48E9F0ADB5C5B52C6F58C3 /* a.xml in Resources */,
+				BE48E59F1E3853FB9761BC10 /* a.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +401,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -391,16 +412,16 @@
 			files = (
 				9C1C9C1217DF081900BCC341 /* main.m in Sources */,
 				9C1C9C1617DF081900BCC341 /* AppDelegate.m in Sources */,
-				9C1C9C2517DF081900BCC341 /* ViewController.m in Sources */,
-				BE48E57136F9864FE2C62EE0 /* SLWordItem.m in Sources */,
-				BE48E413058C8A4EE869ECF1 /* SLWordManager.m in Sources */,
+				9C1C9C2517DF081900BCC341 /* IPadViewController.m in Sources */,
 				BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */,
-				BE48EE8401D1F24C1A2973EA /* ContentView.m in Sources */,
 				9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */,
 				9C1C9C4817E1CBBF00BCC341 /* Check.m in Sources */,
 				9C1C9C4B17E1CBBF00BCC341 /* Word.m in Sources */,
 				9C1C9C5117E1CE3D00BCC341 /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
+				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
+				BE48ED36873C62B8ACB299D9 /* SLPostManager.m in Sources */,
+				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,10 +541,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = 7times/7times.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -533,10 +558,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = 7times/7times.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};

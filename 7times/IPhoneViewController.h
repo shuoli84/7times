@@ -1,17 +1,13 @@
 //
-// Created by Li Shuo on 13-9-11.
+// Created by Li Shuo on 13-9-16.
 // Copyright (c) 2013 Li Shuo. All rights reserved.
 //
 // To change the template use AppCode | Preferences | File Templates.
 //
 
 
-#import "SLWordItem.h"
+#import <Foundation/Foundation.h>
 
-@implementation SLCheck
-@end
 
-@implementation SLWordItem {
-
-}
+@interface IPhoneViewController : UIViewController
 @end

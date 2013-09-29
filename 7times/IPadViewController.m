@@ -6,27 +6,25 @@
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "MWFeedParser.h"
+#import "IPadViewController.h"
 #import "FVDeclaration.h"
 #import "FVDeclareHelper.h"
 #import "A2DynamicDelegate.h"
 #import "NSObject+AssociatedObjects.h"
 #import "TTTTimeIntervalFormatter.h"
-#import "RXMLElement.h"
 #import "UIControl+BlocksKit.h"
 #import "Post.h"
 #import "Word.h"
 #import "Check.h"
 #import "NSSet+BlocksKit.h"
 #import "DotView.h"
-#import "NSTimer+BlocksKit.h"
-#import <QuartzCore/QuartzCore.h>
+#import "SLSharedConfig.h"
+#import "SLPostManager.h"
+#import "UIView+FindFirstResponder.h"
 
-@interface ViewController () <NSFetchedResultsControllerDelegate>
+@interface IPadViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) MWFeedParser *feedParser;
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) SLPostManager *postManager;
 @property (nonatomic, strong) UITableView *itemListTableView;
 @property (nonatomic, strong) UITableView *wordListTableView;
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -34,24 +32,28 @@
 @property (nonatomic, strong) UITextField *inputField;
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
-
-@property (nonatomic, strong) NSTimer *timer;
-
 @end
 
-@implementation ViewController
+@implementation IPadViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    BOOL ios7 = 7 <= [[versionCompatibility objectAtIndex:0] intValue];
+
+    self.postManager = [[SLPostManager alloc] init];
+
     _wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"added" ascending:NO withPredicate:nil groupBy:nil delegate:self];
 
-    self.items = [NSMutableArray array];
-
     typeof(self) __weak weakSelf = self;
+    [SLSharedConfig sharedInstance].coreDataReady = ^{
+        [weakSelf.wordFetchedResultsController performFetch:nil];
+        [weakSelf.wordListTableView reloadData];
+    };
 
     self.declaration = [dec(@"root") $:@[
-        [dec(@"sidebar", CGRectMake(0, 0, 200, FVP(1)), ^{
+        [dec(@"sidebar", CGRectMake(0, 0, 200, FVTillEnd), ^{
             UIView *view = [[UIView alloc]init];
             view.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
             return view;
@@ -99,11 +101,11 @@
                 A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
 
                 [dataSource implementMethod:@selector(numberOfSectionsInTableView:) withBlock:^NSInteger(UITableView *tv){
-                    return weakSelf.wordFetchedResultsController.sections.count;
+                    return (NSInteger)weakSelf.wordFetchedResultsController.sections.count;
                 }];
 
                 [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
-                    return [weakSelf.wordFetchedResultsController.sections[section] numberOfObjects];
+                    return [weakSelf.wordFetchedResultsController.sections[(NSUInteger)section] numberOfObjects];
                 }];
 
                 tableView.rowHeight = 48;
@@ -114,6 +116,7 @@
 
                     if(cell == nil){
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+                        cell.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
 
                         FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, 48)) $:@[
                             [dec(@"content", CGRectMake(5, 5, FVT(10), FVTillEnd), ^{
@@ -122,14 +125,19 @@
                                 view.clipsToBounds = YES;
                                 return view;
                             }()) $:@[
-                                dec(@"word", CGRectMake(10, FVCenter, 120, 25), ^{
+                                dec(@"word", CGRectMake(10, FVCenter, 120, 30), ^{
                                     UITextView *label = [[UITextView alloc] init];
                                     label.tag = 101;
                                     label.font = [UIFont boldSystemFontOfSize:18];
                                     label.textColor = [UIColor blackColor];
                                     label.backgroundColor = [UIColor clearColor];
                                     label.editable = NO;
-                                    label.contentInset = UIEdgeInsetsMake(-4, -8, 0, 0);
+
+                                    if (ios7) {
+                                        label.contentInset = UIEdgeInsetsMake(-4, 0, 0, 0);
+                                    } else { /// iOS4 is installed
+                                        label.contentInset = UIEdgeInsetsMake(-4, -8, 0, 0);
+                                    }
                                     label.scrollEnabled = NO;
                                     return label;
                                 }()),
@@ -167,11 +175,11 @@
                 return tableView;
             }()),
         ]],
-        dec(@"Item list", CGRectMake(FVAfter, 0, FVTillEnd, FVP(1)), ^{
+        dec(@"Item list", CGRectMake(FVAfter, FVSameAsPrev, FVTillEnd, FVTillEnd), ^{
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
-            [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tableView, NSInteger section){
-                return weakSelf.items.count;
+            [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
+                return weakSelf.postManager.posts.count;
             }];
 
             static char key;
@@ -179,14 +187,14 @@
 
             tableView.rowHeight = 160;
 
-            [dataSource implementMethod:@selector(tableView:cellForRowAtIndexPath:) withBlock:^(UITableView *tableView, NSIndexPath *indexPath){
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            [dataSource implementMethod:@selector(tableView:cellForRowAtIndexPath:) withBlock:^(UITableView *tv, NSIndexPath *indexPath){
+                UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"cell"];
                 if(cell==nil){
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
                     UITableViewCell * __weak weakCell = cell;
-                    UITableView *__weak weakTableView = tableView;
+                    UITableView *__weak weakTableView = tv;
 
-                    FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tableView.bounds.size.width, tableView.rowHeight)) $:@[
+                    FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight)) $:@[
                         [dec(@"topping", CGRectMake(10, 0, FVP(1), 30)) $:@[
                             dec(@"source", CGRectMake(0, FVCenter, 120, 20), ^{
                                 UILabel *label = [[UILabel alloc] init];
@@ -206,7 +214,7 @@
                                     label.textColor = [UIColor colorWithRed:127/255.f green:140/255.f blue:141/255.f alpha:1.f];
                                     return label;
                             }()),
-                            [dec(@"wordbutton", CGRectMake(FVT(160), 5, 140, 20), ^{
+                            [dec(@"wordbutton", CGRectMake(FVT(160), 5, 140, 30), ^{
                                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 
                                 [button setTitle:@"word" forState:UIControlStateNormal];
@@ -218,33 +226,37 @@
 
                                 [button addEventHandler:^(UIButton *btn) {
                                     NSIndexPath* indexPath = [weakTableView indexPathForCell:weakCell];
-                                    Post *p = (Post*) [cell associatedValueForKey:&postKey];
+                                    if(indexPath != nil){
+                                        Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
 
-                                    Check *check = [Check MR_createEntity];
-                                    check.date = [NSDate date];
-                                    [p setCheck:check];
+                                        Check *check = [Check MR_createEntity];
+                                        check.date = [NSDate date];
+                                        [p setCheck:check];
 
-                                    [p.word each:^(Word *w) {
-                                        //Only set the check only last check is at least 30 minutes ago
-                                        NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
-                                        for(Check *c in w.check){
-                                            if([lastCheck compare:c.date] == NSOrderedAscending){
-                                                lastCheck = c.date;
+                                        [p.word each:^(Word *w) {
+                                            //Only set the check only last check is at least 30 minutes ago
+                                            NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
+                                            for(Check *c in w.check){
+                                                if([lastCheck compare:c.date] == NSOrderedAscending){
+                                                    lastCheck = c.date;
+                                                }
                                             }
-                                        }
 
-                                        if([[NSDate date] timeIntervalSinceDate:lastCheck] > 30 * 60){
-                                            [w addCheck:[NSSet setWithObject:check]];
-                                        }
-                                        else{
-                                            NSLog(@"The last check for word within 30 minutes, ignore the check");
-                                        }
-                                    }];
+                                            if([[NSDate date] timeIntervalSinceDate:lastCheck] > 30 * 60){
+                                                [w addCheck:[NSSet setWithObject:check]];
+                                            }
+                                            else{
+                                                NSLog(@"The last check for word within 30 minutes, ignore the check");
+                                            }
+                                        }];
 
-                                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                                        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+                                            NSLog(@"Check saved");
+                                        }];
 
-                                    [weakSelf.items removeObject:p];
-                                    [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                        [weakSelf.postManager.posts removeObject:p];
+                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                    }
                                 } forControlEvents:UIControlEventTouchUpInside];
 
                                 button.tag = 106;
@@ -254,7 +266,7 @@
                                 CGRect frame = btn.frame;
                                 btn.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
                                 [btn sizeToFit];
-                                btn.frame = CGRectMake(frame.size.width + frame.origin.x - btn.frame.size.width, btn.frame.origin.y, btn.frame.size.width, btn.frame.size.height);
+                                btn.frame = CGRectMake(frame.size.width + frame.origin.x - btn.frame.size.width, frame.origin.y, btn.frame.size.width, frame.size.height);
                             }],
                             ]],
                         [dec(@"titleContainer", CGRectMake(10, FVA(0), FVFill, FVTillEnd), ^{
@@ -262,11 +274,16 @@
                             view.backgroundColor = [UIColor colorWithRed:236/255.f green:240/255.f blue:241/255.f alpha:1.f];
                             return view;
                         }()) $:@[
-                            dec(@"title", CGRectMake(10, 5, FVT(5), 25), ^{
+                            dec(@"title", CGRectMake(10, 0, FVT(5), 30), ^{
                                 UITextView *label = [[UITextView alloc] init];
                                 label.tag = 101;
                                 label.backgroundColor = [UIColor clearColor];
-                                label.contentInset = UIEdgeInsetsMake(-4, -8, 0, 0);
+
+                                if (ios7) {
+                                    label.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+                                } else { /// iOS4 is installed
+                                    label.contentInset = UIEdgeInsetsMake(-4, -8, 0, 0);
+                                }
                                 label.editable = NO;
                                 label.font = [UIFont systemFontOfSize:18];
                                 label.scrollEnabled = NO;
@@ -289,12 +306,12 @@
 
                     [cell associateValue:declaration withKey:&key];
                 }
-                Post *post = weakSelf.items[indexPath.row];
+                Post *post = weakSelf.postManager.posts[(NSUInteger)indexPath.row];
                 [cell associateValue:post withKey:&postKey];
-                UILabel *label = [cell viewWithTag:101];
+                UILabel *label = (UILabel *)[cell viewWithTag:101];
                 label.text = post.title;
 
-                UILabel *datetime = [cell viewWithTag:102];
+                UILabel *datetime = (UILabel*)[cell viewWithTag:102];
                 TTTTimeIntervalFormatter *formatter = [[TTTTimeIntervalFormatter alloc] init];
                 datetime.text = [formatter stringForTimeInterval:[post.date timeIntervalSinceNow]];
 
@@ -305,10 +322,11 @@
                 textView.text = post.summary;
 
                 UIButton *wordButton = (UIButton *)[cell viewWithTag:106];
-                [wordButton setTitle:[post.word.anyObject word] forState:UIControlStateNormal];
+                [wordButton setTitle:[(Word*)post.word.anyObject word] forState:UIControlStateNormal];
+                wordButton.backgroundColor = [[SLSharedConfig sharedInstance] colorForCount:[(Word *)post.word.anyObject check].count];
 
                 FVDeclaration *declaration = (FVDeclaration *) [cell associatedValueForKey:&key];
-                declaration.unExpandedFrame = CGRectMake(0, 0, tableView.bounds.size.width, tableView.rowHeight);
+                declaration.unExpandedFrame = CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight);
                 [declaration resetLayout];
                 [declaration updateViewFrame];
 
@@ -328,66 +346,40 @@
 
     [self.declaration setupViewTreeInto:self.view];
 
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add word" action:@selector(addWordMenuAction:)];
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
 
-    _timer = [NSTimer timerWithTimeInterval:3 block:^(NSTimeInterval time) {
-        [self loadPost];
-    } repeats:YES];
-    [_timer fire];
-    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
-}
-
--(void)dealloc{
-    [_timer invalidate];
+    [self.postManager setPostChangeBlock:^(SLPostManager *postManager, Post *post, int index, int newIndex) {
+        [weakSelf.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
 }
 
 -(void)addWord:(NSString*)word{
     word = [word stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-
     Word *wordRecord;
 
-    wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word inContext:localContext];
+    wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
     if(wordRecord){
         NSLog(@"Word already there, no need to create a new one");
         return;
     }
 
-    wordRecord = [Word MR_createInContext:localContext];
+    wordRecord = [Word MR_createEntity];
 
     wordRecord.word = word;
     wordRecord.added = [NSDate date];
 
-    [localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         [self.wordListTableView reloadData];
         self.inputField.text = nil;
-
-        //Trigger the load post
-        [self loadPostForWord:wordRecord];
+        [self.postManager loadPostForWord:wordRecord];
     }];
 }
 
-
--(UIView*)firstResponder:(UIView*)view{
-    if([view isFirstResponder]){
-        return view;
-    }
-
-    for(UIView *childView in view.subviews){
-        UIView *v = [self firstResponder:childView];
-        if(v){
-            return v;
-        }
-    }
-
-    return nil;
-}
-
 -(void)addWordMenuAction:(id)sender{
-    UIView *firstResponder = [self firstResponder:self.view];
+    UIView *firstResponder = [self.view firstResponder];
     [firstResponder copy:firstResponder];
 
     NSString *highlightedText = [UIPasteboard generalPasteboard].string;
@@ -411,152 +403,33 @@
     // Dispose of any resources that can be recreated.
 }
 
-BOOL pureTextFont(RXMLElement* element){
-    if([element children:@"font"].count > 0){
-        return NO;
-    }
-    if([element.tag isEqualToString:@"font"]){
-        BOOL __block notPureText = NO;
-        [element iterate:@"*" usingBlock:^(RXMLElement *element) {
-            if(!pureTextFont(element)){ notPureText = YES; }
-        }];
-
-        if(notPureText){return NO;}
-    }
-
-    return YES;
-}
-
--(void)loadPost{
-    NSArray* array = [Word MR_findAll];
-    for(Word *word in array){
-        if(word.check.count < 7){
-            NSDate *lastTime = [NSDate dateWithTimeIntervalSince1970:0];
-            for(Check *check in word.check){
-                if ([lastTime compare:check.date] == NSOrderedAscending){
-                    lastTime = check.date;
-                }
-            }
-
-            if([[NSDate date] timeIntervalSinceDate:lastTime] > 60 * 60){
-                // If longer than 1 hour, load the post
-                [self loadPostForWord:word];
-            }
-        }
-    }
-}
-
--(void)loadPostForWord:(Word *)word{
-    if(word.post.count == 0){
-        NSURL *feedURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://news.google.com/news?q=%@&output=rss", word.word]];
-        self.feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
-
-        _feedParser.feedParseType = ParseTypeFull;
-        _feedParser.connectionType = ConnectionTypeAsynchronously;
-
-        A2DynamicDelegate *delegate = [_feedParser dynamicDelegateForProtocol:@protocol(MWFeedParserDelegate)];
-        typeof(self) __weak weakSelf = self;
-        [delegate implementMethod:@selector(feedParser:didParseFeedItem:) withBlock:^(MWFeedParser *fp, MWFeedItem* item){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                RXMLElement *doc = [[RXMLElement alloc] initFromXMLData:[item.summary dataUsingEncoding:NSUTF8StringEncoding]];
-
-                NSString *title = item.title;
-                NSString *__block source;
-                NSString *__block summary;
-
-                [doc iterateWithRootXPath:@"//font" usingBlock:^(RXMLElement *element) {
-                    if(pureTextFont(element)){
-                        NSString *value = element.text;
-                        value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                        if(value.length > 0){
-                            if(source == nil){
-                                source = value;
-                            }
-                            else{
-                                if(![source isEqualToString:value]){
-                                    if(summary == nil){
-                                        summary = value;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }];
-
-                NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-
-                Post *post = [Post MR_findFirstByAttribute:@"id" withValue:item.identifier];
-                if(post != nil){
-                    NSLog(@"Post already in, skip this");
-                    return;
-                }
-
-                post = [Post MR_createInContext:localContext];
-                post.id = item.identifier;
-                post.title = title;
-                post.source = source;
-                post.summary = summary;
-                post.date = item.date;
-                post.url = item.link;
-
-                [post addWordObject:word];
-
-                [localContext MR_saveToPersistentStoreAndWait];
-            });
-        }];
-
-        [delegate implementMethod:@selector(feedParserDidFinish:) withBlock:^(MWFeedParser *fp){
-            [weakSelf loadPostForWord:word];
-        }];
-        _feedParser.delegate = (id)delegate;
-
-        [_feedParser parse];
-    }
-    else{
-        int added = 0;
-        for(Post *p in word.post){
-            if(p.check == nil){
-                if(![self.items containsObject:p]){
-                    [self.items addObject:p];
-                    [self.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    added++;
-
-                    if(added >= 2){
-                        break;
-                    }
-                }
-            }
-        }
-    }
-}
-
--(void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-
-}
-
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     NSLog(@"Change detected:%@", anObject);
     if([controller isEqual:self.wordFetchedResultsController]){
-        //Scroll to the editing word
-        NSIndexPath* scrollTo = indexPath;
-        if(!scrollTo){
-            scrollTo = newIndexPath;
-        }
-        [self.wordListTableView scrollToRowAtIndexPath:scrollTo atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
         switch (type){
             case NSFetchedResultsChangeInsert:
                 [self.wordListTableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
             case NSFetchedResultsChangeUpdate:
-                [self.wordListTableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.wordListTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 break;
             case NSFetchedResultsChangeMove:
                 [self.wordListTableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
                 break;
             case NSFetchedResultsChangeDelete:
-                [self.wordListTableView deleteRowsAtIndexPaths:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.wordListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
+        }
+
+        //Scroll to the editing word
+        NSIndexPath* scrollTo = indexPath;
+        if(!scrollTo && newIndexPath){
+            scrollTo = newIndexPath;
+        }
+
+        if(scrollTo){
+            [self.wordListTableView scrollToRowAtIndexPath:scrollTo atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
     }
 }

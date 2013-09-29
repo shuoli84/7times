@@ -7,13 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#import "SLSharedConfig.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"database.sqlite"];
+    [MagicalRecord setupCoreDataStackWithiCloudContainer:@"Q658KUUNJA.com.menic.7times" contentNameKey:@"data" localStoreNamed:@"local.1.0.sqlite" cloudStorePathComponent:@"data" completion:^{
+        //Send a notification
+        NSLog(@"Core data context setup ready");
+        if([SLSharedConfig sharedInstance].coreDataReady){
+            [SLSharedConfig sharedInstance].coreDataReady();
+        }
+    }];
     return YES;
 }
 							

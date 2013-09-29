@@ -12,8 +12,12 @@
 @interface SLSharedConfig : NSObject
 
 @property (nonatomic, assign) int wordLimitPerHour;
-
 @property (nonatomic, strong) NSString* googleNewsFeedURL;
+@property (nonatomic, strong) NSArray* colors;
+
+-(UIColor*)colorForCount:(int)count;
 
 +(SLSharedConfig *)sharedInstance;
+
+@property (nonatomic, copy) void(^coreDataReady)();
 @end
