@@ -55,30 +55,6 @@
         [weakSelf.wordListTableView reloadData];
     };
 
-    /*
-    self.postFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *dataBindings){
-        Post* post = (Post*)evaluatedObject;
-        Word* word = post.word.anyObject;
-
-        NSArray* timeIntervalsInHour = @[@0, @12, @24, @48, @(3*24), @(5*24), @(7*24), @(10*24)];
-        if(word.check.count < 7){
-            NSDate *lastTime = [NSDate dateWithTimeIntervalSince1970:0];
-            for(Check *check in word.check){
-                if ([lastTime compare:check.date] == NSOrderedAscending){
-                    lastTime = check.date;
-                }
-            }
-
-            int timeIntervalInHour = [timeIntervalsInHour[word.check.count] integerValue];
-
-            if([[NSDate date] timeIntervalSinceDate:lastTime] > timeIntervalInHour * 60 * 60){
-                return YES;
-            }
-        }
-        return NO;
-    }] groupBy:nil delegate:self];
-    */
-
     _postManager = [[SLPostManager alloc]init];
 
     self.declaration = [dec(@"root") $:@[
@@ -211,7 +187,7 @@
                     UITableView *__weak weakTableView = tv;
 
                     FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight)) $:@[
-                        [dec(@"topping", CGRectMake(10, 0, FVP(1), 30)) $:@[
+                        [dec(@"topping", CGRectMake(10, 0, FVP(1), 25)) $:@[
                             dec(@"source", CGRectMake(5, FVCenter, FVFill, 20), ^{
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Google News";
@@ -221,7 +197,7 @@
                                 label.backgroundColor = [UIColor clearColor];
                                 return label;
                             }()),
-                            [dec(@"wordbutton", CGRectMake(FVT(160), 5, 140, 30), ^{
+                            [dec(@"wordbutton", CGRectMake(FVT(160), 5, 140, 25), ^{
                                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 
                                 [button setTitle:@"word" forState:UIControlStateNormal];

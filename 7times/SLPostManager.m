@@ -152,7 +152,7 @@ BOOL pureTextFont(RXMLElement* element){
         [_feedParser parse];
     }
     else{
-        if([self.wordWithPosts[word.word] integerValue] < 2){
+        if(word.word && [self.wordWithPosts[word.word] integerValue] < 2){
             NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO]]];
             for(Post *p in posts){
                 if(p.check == nil){
