@@ -39,6 +39,8 @@
             [UIColor colorWithRed:52.f/255.f green:152/255.f blue:219/255.f alpha:1.f],
             [UIColor colorWithRed:155.f/255.f green:89/255.f blue:182/255.f alpha:1.f],
             ];
+
+        _timeIntervals = @[@0, @12, @24, @48, @(3*24), @(5*24), @(7*24), @(10*24)];
     }
 
     return self;

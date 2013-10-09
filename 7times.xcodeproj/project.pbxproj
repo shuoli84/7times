@@ -29,11 +29,16 @@
 		9C1C9C4817E1CBBF00BCC341 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4717E1CBBF00BCC341 /* Check.m */; };
 		9C1C9C4B17E1CBBF00BCC341 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4A17E1CBBF00BCC341 /* Word.m */; };
 		9C1C9C5117E1CE3D00BCC341 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C5017E1CE3D00BCC341 /* Post.m */; };
+		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
+		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
+		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E59F1E3853FB9761BC10 /* a.html in Resources */ = {isa = PBXBuildFile; fileRef = BE48EC461A71270ACB60923B /* a.html */; };
+		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
 		BE48E9F0ADB5C5B52C6F58C3 /* a.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE48E485FE7D4AA74D13C749 /* a.xml */; };
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
+		BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE43F2591308B9B53D2A /* Word+Util.m */; };
 		BE48ED36873C62B8ACB299D9 /* SLPostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
@@ -83,13 +88,18 @@
 		9C1C9C4A17E1CBBF00BCC341 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C1C9C4F17E1CE3D00BCC341 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		9C1C9C5017E1CE3D00BCC341 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9C74866A18053A2E000C0E42 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
 		BE48E485FE7D4AA74D13C749 /* a.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = a.xml; sourceTree = "<group>"; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
 		BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPostManager.m; sourceTree = "<group>"; };
 		BE48E7CC2B7021E380FDFC5C /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
+		BE48E8B97A0F96995FA5CD69 /* Word+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Word+Util.h"; sourceTree = "<group>"; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		BE48EA2F8A83E5038FAEF779 /* SLPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPostManager.h; sourceTree = "<group>"; };
@@ -97,6 +107,8 @@
 		BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FindFirstResponder.m"; sourceTree = "<group>"; };
 		BE48EC461A71270ACB60923B /* a.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = a.html; sourceTree = "<group>"; };
 		BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhoneViewController.m; sourceTree = "<group>"; };
+		BE48ECD8C3AC4174F3920BB8 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = SOURCE_ROOT; };
+		BE48EE43F2591308B9B53D2A /* Word+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Word+Util.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +116,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */,
+				9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */,
+				9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */,
 				9C1C9C0617DF081900BCC341 /* UIKit.framework in Frameworks */,
 				9C1C9C0817DF081900BCC341 /* Foundation.framework in Frameworks */,
 				9C1C9C0A17DF081900BCC341 /* CoreGraphics.framework in Frameworks */,
 				B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */,
+				BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +172,9 @@
 		9C1C9C0417DF081900BCC341 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C74866C18053A3D000C0E42 /* AdSupport.framework */,
+				9C74866A18053A2E000C0E42 /* Security.framework */,
+				9C748668180539A5000C0E42 /* SystemConfiguration.framework */,
 				9C1C9C0517DF081900BCC341 /* UIKit.framework */,
 				9C1C9C0717DF081900BCC341 /* Foundation.framework */,
 				9C1C9C0917DF081900BCC341 /* CoreGraphics.framework */,
@@ -189,6 +208,10 @@
 				BE48EC461A71270ACB60923B /* a.html */,
 				BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */,
 				BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */,
+				BE48EE43F2591308B9B53D2A /* Word+Util.m */,
+				BE48E8B97A0F96995FA5CD69 /* Word+Util.h */,
+				BE48ECD8C3AC4174F3920BB8 /* Flurry.h */,
+				BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -422,6 +445,7 @@
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* SLPostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
+				BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +571,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
+				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
@@ -564,6 +589,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
+				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";

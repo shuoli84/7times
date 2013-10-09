@@ -22,6 +22,8 @@
 #import "Check.h"
 #import "UIGestureRecognizer+BlocksKit.h"
 #import "UIView+FindFirstResponder.h"
+#import "Word+Util.h"
+#import "Flurry.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -197,60 +199,6 @@
                                 label.backgroundColor = [UIColor clearColor];
                                 return label;
                             }()),
-                            [dec(@"wordbutton", CGRectMake(FVT(160), 5, 140, 25), ^{
-                                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-                                [button setTitle:@"word" forState:UIControlStateNormal];
-                                button.layer.cornerRadius = 5.f;
-                                button.backgroundColor = [UIColor colorWithRed:192/255.f green:57/255.f blue:43/255.f alpha:1.f];
-                                button.titleLabel.font = [UIFont systemFontOfSize:15];
-
-                                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-                                [button addEventHandler:^(UIButton *btn) {
-                                    NSIndexPath* indexPath = [weakTableView indexPathForCell:weakCell];
-                                    if(indexPath != nil){
-                                        Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
-
-                                        Check *check = [Check MR_createEntity];
-                                        check.date = [NSDate date];
-                                        [p setCheck:check];
-
-                                        [p.word each:^(Word *w) {
-                                            //Only set the check only last check is at least 30 minutes ago
-                                            NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
-                                            for(Check *c in w.check){
-                                                if([lastCheck compare:c.date] == NSOrderedAscending){
-                                                    lastCheck = c.date;
-                                                }
-                                            }
-
-                                            if([[NSDate date] timeIntervalSinceDate:lastCheck] > 30 * 60){
-                                                [w addCheck:[NSSet setWithObject:check]];
-                                            }
-                                            else{
-                                                NSLog(@"The last check for word within 30 minutes, ignore the check");
-                                            }
-                                        }];
-
-                                        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-                                            NSLog(@"Check saved");
-                                        }];
-
-                                        [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger)indexPath.row];
-                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                                    }
-                                } forControlEvents:UIControlEventTouchUpInside];
-
-                                button.tag = 106;
-                                return button;
-                            }()) postProcess:^(FVDeclaration *d) {
-                                UIButton* btn = (UIButton *) d.object;
-                                CGRect frame = btn.frame;
-                                btn.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-                                [btn sizeToFit];
-                                btn.frame = CGRectMake(frame.size.width + frame.origin.x - btn.frame.size.width, frame.origin.y, btn.frame.size.width, frame.size.height);
-                            }],
                         ]],
 
                         [dec(@"titleContainer", CGRectMake(10, FVA(0), FVFill, FVTillEnd), ^{
@@ -277,13 +225,60 @@
                                 label.textColor = [UIColor colorWithRed:127/255.f green:140/255.f blue:141/255.f alpha:1.f];
                                 return label;
                             }()),
-                            dec(@"summary", CGRectMake(10, FVA(0), FVT(5), FVTillEnd), ^{
+                            dec(@"summary", CGRectMake(5, FVA(0), FVT(5), FVTillEnd), ^{
                                 UITextView *textView = [[UITextView alloc]init];
                                 textView.tag = 105;
                                 textView.editable = NO;
                                 textView.font = [UIFont systemFontOfSize:20];
                                 textView.backgroundColor = [UIColor clearColor];
                                 return textView;
+                            }()),
+                            dec(@"doneButton", CGRectMake(FVCenter, FVT(70), FVT(30), 50), ^{
+                                UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+                                button.layer.cornerRadius = 8.f;
+                                button.backgroundColor = [UIColor whiteColor];
+                                button.layer.borderWidth = 3.f;
+                                [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+                                button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+                                [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+
+                                button.tag = 107;
+
+                                [button addEventHandler:^(id sender) {
+                                    NSIndexPath* indexPath = [weakTableView indexPathForCell:weakCell];
+                                    if(indexPath != nil){
+                                        Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
+
+                                        Check *check = [Check MR_createEntity];
+                                        check.date = [NSDate date];
+                                        [p setCheck:check];
+
+                                        [p.word each:^(Word *w) {
+                                            //Only set the check only last check is at least 30 minutes ago
+                                            if([w readyForNewCheck]){
+                                               [w addCheck:[NSSet setWithObject:check]];
+                                            }
+                                            else{
+                                                NSLog(@"Not ready for a new check, ignore");
+                                            }
+                                        }];
+
+                                        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+                                            NSLog(@"Check saved");
+                                        }];
+
+                                        [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger)indexPath.row];
+                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+                                        [Flurry logEvent:@"Post_dismiss" withParameters:@{
+                                            @"word": [p.word.anyObject word],
+                                            @"post": p.title,
+                                            @"post_url" : p.url,
+                                        }];
+                                    }
+                                } forControlEvents:UIControlEventTouchUpInside];
+
+                                return button;
                             }()),
                         ]],
 
@@ -297,10 +292,23 @@
                 Post *post = weakSelf.postManager.posts[(NSUInteger)indexPath.row];
                 [cell associateValue:post withKey:&postKey];
 
-                // word button requires post process adjust frame, so its content needs to be set before update frame
-                UIButton *wordButton = (UIButton *)[cell viewWithTag:106];
-                [wordButton setTitle:[post.word.anyObject word] forState:UIControlStateNormal];
-                wordButton.backgroundColor = [[SLSharedConfig sharedInstance] colorForCount:[(Word *)post.word.anyObject check].count];
+                Word *word = post.word.anyObject;
+                UIColor* wordColor;
+                if(word.readyForNewCheck){
+                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:word.check.count];
+                }
+                else if(word.check.count >= 1){
+                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:word.check.count - 1];
+                }
+                else {
+                    wordColor = [UIColor blackColor];
+                }
+
+                UIButton *dismissButton = (UIButton*)[cell viewWithTag:107];
+                dismissButton.layer.borderColor = wordColor.CGColor;
+                [dismissButton setTitleColor:wordColor forState:UIControlStateNormal];
+                [dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+                [dismissButton setTitle:word.word forState:UIControlStateNormal];
 
                 UITextView *label = (UITextView *)[cell viewWithTag:101];
                 label.text = post.title;
@@ -368,7 +376,12 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     if([title isEqualToString:@"Add"]){
-        [self addWord:[alertView textFieldAtIndex:0].text];
+        NSString* word = [alertView textFieldAtIndex:0].text;
+        [self addWord:word];
+
+        [Flurry logEvent:@"Word_add" withParameters:@{
+            @"word":word
+        }];
     }
 }
 
