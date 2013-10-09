@@ -24,6 +24,7 @@
 #import "UIView+FindFirstResponder.h"
 #import "Word+Util.h"
 #import "Flurry.h"
+#import "TSMiniWebBrowser.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -192,7 +193,7 @@
                     UITableView *__weak weakTableView = tv;
 
                     FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight)) $:@[
-                        [dec(@"topping", CGRectMake(10, 0, FVP(1), 25)) $:@[
+                        [dec(@"topping", CGRectMake(0, 0, FVP(1), 25)) $:@[
                             dec(@"source", CGRectMake(5, FVCenter, FVFill, 20), ^{
                                 UILabel *label = [[UILabel alloc] init];
                                 label.text = @"Google News";
@@ -204,7 +205,7 @@
                             }()),
                         ]],
 
-                        [dec(@"titleContainer", CGRectMake(10, FVA(0), FVFill, FVTillEnd), ^{
+                        [dec(@"container", CGRectMake(0, FVA(0), FVP(1.f), FVT(75)), ^{
                             UIView *view = [[UIView alloc] init];
                             view.backgroundColor = [UIColor colorWithRed:236/255.f green:240/255.f blue:241/255.f alpha:1.f];
                             return view;
@@ -236,56 +237,70 @@
                                 textView.backgroundColor = [UIColor clearColor];
                                 return textView;
                             }()),
-                            dec(@"doneButton", CGRectMake(FVCenter, FVT(70), FVT(30), 50), ^{
-                                UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-                                button.layer.cornerRadius = 8.f;
-                                button.backgroundColor = [UIColor whiteColor];
-                                button.layer.borderWidth = 3.f;
-                                [button setTitle:@"Dismiss" forState:UIControlStateNormal];
-                                button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
-                                [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 
-                                button.tag = 107;
-
-                                [button addEventHandler:^(id sender) {
-                                    NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
-                                    if(idx != nil){
-                                        Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
-
-                                        Check *check = [Check MR_createEntity];
-                                        check.date = [NSDate date];
-                                        [p setCheck:check];
-
-                                        [p.word each:^(Word *w) {
-                                            //Only set the check only last check is at least 30 minutes ago
-                                            if([w readyForNewCheck]){
-                                               [w addCheck:[NSSet setWithObject:check]];
-                                            }
-                                            else{
-                                                NSLog(@"Not ready for a new check, ignore");
-                                            }
-                                        }];
-
-                                        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-                                            NSLog(@"Check saved");
-                                        }];
-
-                                        [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger) idx.row];
-                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
-
-                                        [Flurry logEvent:@"Post_dismiss" withParameters:@{
-                                            @"word": [p.word.anyObject word],
-                                            @"post": p.title,
-                                            @"post_url" : p.url,
-                                        }];
-                                    }
-                                } forControlEvents:UIControlEventTouchUpInside];
-
-                                return button;
-                            }()),
                         ]],
+                        dec(@"doneButton", CGRectMake(0, FVT(50), FVT(52), 50), ^{
+                            UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+                            button.layer.borderWidth = 3.f;
+                            [button setTitle:@"Dismiss" forState:UIControlStateNormal];
+                            button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+                            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
-                        dec(@"space", CGRectMake(FVT(10), 0, 10, 0))
+                            button.tag = 107;
+
+                            [button addEventHandler:^(id sender) {
+                                NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
+                                if(idx != nil){
+                                    Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
+
+                                    Check *check = [Check MR_createEntity];
+                                    check.date = [NSDate date];
+                                    [p setCheck:check];
+
+                                    [p.word each:^(Word *w) {
+                                        //Only set the check only last check is at least 30 minutes ago
+                                        if([w readyForNewCheck]){
+                                            [w addCheck:[NSSet setWithObject:check]];
+                                        }
+                                        else{
+                                            NSLog(@"Not ready for a new check, ignore");
+                                        }
+                                    }];
+
+                                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+                                        NSLog(@"Check saved");
+                                    }];
+
+                                    [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger) idx.row];
+                                    [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
+
+                                    [Flurry logEvent:@"Post_dismiss" withParameters:@{
+                                        @"word": [p.word.anyObject word],
+                                        @"post": p.title,
+                                        @"post_url" : p.url,
+                                    }];
+                                }
+                            } forControlEvents:UIControlEventTouchUpInside];
+
+                            return button;
+                        }()),
+                        dec(@"openInBrowserButton", CGRectMake(FVA(2), FVSameAsPrev, FVTillEnd, FVTillEnd), ^{
+                            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                            [button setTitle:@">" forState:UIControlStateNormal];
+                            button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+                            button.tag = 108;
+
+                            [button addEventHandler:^(id sender) {
+                                NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
+                                if(idx != nil){
+                                    Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
+                                    TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:[NSURL URLWithString:p.url]];
+                                    browser.mode = TSMiniWebBrowserModeModal;
+                                    [weakSelf presentViewController:browser animated:YES completion:nil];
+                                }
+                            } forControlEvents:UIControlEventTouchUpInside];
+                            return button;
+                        }()),
                     ]];
 
                     [declaration setupViewTreeInto:cell];
@@ -309,9 +324,11 @@
 
                 UIButton *dismissButton = (UIButton*)[cell viewWithTag:107];
                 dismissButton.layer.borderColor = wordColor.CGColor;
-                [dismissButton setTitleColor:wordColor forState:UIControlStateNormal];
-                [dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+                dismissButton.backgroundColor = wordColor;
                 [dismissButton setTitle:word.word forState:UIControlStateNormal];
+
+                UIButton *openLinkButton = (UIButton*)[cell viewWithTag:108];
+                openLinkButton.backgroundColor = wordColor;
 
                 UITextView *label = (UITextView *)[cell viewWithTag:101];
                 label.text = post.title;
