@@ -36,8 +36,8 @@
 -(void)drawRect:(CGRect)rect {
     [super drawRect:rect];
 
-    float dotRadius = 0.f;
-    if(self.dotRadius == 0.f){
+    float dotRadius = _dotRadius;
+    if(dotRadius == 0.f){
         dotRadius = 3.f;
     }
     float spaceBetween = _spaceBetween;
@@ -48,7 +48,7 @@
     int dotNumber = MIN(self.dotNumber, 7);
     float x = _leftMargin;
     float y = self.bounds.size.height / 2 - self.dotRadius;
-    for (int i = 0; i < dotNumber; i++){
+    for (unsigned int i = 0; i < dotNumber; i++){
         [_colorArray[i] setFill];
         [[UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, y, dotRadius * 2, dotRadius * 2)] fill];
         x+= dotRadius * 2 + spaceBetween;
@@ -56,8 +56,8 @@
 
     if(7 > dotNumber){
         for (int i = dotNumber; i < 7; i++){
-            [[UIColor grayColor] setStroke];
-            [[UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, y, (dotRadius) * 2, (dotRadius) * 2)] stroke];
+            [[UIColor lightGrayColor] setFill];
+            [[UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, y, (dotRadius) * 2, (dotRadius) * 2)] fill];
             x += dotRadius * 2 + spaceBetween;
         }
     }

@@ -112,9 +112,12 @@
                                     label.scrollEnabled = NO;
                                     return label;
                                 }()),
-                                dec(@"dotView", CGRectMake(FVT(70), FVCenter, 60, 25), ^{
+                                dec(@"dotView", CGRectMake(FVT(80), FVCenter, 75, 25), ^{
                                     DotView *dotView = [[DotView alloc]init];
                                     dotView.backgroundColor = [UIColor clearColor];
+                                    dotView.leftMargin = 1.f;
+                                    dotView.dotRadius = 3.f;
+                                    dotView.spaceBetween = 3.f;
                                     dotView.tag = 102;
                                     return dotView;
                                 }()),
@@ -245,8 +248,8 @@
                                 button.tag = 107;
 
                                 [button addEventHandler:^(id sender) {
-                                    NSIndexPath* indexPath = [weakTableView indexPathForCell:weakCell];
-                                    if(indexPath != nil){
+                                    NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
+                                    if(idx != nil){
                                         Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
 
                                         Check *check = [Check MR_createEntity];
@@ -267,8 +270,8 @@
                                             NSLog(@"Check saved");
                                         }];
 
-                                        [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger)indexPath.row];
-                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                        [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger) idx.row];
+                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
 
                                         [Flurry logEvent:@"Post_dismiss" withParameters:@{
                                             @"word": [p.word.anyObject word],
