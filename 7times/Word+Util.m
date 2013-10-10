@@ -14,6 +14,9 @@
 @implementation Word (Util)
 
 -(BOOL)readyForNewCheck{
+    if(self.check.count >= 7){
+        return NO;
+    }
     //Only set the check only last check is at least 30 minutes ago
     NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
     for(Check *c in self.check){
@@ -23,7 +26,7 @@
     }
 
     int shouldWaitHours = [[SLSharedConfig sharedInstance].timeIntervals[self.check.count] integerValue];
-    if([[NSDate date] timeIntervalSinceDate:lastCheck] >= shouldWaitHours * 60){
+    if([[NSDate date] timeIntervalSinceDate:lastCheck] >= shouldWaitHours * 60 * 60){
         return YES;
     }
     return NO;
