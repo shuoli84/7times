@@ -33,7 +33,6 @@
 @property (nonatomic, strong) UITableView *itemListTableView;
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
-@property (nonatomic, strong) NSFetchedResultsController *postFetchedResultsController;
 
 @property (nonatomic, strong) SLPostManager *postManager;
 
@@ -469,9 +468,6 @@
         if(scrollTo){
             [self.wordListTableView scrollToRowAtIndexPath:scrollTo atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
-    }
-    else if([controller isEqual:self.postFetchedResultsController]){
-        NSLog(@"Change detected");
     }
 }
 @end

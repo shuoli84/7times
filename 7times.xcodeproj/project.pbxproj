@@ -34,8 +34,10 @@
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
+		BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EBCDEC1039A77311A1BD /* tofle.txt */; };
 		BE48E59F1E3853FB9761BC10 /* a.html in Resources */ = {isa = PBXBuildFile; fileRef = BE48EC461A71270ACB60923B /* a.html */; };
 		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
+		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
 		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
 		BE48E9F0ADB5C5B52C6F58C3 /* a.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE48E485FE7D4AA74D13C749 /* a.xml */; };
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
@@ -97,6 +99,7 @@
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
 		BE48E485FE7D4AA74D13C749 /* a.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = a.xml; sourceTree = "<group>"; };
+		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E663F77584937365BCA3 /* NSURL+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryString.h"; sourceTree = "<group>"; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
 		BE48E77AD3CF8872FFDD8E2E /* SLPostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPostManager.m; sourceTree = "<group>"; };
@@ -107,6 +110,7 @@
 		BE48EA2F8A83E5038FAEF779 /* SLPostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPostManager.h; sourceTree = "<group>"; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
 		BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryString.m"; sourceTree = "<group>"; };
+		BE48EBCDEC1039A77311A1BD /* tofle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tofle.txt; sourceTree = SOURCE_ROOT; };
 		BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FindFirstResponder.m"; sourceTree = "<group>"; };
 		BE48EC461A71270ACB60923B /* a.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = a.html; sourceTree = "<group>"; };
 		BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhoneViewController.m; sourceTree = "<group>"; };
@@ -231,6 +235,8 @@
 				9C1C9C1717DF081900BCC341 /* Default.png */,
 				9C1C9C1917DF081900BCC341 /* Default@2x.png */,
 				9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */,
+				BE48E50A0F0BFC0D59E731EB /* sat.txt */,
+				BE48EBCDEC1039A77311A1BD /* tofle.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -347,6 +353,8 @@
 				9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */,
 				BE48E9F0ADB5C5B52C6F58C3 /* a.xml in Resources */,
 				BE48E59F1E3853FB9761BC10 /* a.html in Resources */,
+				BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */,
+				BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
