@@ -25,6 +25,7 @@
 #import "Word+Util.h"
 #import "Flurry.h"
 #import "TSMiniWebBrowser.h"
+#import "NSURL+QueryString.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -61,7 +62,7 @@
     _postManager = [[SLPostManager alloc]init];
 
     self.declaration = [dec(@"root") $:@[
-        [dec(@"wordView", CGRectMake(0, 0, FVP(1), FVP(1))) $:@[
+        [dec(@"wordView", CGRectMake(0, ios7?20:0, FVP(1), FVT(ios7?20:0))) $:@[
             dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
                 UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
                 self.wordListTableView = tableView;
@@ -145,7 +146,9 @@
 
                 UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
                     FVDeclaration *d = [weakSelf.declaration declarationByName:@"itemView"];
-                    d.unExpandedFrame = CGRectMake(0, 0, FVP(1), FVP(1));
+                    CGRect f = d.unExpandedFrame;
+                    f.origin.x = 0;
+                    d.unExpandedFrame = f;
                     [UIView beginAnimations:nil context:nil];
                     [d updateViewFrame];
                     [UIView commitAnimations];
@@ -170,7 +173,7 @@
                 return button;
             }())
         ]],
-        dec(@"itemView", CGRectMake(0, 0, FVP(1), FVP(1)), ^{
+        dec(@"itemView", CGRectMake(0, ios7?20:0, FVP(1), FVT(ios7?20:0)), ^{
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
@@ -180,7 +183,7 @@
             static char key;
             static char postKey;
 
-            tableView.rowHeight = self.view.bounds.size.height;
+            tableView.rowHeight = self.view.bounds.size.height - (ios7?20:0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             tableView.allowsSelection = NO;
             tableView.pagingEnabled = YES;
@@ -294,7 +297,15 @@
                                 NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
                                 if(idx != nil){
                                     Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
-                                    TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:[NSURL URLWithString:p.url]];
+                                    NSURL *url = [NSURL URLWithString:p.url];
+                                    if(url.dictionaryForQueryString[@"url"]){
+                                        url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
+                                        NSLog(@"Get real url:%@", url.absoluteString);
+                                    }
+
+                                    url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", url.absoluteString]];
+
+                                    TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:url];
                                     browser.mode = TSMiniWebBrowserModeModal;
                                     [weakSelf presentViewController:browser animated:YES completion:nil];
                                 }
@@ -363,12 +374,14 @@
 
             UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
                 FVDeclaration *d = [weakSelf.declaration declarationByName:@"itemView"];
-                d.unExpandedFrame = CGRectMake(FVT(0), 0, FVP(1), FVP(1));
+                CGRect f = d.unExpandedFrame;
+                f.origin.x = FVT(0);
+                d.unExpandedFrame = f;
                 [UIView beginAnimations:nil context:nil];
                 [d updateViewFrame];
                 [UIView commitAnimations];
             }];
-            swipe.direction = UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
+            swipe.direction = UISwipeGestureRecognizerDirectionRight;
             [tableView addGestureRecognizer:swipe];
             return tableView;
         }()),
