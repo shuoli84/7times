@@ -20,7 +20,6 @@
 #import "Post.h"
 #import "SLSharedConfig.h"
 #import "Check.h"
-#import "UIGestureRecognizer+BlocksKit.h"
 #import "UIView+FindFirstResponder.h"
 #import "Word+Util.h"
 #import "Flurry.h"
@@ -61,14 +60,19 @@
 
     _postManager = [[SLPostManager alloc]init];
 
-    self.declaration = [dec(@"root") $:@[
+    self.declaration = [dec(@"root", CGRectZero, ^{
+        UIScrollView *scrollView = [[UIScrollView alloc] init];
+        scrollView.pagingEnabled = YES;
+        scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.contentSize = CGSizeMake(weakSelf.view.bounds.size.width * 2, weakSelf.view.bounds.size.height);
+        return scrollView;
+    }()) $:@[
         [dec(@"wordView", CGRectMake(0, ios7?20:0, FVP(1), FVT(ios7?20:0))) $:@[
             dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
                 UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
                 self.wordListTableView = tableView;
 
-                tableView.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
-
+                tableView.backgroundColor = [UIColor whiteColor];
                 tableView.rowHeight = 48;
                 tableView.allowsSelection = NO;
                 tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -89,7 +93,7 @@
 
                     if(cell == nil){
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-                        cell.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
+                        //cell.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
 
                         FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, 48)) $:@[
                             [dec(@"content", CGRectMake(5, 5, FVT(10), FVTillEnd), ^{
@@ -143,37 +147,38 @@
                 }];
 
                 tableView.dataSource = (id)dataSource;
-
-                UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
-                    FVDeclaration *d = [weakSelf.declaration declarationByName:@"itemView"];
-                    CGRect f = d.unExpandedFrame;
-                    f.origin.x = 0;
-                    d.unExpandedFrame = f;
-                    [UIView beginAnimations:nil context:nil];
-                    [d updateViewFrame];
-                    [UIView commitAnimations];
-                }];
-                swipe.direction = UISwipeGestureRecognizerDirectionLeft;
-                [tableView addGestureRecognizer:swipe];
-
                 return tableView;
             }()),
-            dec(@"addButton", CGRectMake(0, FVT(40), FVP(1), 40), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [dec(@"addButton", CGRectMake(0, FVT(50), FVP(.5), 50)) $:@[
+                dec(@"button", CGRectMake(0, 0, FVT(1), FVP(1)), ^{
+                    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 
-                [button setTitle:@"+" forState:UIControlStateNormal];
-                button.backgroundColor = [UIColor whiteColor];
+                    [button setTitle:@"+" forState:UIControlStateNormal];
+                    button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
 
-                [button addEventHandler:^(id sender) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Word" message:nil delegate:weakSelf cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
-                    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-                    [alertView show];
-                } forControlEvents:UIControlEventTouchUpInside];
+                    [button addEventHandler:^(id sender) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Word" message:nil delegate:weakSelf cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+                        alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+                        [alertView show];
+                    } forControlEvents:UIControlEventTouchUpInside];
 
-                return button;
-            }())
+                    return button;
+                }())
+            ]],
+            [dec(@"addButton", CGRectMake(FVA(0), FVT(50), FVP(.5), 50)) $:@[
+                dec(@"button", CGRectMake(1, FVT(50), FVT(1), 50), ^{
+                     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                     [button setTitle:@"load" forState:UIControlStateNormal];
+                     button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
+                     button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+                     return button;
+                }()),
+            ]],
+
         ]],
-        dec(@"itemView", CGRectMake(0, ios7?20:0, FVP(1), FVT(ios7?20:0)), ^{
+        dec(@"itemView", CGRectMake(FVA(0), ios7?20:0, FVP(1), FVT(ios7?20:0)), ^{
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
@@ -261,7 +266,6 @@
                                     [p setCheck:check];
 
                                     [p.word each:^(Word *w) {
-                                        //Only set the check only last check is at least 30 minutes ago
                                         if([w readyForNewCheck]){
                                             [w addCheck:[NSSet setWithObject:check]];
                                         }
@@ -371,18 +375,6 @@
             tableView.dataSource = (id)dataSource;
 
             weakSelf.itemListTableView = tableView;
-
-            UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
-                FVDeclaration *d = [weakSelf.declaration declarationByName:@"itemView"];
-                CGRect f = d.unExpandedFrame;
-                f.origin.x = FVT(0);
-                d.unExpandedFrame = f;
-                [UIView beginAnimations:nil context:nil];
-                [d updateViewFrame];
-                [UIView commitAnimations];
-            }];
-            swipe.direction = UISwipeGestureRecognizerDirectionRight;
-            [tableView addGestureRecognizer:swipe];
             return tableView;
         }()),
     ]];
