@@ -1,31 +1,25 @@
-//
-//  _timesTests.m
-//  7timesTests
-//
-//  Created by Li Shuo on 13-9-10.
-//  Copyright (c) 2013年 Li Shuo. All rights reserved.
-//
+#import "Kiwi.h"
+#import "Word.h"
 
-#import "_timesTests.h"
+SPEC_BEGIN(WordSpec)
 
-@implementation _timesTests
+    describe(@"Word", ^{
+        beforeEach(^{
+            [MagicalRecord setupCoreDataStackWithInMemoryStore];
+        });
 
-- (void)setUp
-{
-    [super setUp];
-    
-    // Set-up code here.
-}
+        afterEach(^{
+            [MagicalRecord cleanUp];
+        });
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
-    [super tearDown];
-}
+        it(@"should create word", ^{
+            Word* word = [Word MR_createEntity];
+            word.word = @"word";
+            [[NSManagedObjectContext MR_defaultContext] save:nil];
 
-- (void)testExample
-{
-}
+            [[@"word" should] equal:word.word];
+        });
+    });
 
-@end
+SPEC_END
+

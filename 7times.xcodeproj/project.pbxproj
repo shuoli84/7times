@@ -32,6 +32,7 @@
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
+		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
 		BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EBCDEC1039A77311A1BD /* tofle.txt */; };
@@ -82,7 +83,6 @@
 		9C1C9C2C17DF081900BCC341 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9C1C9C3417DF081900BCC341 /* 7timesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "7timesTests-Info.plist"; sourceTree = "<group>"; };
 		9C1C9C3617DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9C1C9C3817DF081900BCC341 /* _timesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _timesTests.h; sourceTree = "<group>"; };
 		9C1C9C3917DF081900BCC341 /* _timesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _timesTests.m; sourceTree = "<group>"; };
 		9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9C1C9C4617E1CBBF00BCC341 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
@@ -94,6 +94,7 @@
 		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9C74866A18053A2E000C0E42 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		9C74866E1807DC27000C0E42 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
@@ -138,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */,
 				9C1C9C2D17DF081900BCC341 /* SenTestingKit.framework in Frameworks */,
 				9C1C9C2E17DF081900BCC341 /* UIKit.framework in Frameworks */,
 				9C1C9C2F17DF081900BCC341 /* Foundation.framework in Frameworks */,
@@ -179,6 +181,7 @@
 		9C1C9C0417DF081900BCC341 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C74866E1807DC27000C0E42 /* CoreData.framework */,
 				9C74866C18053A3D000C0E42 /* AdSupport.framework */,
 				9C74866A18053A2E000C0E42 /* Security.framework */,
 				9C748668180539A5000C0E42 /* SystemConfiguration.framework */,
@@ -244,7 +247,6 @@
 		9C1C9C3217DF081900BCC341 /* 7timesTests */ = {
 			isa = PBXGroup;
 			children = (
-				9C1C9C3817DF081900BCC341 /* _timesTests.h */,
 				9C1C9C3917DF081900BCC341 /* _timesTests.m */,
 				9C1C9C3317DF081900BCC341 /* Supporting Files */,
 			);

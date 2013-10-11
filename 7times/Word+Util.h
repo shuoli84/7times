@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Word.h"
 
+@class Check;
+
 @interface Word (Util)
 
 -(BOOL)readyForNewCheck;
+-(BOOL)needsNewPosts;
+-(Check *)lastCheck;
+
++(NSComparator)comparator;
 
 @end
