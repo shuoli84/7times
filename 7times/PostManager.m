@@ -69,7 +69,12 @@
 
     for(Word *word in wordArray){
         if(word.lastCheckExpired){
-           [self loadPostForWord:word];
+            //if the fresh notes already contains 50 posts, then break the loop
+            if(word.check.count == 0 && self.freshPosts.count > 50){
+                break;
+            }
+
+            [self loadPostForWord:word];
         }
     }
 }
