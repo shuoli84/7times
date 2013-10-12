@@ -17,6 +17,7 @@
 
 @interface PostManager ()
 @property (nonatomic, strong) NSMutableArray *posts;
+@property (nonatomic, strong) NSMutableArray *freshPosts;
 @property (nonatomic, strong) NSMutableSet *showedPostIds;
 @property (nonatomic, strong) NSMutableDictionary *wordShowedPostsNumber;
 @end
@@ -30,6 +31,7 @@
 
     if(self != nil){
         self.posts = [NSMutableArray array];
+        self.freshPosts = [NSMutableArray array];
         self.showedPostIds = [NSMutableSet set];
         self.wordShowedPostsNumber = [NSMutableDictionary dictionary];
     }
@@ -77,13 +79,21 @@
         NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO]]];
         for(Post *p in posts){
             if(p.check == nil){
-                if(![self.showedPostIds containsObject:p.id]){
-                    [self.posts addObject:p];
-                    [self.showedPostIds addObject:p.id];
+                if(![self.showedPostIds containsObject:p.objectID]){
+                    int index = 0;
+                    if(word.check.count > 0){
+                        [self.posts addObject:p];
+                        index = self.posts.count - 1;
+                    }
+                    else{
+                        [self.freshPosts addObject:p];
+                        index = self.posts.count + self.freshPosts.count - 1;
+                    }
+                    [self.showedPostIds addObject:p.objectID];
                     self.wordShowedPostsNumber[word.word] = @([self.wordShowedPostsNumber[word.word] integerValue] + 1);
 
                     if(self.postChangeBlock){
-                        self.postChangeBlock(self, p, -1, self.posts.count - 1);
+                        self.postChangeBlock(self, p, -1, index);
                     }
 
                     if([self.wordShowedPostsNumber[word.word] integerValue]>=2){
@@ -96,14 +106,24 @@
 }
 
 -(int)postCount{
-    return self.posts.count;
+    return self.posts.count + self.freshPosts.count;
 }
 
 -(Post*)postForIndexPath:(NSIndexPath *)indexPath{
-    return self.posts[indexPath.row];
+    if(self.posts.count > indexPath.row){
+        return self.posts[(uint)indexPath.row];
+    }
+    else{
+        return self.freshPosts[(uint)(indexPath.row - self.posts.count)];
+    }
 }
 
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath{
-    [self.posts removeObjectAtIndex:indexPath.row];
+    if(self.posts.count > indexPath.row){
+        [self.posts removeObjectAtIndex:(uint)indexPath.row];
+    }
+    else{
+        [self.freshPosts removeObjectAtIndex:(uint)indexPath.row - self.posts.count];
+    }
 }
 @end

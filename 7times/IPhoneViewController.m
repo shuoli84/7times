@@ -391,6 +391,7 @@
     menuCont.menuItems = @[menuItem];
 
     [self.postDownloader start];
+    [self.postManager start];
 }
 
 -(void)viewWillLayoutSubviews {
