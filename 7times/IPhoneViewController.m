@@ -183,7 +183,7 @@
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
-                return weakSelf.postManager.posts.count;
+                return weakSelf.postManager.postCount;
             }];
 
             static char key;
@@ -279,7 +279,7 @@
                                         NSLog(@"Check saved");
                                     }];
 
-                                    [weakSelf.postManager.posts removeObjectAtIndex:(NSUInteger) idx.row];
+                                    [weakSelf.postManager removePostAtIndexPath:idx];
                                     [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
 
                                     [Flurry logEvent:@"Post_dismiss" withParameters:@{
@@ -323,7 +323,7 @@
 
                     [cell associateValue:declaration withKey:&key];
                 }
-                Post *post = weakSelf.postManager.posts[(NSUInteger)indexPath.row];
+                Post *post = [weakSelf.postManager postForIndexPath:indexPath];
                 [cell associateValue:post withKey:&postKey];
 
                 Word *word = post.word.anyObject;

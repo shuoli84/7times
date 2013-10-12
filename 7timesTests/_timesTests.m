@@ -5,6 +5,7 @@
 #import "Check.h"
 #import "GoogleNewsSource.h"
 #import "PostDownloader.h"
+#import "PostManager.h"
 
 SPEC_BEGIN(WordSpec)
 
@@ -68,7 +69,7 @@ SPEC_BEGIN(WordSpec)
 
 SPEC_END
 
-SPEC_BEGIN(LoadPostSpec)
+SPEC_BEGIN(DownloadPostSpec)
 
     describe(@"able to load posts from google news search", ^{
         beforeEach(^{
@@ -118,5 +119,27 @@ SPEC_BEGIN(LoadPostSpec)
 
     });
 
+SPEC_END
+
+SPEC_BEGIN(PostManagerSpec)
+    describe(@"basic operations", ^{
+        beforeEach(^{
+            [MagicalRecord setupCoreDataStackWithInMemoryStore];
+        });
+
+        afterEach(^{
+            [MagicalRecord cleanUp];
+        });
+
+        it(@"able to load posts", ^{
+            PostManager* postManager = [[PostManager alloc]init];
+            [[theValue(postManager.postCount) should] equal:theValue(0)];
+            [postManager loadPost];
+
+            NSLog(@"%d posts loaded", postManager.postCount);
+            [[theValue(postManager.postCount) shouldNot] equal:theValue(0)];
+        });
+
+    });
 SPEC_END
 

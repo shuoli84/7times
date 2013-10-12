@@ -179,7 +179,7 @@
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
-                return weakSelf.postManager.posts.count;
+                return weakSelf.postManager.postCount;
             }];
 
             static char key;
@@ -254,7 +254,7 @@
                                             NSLog(@"Check saved");
                                         }];
 
-                                        [weakSelf.postManager.posts removeObject:p];
+                                        [weakSelf.postManager removePostAtIndexPath:idxPth];
                                         [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idxPth] withRowAnimation:UITableViewRowAnimationAutomatic];
                                     }
                                 } forControlEvents:UIControlEventTouchUpInside];
@@ -306,7 +306,7 @@
 
                     [cell associateValue:declaration withKey:&key];
                 }
-                Post *post = weakSelf.postManager.posts[(NSUInteger)indexPath.row];
+                Post *post = [weakSelf.postManager postForIndexPath:indexPath];
                 [cell associateValue:post withKey:&postKey];
                 UILabel *label = (UILabel *)[cell viewWithTag:101];
                 label.text = post.title;
