@@ -19,12 +19,12 @@
 #import "NSSet+BlocksKit.h"
 #import "DotView.h"
 #import "SLSharedConfig.h"
-#import "SLPostManager.h"
+#import "PostManager.h"
 #import "UIView+FindFirstResponder.h"
 
 @interface IPadViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) SLPostManager *postManager;
+@property (nonatomic, strong) PostManager *postManager;
 @property (nonatomic, strong) UITableView *itemListTableView;
 @property (nonatomic, strong) UITableView *wordListTableView;
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -42,7 +42,7 @@
     NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     BOOL ios7 = 7 <= [[versionCompatibility objectAtIndex:0] intValue];
 
-    self.postManager = [[SLPostManager alloc] init];
+    self.postManager = [[PostManager alloc] init];
 
     _wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"added" ascending:NO withPredicate:nil groupBy:nil delegate:self];
 
@@ -225,8 +225,8 @@
                                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
                                 [button addEventHandler:^(UIButton *btn) {
-                                    NSIndexPath* indexPath = [weakTableView indexPathForCell:weakCell];
-                                    if(indexPath != nil){
+                                    NSIndexPath*idxPth = [weakTableView indexPathForCell:weakCell];
+                                    if(idxPth != nil){
                                         Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
 
                                         Check *check = [Check MR_createEntity];
@@ -255,7 +255,7 @@
                                         }];
 
                                         [weakSelf.postManager.posts removeObject:p];
-                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                        [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idxPth] withRowAnimation:UITableViewRowAnimationAutomatic];
                                     }
                                 } forControlEvents:UIControlEventTouchUpInside];
 
@@ -350,7 +350,7 @@
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
 
-    [self.postManager setPostChangeBlock:^(SLPostManager *postManager, Post *post, int index, int newIndex) {
+    [self.postManager setPostChangeBlock:^(PostManager *postManager, Post *post, int index, int newIndex) {
         [weakSelf.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 }

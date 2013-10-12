@@ -11,8 +11,6 @@
 
 @interface SLSharedConfig : NSObject
 
-@property (nonatomic, assign) int wordLimitPerHour;
-@property (nonatomic, strong) NSString* googleNewsFeedURL;
 @property (nonatomic, strong) NSArray* colors;
 @property (nonatomic, strong) NSArray* timeIntervals;
 

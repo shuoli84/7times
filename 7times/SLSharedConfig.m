@@ -21,15 +21,9 @@
     return sharedInstance;
 }
 
--(NSString*)googleNewsFeedURL {
-    return @"https://news.google.com/news?pz=1&num=14&cf=all&ned=us&output=rss&q=%@";
-}
-
 -(id)init{
     self = [super init];
     if (self){
-        self.wordLimitPerHour = 20;
-        self.googleNewsFeedURL = @"https://news.google.com/news?q=%@&output=rss";
         _colors =@[
             [UIColor colorWithRed:231.f/255.f green:76/255.f blue:60/255.f alpha:1.f],
             [UIColor colorWithRed:255.f/255.f green:128/255.f blue:0/255.f alpha:1.f],
@@ -55,6 +49,6 @@
         count = 0;
     }
 
-    return _colors[count];
+    return _colors[(unsigned int)count];
 }
 @end

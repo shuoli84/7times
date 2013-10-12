@@ -14,7 +14,7 @@
 
 @implementation Word (Util)
 
--(BOOL)readyForNewCheck{
+-(BOOL)lastCheckExpired {
     if(self.check.count >= 7){
         return NO;
     }
@@ -81,15 +81,4 @@
     return result;
 }
 
--(BOOL)needsNewPosts{
-    if(self.check.count >= 7){
-        return NO;
-    }
-
-    if(self.unCheckedPosts.count == 0) {
-        return YES;
-    }
-
-    return NO;
-}
 @end

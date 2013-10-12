@@ -13,13 +13,13 @@
 @class Word;
 
 
-@interface SLPostManager : NSObject
+@interface PostManager : NSObject
 
 @property (nonatomic, strong) NSMutableArray *posts;
 @property (nonatomic, strong) NSMutableSet *showedPostIds;
 @property (nonatomic, strong) NSMutableDictionary *wordWithPosts;
 
-@property (nonatomic, copy) void (^postChangeBlock)(SLPostManager *postManager, Post* post, int index, int newIndex);
+@property (nonatomic, copy) void (^postChangeBlock)(PostManager *postManager, Post* post, int index, int newIndex);
 
 -(void)loadPost;
 -(void)loadPostForWord:(Word *)word;

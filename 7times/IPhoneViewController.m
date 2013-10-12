@@ -16,7 +16,7 @@
 #import "IPhoneViewController.h"
 #import "Word.h"
 #import "DotView.h"
-#import "SLPostManager.h"
+#import "PostManager.h"
 #import "Post.h"
 #import "SLSharedConfig.h"
 #import "Check.h"
@@ -25,6 +25,7 @@
 #import "Flurry.h"
 #import "TSMiniWebBrowser.h"
 #import "NSURL+QueryString.h"
+#import "PostDownloader.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -34,8 +35,8 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
-@property (nonatomic, strong) SLPostManager *postManager;
-
+@property (nonatomic, strong) PostManager *postManager;
+@property (nonatomic, strong) PostDownloader *postDownloader;
 @end
 
 @implementation IPhoneViewController {
@@ -57,7 +58,8 @@
         [weakSelf.wordListTableView reloadData];
     };
 
-    _postManager = [[SLPostManager alloc]init];
+    self.postManager = [[PostManager alloc]init];
+    self.postDownloader = [[PostDownloader alloc] init];
 
     self.declaration = [dec(@"root", CGRectZero, ^{
         UIScrollView *scrollView = [[UIScrollView alloc] init];
@@ -265,7 +267,7 @@
                                     [p setCheck:check];
 
                                     [p.word each:^(Word *w) {
-                                        if([w readyForNewCheck]){
+                                        if([w lastCheckExpired]){
                                             [w addCheck:[NSSet setWithObject:check]];
                                         }
                                         else{
@@ -326,7 +328,7 @@
 
                 Word *word = post.word.anyObject;
                 UIColor* wordColor;
-                if(word.readyForNewCheck){
+                if(word.lastCheckExpired){
                     wordColor = [[SLSharedConfig sharedInstance] colorForCount:word.check.count];
                 }
                 else if(word.check.count >= 1){
@@ -380,13 +382,15 @@
 
     [self.declaration setupViewTreeInto:self.view];
 
-    [self.postManager setPostChangeBlock:^(SLPostManager *postManager, Post *post, int index, int newIndex) {
+    [self.postManager setPostChangeBlock:^(PostManager *postManager, Post *post, int index, int newIndex) {
         [weakSelf.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
+
+    [self.postDownloader start];
 }
 
 -(void)viewWillLayoutSubviews {
