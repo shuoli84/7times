@@ -35,7 +35,9 @@
 		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
+		BE48E1977E655489A78ED8EA /* WordList.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0B6C37D4E4EC987410 /* WordList.m */; };
 		BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EBCDEC1039A77311A1BD /* tofle.txt */; };
+		BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E555847B0457DC217B20 /* WordListManager.m */; };
 		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
 		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
@@ -43,6 +45,7 @@
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
 		BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE43F2591308B9B53D2A /* Word+Util.m */; };
 		BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* PostManager.m */; };
+		BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E29FC619F4D67CAD7289 /* WordListViewController.m */; };
 		BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E8A2AC414440211607D4 /* PostDownloader.m */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
@@ -98,16 +101,22 @@
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
+		BE48E1EBCA1B38425D9197FB /* WordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListViewController.h; sourceTree = "<group>"; };
+		BE48E29FC619F4D67CAD7289 /* WordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListViewController.m; sourceTree = "<group>"; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
 		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
+		BE48E5426FA50E7B12BA3C9F /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
+		BE48E555847B0457DC217B20 /* WordListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListManager.m; sourceTree = "<group>"; };
 		BE48E58BA5FE61849BB6CFB9 /* GoogleNewsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleNewsSource.h; sourceTree = "<group>"; };
 		BE48E663F77584937365BCA3 /* NSURL+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryString.h"; sourceTree = "<group>"; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
 		BE48E77AD3CF8872FFDD8E2E /* PostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostManager.m; sourceTree = "<group>"; };
 		BE48E7CC2B7021E380FDFC5C /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
+		BE48E8201149365399524F87 /* WordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordList.h; sourceTree = "<group>"; };
 		BE48E8A2AC414440211607D4 /* PostDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDownloader.m; sourceTree = "<group>"; };
 		BE48E8B97A0F96995FA5CD69 /* Word+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Word+Util.h"; sourceTree = "<group>"; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
+		BE48EA0B6C37D4E4EC987410 /* WordList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordList.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
@@ -228,6 +237,12 @@
 				BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */,
 				BE48EE296B7C5DECC279AD67 /* GoogleNewsSource.m */,
 				BE48E58BA5FE61849BB6CFB9 /* GoogleNewsSource.h */,
+				BE48E29FC619F4D67CAD7289 /* WordListViewController.m */,
+				BE48E1EBCA1B38425D9197FB /* WordListViewController.h */,
+				BE48EA0B6C37D4E4EC987410 /* WordList.m */,
+				BE48E8201149365399524F87 /* WordList.h */,
+				BE48E555847B0457DC217B20 /* WordListManager.m */,
+				BE48E5426FA50E7B12BA3C9F /* WordListManager.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -466,6 +481,9 @@
 				BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */,
 				BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */,
 				BE48E93D591D8E1B176496DC /* GoogleNewsSource.m in Sources */,
+				BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */,
+				BE48E1977E655489A78ED8EA /* WordList.m in Sources */,
+				BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

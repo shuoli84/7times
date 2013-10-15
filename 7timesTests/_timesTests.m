@@ -6,6 +6,8 @@
 #import "GoogleNewsSource.h"
 #import "PostDownloader.h"
 #import "PostManager.h"
+#import "WordList.h"
+#import "WordListManager.h"
 
 SPEC_BEGIN(WordSpec)
 
@@ -141,5 +143,25 @@ SPEC_BEGIN(PostManagerSpec)
         });
 
     });
+SPEC_END
+
+SPEC_BEGIN(WordListSpec)
+
+    describe(@"parse from string", ^{
+        it(@"able to parse string", ^{
+            WordList *wordList = [[WordList alloc] initWithString:@"word1\nword2 \n \n word3"];
+            [[theValue(wordList.words.count) shouldNot] equal:theValue(0)];
+
+            wordList = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"tofle" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
+            [[theValue(wordList.words.count) shouldNot] equal:theValue(0)];
+        });
+
+        it(@"WordlistManager", ^{
+            WordListManager *manager = [[WordListManager alloc]init];
+            [[theValue(manager.allWordLists.count) shouldNot] equal:theValue(0)];
+        });
+
+    });
+
 SPEC_END
 

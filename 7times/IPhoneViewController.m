@@ -26,6 +26,7 @@
 #import "TSMiniWebBrowser.h"
 #import "NSURL+QueryString.h"
 #import "PostDownloader.h"
+#import "WordListViewController.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -68,7 +69,7 @@
         scrollView.contentSize = CGSizeMake(weakSelf.view.bounds.size.width * 2, weakSelf.view.bounds.size.height);
         return scrollView;
     }()) $:@[
-        [dec(@"wordView", CGRectMake(0, ios7?20:0, FVP(1), FVT(ios7?20:0))) $:@[
+        [dec(@"wordView", CGRectMake(0, 0, FVP(1), FVP(1))) $:@[
             dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
                 UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
                 self.wordListTableView = tableView;
@@ -168,18 +169,23 @@
                     return button;
                 }())
             ]],
-            [dec(@"addButton", CGRectMake(FVA(0), FVT(50), FVP(.5), 50)) $:@[
+            [dec(@"loadButton", CGRectMake(FVA(0), FVT(50), FVP(.5), 50)) $:@[
                 dec(@"button", CGRectMake(1, FVT(50), FVT(1), 50), ^{
                      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                      [button setTitle:@"load" forState:UIControlStateNormal];
                      button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
                      button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
-                     return button;
+
+                    [button addEventHandler:^(id sender) {
+                        WordListViewController *wordListViewController = [[WordListViewController alloc] init];
+                        [weakSelf presentViewController:wordListViewController animated:YES completion:nil];
+                    } forControlEvents:UIControlEventTouchUpInside];
+                    return button;
                 }()),
             ]],
 
         ]],
-        dec(@"itemView", CGRectMake(FVA(0), ios7?20:0, FVP(1), FVT(ios7?20:0)), ^{
+        dec(@"itemView", CGRectMake(FVA(0), 0, FVP(1), FVT(0)), ^{
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
@@ -189,7 +195,7 @@
             static char key;
             static char postKey;
 
-            tableView.rowHeight = self.view.bounds.size.height - (ios7?20:0);
+            tableView.rowHeight = self.view.bounds.size.height;
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             tableView.allowsSelection = NO;
             tableView.pagingEnabled = YES;
@@ -462,16 +468,6 @@
             case NSFetchedResultsChangeDelete:
                 [self.wordListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
-        }
-
-        //Scroll to the editing word
-        NSIndexPath* scrollTo = indexPath;
-        if(!scrollTo && newIndexPath){
-            scrollTo = newIndexPath;
-        }
-
-        if(scrollTo){
-            [self.wordListTableView scrollToRowAtIndexPath:scrollTo atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
     }
 }
