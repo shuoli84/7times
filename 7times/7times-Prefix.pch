@@ -13,4 +13,6 @@
     #import <Foundation/Foundation.h>
     #import "CoreData+MagicalRecord.h"
 
+    #define IRATE_USE_STOREKIT 1
 #endif
+

@@ -15,6 +15,7 @@
 #import "NSObject+AssociatedObjects.h"
 #import "Word.h"
 #import "MagicalRecordShorthand.h"
+#import "SVProgressHUD.h"
 
 @interface WordListViewController()
 @property (nonatomic, strong) FVDeclaration *viewDeclare;
@@ -124,10 +125,14 @@
 
                         NSLog(@"Start loading wordlist: %@", wordList.name);
 
-                        //dispatch_async(dispatch_get_main_queue(), ^{
-                            NSArray* words = wordList.words;
+                        NSArray* words = wordList.words;
+                        int __block i = 0;
+                        int count = words.count;
+
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             for(NSString *word in words){
-                                BOOL alreadyIn = [Word MR_findByAttribute:@"word" withValue:word].count != 0;
+                                i++;
+                                BOOL alreadyIn = [Word MR_findFirstByAttribute:@"word" withValue:word] != nil;
                                 if(!alreadyIn){
                                     NSLog(@"create word: %@", word);
                                     Word *wordEntity = [Word MR_createEntity];
@@ -136,8 +141,20 @@
 
                                     [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
                                 }
+
+                                if(i % 30 == 0){
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                       [SVProgressHUD showProgress:(float)i/(float)count status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
+                                    });
+                                }
+
+                                if(i >= count){
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [SVProgressHUD dismiss];
+                                    });
+                                }
                             }
-                        //});
+                        });
 
                     } forControlEvents:UIControlEventTouchUpInside];
                     return button;

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "SLSharedConfig.h"
 #import "Flurry.h"
+#import "iRate.h"
 
 @implementation AppDelegate
 
@@ -53,6 +54,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
++(void)initialize {
+    [iRate sharedInstance].daysUntilPrompt = 3;
+    [iRate sharedInstance].usesUntilPrompt = 15;
 }
 
 @end

@@ -8,6 +8,8 @@ pod 'RaptureXML'
 pod 'MagicalRecord'
 pod 'UbiquityStoreManager'
 pod 'TSMiniWebBrowser'
+pod 'SVProgressHUD'
+pod 'iRate'
 
 target :'7timesTests', :exclusive => true do
     pod 'Kiwi'
