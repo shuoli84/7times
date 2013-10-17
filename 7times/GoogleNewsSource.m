@@ -105,7 +105,7 @@ BOOL pureTextFont(RXMLElement* element){
                 post.url = item.link;
             }
 
-            [post addWordObject:word];
+            post.word = word;
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
     }

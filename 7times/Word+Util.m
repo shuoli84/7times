@@ -15,21 +15,17 @@
 @implementation Word (Util)
 
 -(BOOL)lastCheckExpired {
-    if(self.check.count >= 7){
+    if(self.checkNumber.integerValue >= 7){
         return NO;
     }
 
-    Check *lastCheck = self.lastCheck;
-    NSDate *lastCheckDate = [NSDate dateWithTimeIntervalSince1970:0];
-    if(lastCheck != nil){
-        lastCheckDate = lastCheck.date;
+    NSDate *lastCheckDate = self.lastCheckTime;
+    if(lastCheckDate == nil){
+        lastCheckDate = [NSDate dateWithTimeIntervalSince1970:0];
     }
 
     int shouldWaitHours = [[SLSharedConfig sharedInstance].timeIntervals[self.check.count] integerValue];
-    if([[NSDate date] timeIntervalSinceDate:lastCheckDate] >= shouldWaitHours * 60 * 60){
-        return YES;
-    }
-    return NO;
+    return [[NSDate date] timeIntervalSinceDate:lastCheckDate] >= shouldWaitHours * 60 * 60;
 }
 
 -(Check *)lastCheck {
@@ -47,38 +43,23 @@
 
 +(NSComparator)comparator {
     return ^NSComparisonResult(Word *word1, Word *word2) {
-        if(word2.check.count == 0){
+        if(word2.checkNumber.integerValue == 0){
             return NSOrderedAscending;
         }
 
-        if(word1.check.count == 0){
+        if(word1.checkNumber.integerValue == 0){
             return NSOrderedDescending;
         }
 
-        Check *lastCheck1 = word1.lastCheck;
-        Check *lastCheck2 = word2.lastCheck;
-
         NSArray *timeIntervals = [SLSharedConfig sharedInstance].timeIntervals;
-        int interval1 = [timeIntervals[word1.check.count] integerValue];
-        int interval2 = [timeIntervals[word2.check.count] integerValue];
+        int interval1 = [timeIntervals[(uint)word1.checkNumber.integerValue] integerValue];
+        int interval2 = [timeIntervals[(uint)word2.checkNumber.integerValue] integerValue];
 
-        NSDate *time1 = [lastCheck1.date dateByAddingTimeInterval:interval1 * 60 * 60];
-        NSDate *time2 = [lastCheck2.date dateByAddingTimeInterval:interval2 * 60 * 60];
+        NSDate *time1 = [word1.lastCheckTime dateByAddingTimeInterval:interval1 * 60 * 60];
+        NSDate *time2 = [word2.lastCheckTime dateByAddingTimeInterval:interval2 * 60 * 60];
 
         return [time1 compare:time2];
     };
-}
-
--(NSArray*)unCheckedPosts{
-    NSMutableArray *result = [NSMutableArray array];
-
-    for(Post *post in self.post){
-        if(post.check == nil){
-            [result addObject:post];
-        }
-    }
-
-    return result;
 }
 
 @end

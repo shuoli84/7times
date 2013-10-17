@@ -233,22 +233,21 @@
                                         check.date = [NSDate date];
                                         [p setCheck:check];
 
-                                        [p.word each:^(Word *w) {
-                                            //Only set the check only last check is at least 30 minutes ago
-                                            NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
-                                            for(Check *c in w.check){
-                                                if([lastCheck compare:c.date] == NSOrderedAscending){
-                                                    lastCheck = c.date;
-                                                }
+                                        Word *w = p.word;
+                                        //Only set the check only last check is at least 30 minutes ago
+                                        NSDate* lastCheck = [NSDate dateWithTimeIntervalSince1970:0];
+                                        for(Check *c in w.check){
+                                            if([lastCheck compare:c.date] == NSOrderedAscending){
+                                                lastCheck = c.date;
                                             }
+                                        }
 
-                                            if([[NSDate date] timeIntervalSinceDate:lastCheck] > 30 * 60){
-                                                [w addCheck:[NSSet setWithObject:check]];
-                                            }
-                                            else{
-                                                NSLog(@"The last check for word within 30 minutes, ignore the check");
-                                            }
-                                        }];
+                                        if([[NSDate date] timeIntervalSinceDate:lastCheck] > 30 * 60){
+                                            [w addCheck:[NSSet setWithObject:check]];
+                                        }
+                                        else{
+                                            NSLog(@"The last check for word within 30 minutes, ignore the check");
+                                        }
 
                                         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
                                             NSLog(@"Check saved");
@@ -322,8 +321,8 @@
                 textView.text = post.summary;
 
                 UIButton *wordButton = (UIButton *)[cell viewWithTag:106];
-                [wordButton setTitle:[(Word*)post.word.anyObject word] forState:UIControlStateNormal];
-                wordButton.backgroundColor = [[SLSharedConfig sharedInstance] colorForCount:[(Word *)post.word.anyObject check].count];
+                [wordButton setTitle:[(Word*)post.word word] forState:UIControlStateNormal];
+                wordButton.backgroundColor = [[SLSharedConfig sharedInstance] colorForCount:[post.word check].count];
 
                 FVDeclaration *declaration = (FVDeclaration *) [cell associatedValueForKey:&key];
                 declaration.unExpandedFrame = CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight);

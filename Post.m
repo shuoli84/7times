@@ -2,7 +2,7 @@
 //  Post.m
 //  7times
 //
-//  Created by Li Shuo on 13-9-12.
+//  Created by Li Shuo on 13-10-17.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
@@ -13,12 +13,13 @@
 
 @implementation Post
 
-@dynamic id;
+@dynamic checked;
 @dynamic date;
-@dynamic url;
-@dynamic title;
-@dynamic summary;
+@dynamic id;
 @dynamic source;
+@dynamic summary;
+@dynamic title;
+@dynamic url;
 @dynamic check;
 @dynamic word;
 

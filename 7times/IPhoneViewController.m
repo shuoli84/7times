@@ -12,7 +12,6 @@
 #import <BlocksKit/NSObject+AssociatedObjects.h>
 #import <BlocksKit/UIControl+BlocksKit.h>
 #import <FormatterKit/TTTTimeIntervalFormatter.h>
-#import <BlocksKit/NSSet+BlocksKit.h>
 #import "IPhoneViewController.h"
 #import "Word.h"
 #import "DotView.h"
@@ -95,7 +94,6 @@
 
                     if(cell == nil){
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-                        //cell.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
 
                         FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, 48)) $:@[
                             [dec(@"content", CGRectMake(5, 5, FVT(10), FVTillEnd), ^{
@@ -143,7 +141,7 @@
                     label.text = word.word;
 
                     DotView *dotView = (DotView*)[cell viewWithTag:102];
-                    dotView.dotNumber = word.check.count;
+                    dotView.dotNumber = word.checkNumber.integerValue;
                     [dotView setNeedsDisplay];
                     return cell;
                 }];
@@ -272,24 +270,25 @@
                                     check.date = [NSDate date];
                                     [p setCheck:check];
 
-                                    [p.word each:^(Word *w) {
-                                        if([w lastCheckExpired]){
-                                            [w addCheck:[NSSet setWithObject:check]];
-                                        }
-                                        else{
-                                            NSLog(@"Not ready for a new check, ignore");
-                                        }
-                                    }];
+                                    p.checked = [NSNumber numberWithBool:YES];
 
-                                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-                                        NSLog(@"Check saved");
-                                    }];
+                                    Word *w = p.word;
+                                    if([w lastCheckExpired]){
+                                        [w addCheck:[NSSet setWithObject:check]];
+                                        w.lastCheckTime = check.date;
+                                        w.checkNumber = @(w.checkNumber.integerValue + 1);
+                                    }
+                                    else{
+                                        NSLog(@"Not ready for a new check, ignore");
+                                    }
+
+                                    [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
 
                                     [weakSelf.postManager removePostAtIndexPath:idx];
                                     [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
 
                                     [Flurry logEvent:@"Post_dismiss" withParameters:@{
-                                        @"word": [p.word.anyObject word],
+                                        @"word": [p.word word],
                                         @"post": p.title,
                                         @"post_url" : p.url,
                                     }];
@@ -332,13 +331,14 @@
                 Post *post = [weakSelf.postManager postForIndexPath:indexPath];
                 [cell associateValue:post withKey:&postKey];
 
-                Word *word = post.word.anyObject;
+                Word *word = post.word;
                 UIColor* wordColor;
+                int checkNumber = word.checkNumber.integerValue;
                 if(word.lastCheckExpired){
-                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:word.check.count];
+                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:checkNumber];
                 }
-                else if(word.check.count >= 1){
-                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:word.check.count - 1];
+                else if(checkNumber >= 1){
+                    wordColor = [[SLSharedConfig sharedInstance] colorForCount:checkNumber - 1];
                 }
                 else {
                     wordColor = [UIColor blackColor];
@@ -423,24 +423,20 @@
 -(void)addWord:(NSString*)word{
     word = [word stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-
-    Word *wordRecord;
-
-    wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word inContext:localContext];
+    Word *wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
     if(wordRecord){
         NSLog(@"Word already there, no need to create a new one");
         return;
     }
 
-    wordRecord = [Word MR_createInContext:localContext];
+    wordRecord = [Word MR_createEntity];
 
     wordRecord.word = word;
     wordRecord.added = [NSDate date];
+    [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
 
-    [localContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        [self.postManager loadPostForWord:wordRecord];
-    }];
+    NSLog(@"Word saved");
+    [self.postDownloader downloadForWord:word];
 }
 
 -(void)addWordMenuAction:(id)sender{

@@ -10,6 +10,7 @@
 #import "GoogleNewsSource.h"
 #import "NSTimer+BlocksKit.h"
 #import "Word+Util.h"
+#import "Word.h"
 
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
@@ -78,6 +79,17 @@
     }
 
     NSLog(@"Posts download finished");
+}
+
+-(void)downloadForWord:(NSString*)word{
+    dispatch_async(_downloadQueue, ^{
+        Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word];
+        if(word1.lastCheckExpired){
+            NSLog(@"Start download posts for word: %@", word);
+            [self.googleNewsSource download:word1];
+            NSLog(@"Finish download for word: %@", word);
+        }
+    });
 }
 
 -(void)dealloc{

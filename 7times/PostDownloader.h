@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Word;
+
 
 @interface PostDownloader : NSObject
 
@@ -15,6 +17,7 @@
 -(void)end;
 
 -(void)download;
+-(void)downloadForWord:(NSString*)word;
 
 -(NSArray*)wordListNeedPosts;
 @end

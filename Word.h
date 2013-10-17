@@ -2,33 +2,43 @@
 //  Word.h
 //  7times
 //
-//  Created by Li Shuo on 13-9-12.
+//  Created by Li Shuo on 13-10-17.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Check;
+@class Check, Post;
 
 @interface Word : NSManagedObject
 
-@property (nonatomic, retain) NSString * word;
 @property (nonatomic, retain) NSDate * added;
-@property (nonatomic, retain) NSSet *post;
+@property (nonatomic, retain) NSNumber * checkNumber;
+@property (nonatomic, retain) NSDate * lastCheckTime;
+@property (nonatomic, retain) NSNumber * postNumber;
+@property (nonatomic, retain) NSString * source;
+@property (nonatomic, retain) NSString * word;
+@property (nonatomic, retain) NSDate * nextCheckTime;
 @property (nonatomic, retain) NSSet *check;
+@property (nonatomic, retain) NSOrderedSet *post;
 @end
 
 @interface Word (CoreDataGeneratedAccessors)
-
-- (void)addPostObject:(NSManagedObject *)value;
-- (void)removePostObject:(NSManagedObject *)value;
-- (void)addPost:(NSSet *)values;
-- (void)removePost:(NSSet *)values;
 
 - (void)addCheckObject:(Check *)value;
 - (void)removeCheckObject:(Check *)value;
 - (void)addCheck:(NSSet *)values;
 - (void)removeCheck:(NSSet *)values;
 
+- (void)insertObject:(Post *)value inPostAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromPostAtIndex:(NSUInteger)idx;
+- (void)insertPost:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removePostAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInPostAtIndex:(NSUInteger)idx withObject:(Post *)value;
+- (void)replacePostAtIndexes:(NSIndexSet *)indexes withPost:(NSArray *)values;
+- (void)addPostObject:(Post *)value;
+- (void)removePostObject:(Post *)value;
+- (void)addPost:(NSOrderedSet *)values;
+- (void)removePost:(NSOrderedSet *)values;
 @end

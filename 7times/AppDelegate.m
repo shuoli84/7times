@@ -19,13 +19,7 @@
     [Flurry startSession:@"CB3JTGXRXMST9B99K452"];
     [Flurry setEventLoggingEnabled:YES];
 
-    [MagicalRecord setupCoreDataStackWithiCloudContainer:@"Q658KUUNJA.com.menic.7times" contentNameKey:@"data" localStoreNamed:@"local.1.0.sqlite" cloudStorePathComponent:@"data" completion:^{
-        //Send a notification
-        NSLog(@"Core data context setup ready");
-        if([SLSharedConfig sharedInstance].coreDataReady){
-            [SLSharedConfig sharedInstance].coreDataReady();
-        }
-    }];
+    [MagicalRecord setupAutoMigratingCoreDataStack];
     return YES;
 }
 							

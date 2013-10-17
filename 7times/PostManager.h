@@ -27,4 +27,6 @@
 -(Post*)postForIndexPath:(NSIndexPath *)indexPath;
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath;
 
++(NSFetchRequest *)fetchRequest;
+
 @end

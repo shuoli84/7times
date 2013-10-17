@@ -63,9 +63,32 @@ SPEC_BEGIN(WordSpec)
             check.date = [NSDate date];
             check.post = post;
             check.word = word;
+            word.lastCheckTime = check.date;
 
             [[NSManagedObjectContext MR_defaultContext] save:nil];
             [[theValue(word.lastCheckExpired) should] beNo];
+        });
+
+        it(@"should able to select out word", ^{
+            Word *word1 = [Word MR_createEntity];
+            word1.word = @"word1";
+            word1.added = [NSDate date];
+
+            Word *word2 = [Word MR_createEntity];
+            word2.word = @"word2";
+            word2.added = [NSDate date];
+            word2.nextCheckTime = [[NSDate date] dateByAddingTimeInterval:20];
+
+            Word *word3 = [Word MR_createEntity];
+            word3.word = @"word1";
+            word3.added = [NSDate date];
+            word3.checkNumber = @(7);
+
+            [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+
+            NSFetchRequest *fetchRequest = [PostManager fetchRequest];
+            NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
+            [[theValue(array.count) should] equal:theValue(1)];
         });
     });
 
@@ -107,7 +130,7 @@ SPEC_BEGIN(DownloadPostSpec)
             word5.word = @"word5";
 
             Post *post1 = [Post MR_createEntity];
-            [post1 addWordObject:word2];
+            post1.word = word2;
 
             Check *check = [Check MR_createEntity];
             check.word = word3;

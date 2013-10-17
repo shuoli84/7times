@@ -41,9 +41,7 @@
 -(void)start{
     typeof(self) __weak weakSelf = self;
     _timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf loadPost];
-        });
+        [weakSelf loadPost];
     } repeats:YES];
     [_timer fire];
 
@@ -58,22 +56,24 @@
     [_timer invalidate];
 }
 
++(NSFetchRequest *)fetchRequest {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Word"];
+    fetchRequest.fetchLimit = 50;
+    NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:
+        @"checkNumber < 7 AND nextCheckTime <= %@", [NSDate date]];
+    fetchRequest.predicate = fetchPredicate;
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"checkNumber" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    return fetchRequest;
+}
+
 -(void)loadPost{
-    NSArray* wordArray = [Word MR_findAll];
-
-    wordArray = [wordArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(Word * evaluatedObject, NSDictionary *bindings) {
-        return evaluatedObject.check.count < 7;
-    }]];
-
-    wordArray = [wordArray sortedArrayUsingComparator:[Word comparator]];
+    NSFetchRequest *fetchRequest = [[self class] fetchRequest];
+    NSArray* wordArray = [Word MR_executeFetchRequest:fetchRequest];
 
     for(Word *word in wordArray){
         if(word.lastCheckExpired){
-            //if the fresh notes already contains 50 posts, then break the loop
-            if(word.check.count == 0 && self.freshPosts.count > 50){
-                break;
-            }
-
             [self loadPostForWord:word];
         }
     }
@@ -83,7 +83,7 @@
     if(word.word && [self.wordShowedPostsNumber[word.word] integerValue] < 2){
         NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO]]];
         for(Post *p in posts){
-            if(p.check == nil){
+            if(!p.checked){
                 if(![self.showedPostIds containsObject:p.objectID]){
                     int index = 0;
                     if(word.check.count > 0){
