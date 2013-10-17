@@ -17,16 +17,24 @@
 
     if(self){
         NSMutableArray *lists = [NSMutableArray array];
-        WordList *tofle = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"tofle" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
-        tofle.name = @"Tofle";
 
-        [lists addObject:tofle];
+        NSArray *wordlistArray = @[
+            @[@"CET4", @"cet4"],
+            @[@"CET6", @"cet6"],
+            @[@"Tofle", @"tofle"],
+            @[@"SAT", @"sat"],
+            @[@"GMAT", @"gmat"],
+            @[@"GRE", @"gre"],
+        ];
 
-        WordList *sat = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:
-                [[NSBundle mainBundle] pathForResource:@"sat" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
-        sat.name = @"SAT";
+        for(NSArray *l in wordlistArray){
+            NSString* name = l[0];
+            NSString* filename = l[1];
+            WordList *tofle = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
+            tofle.name = name;
 
-        [lists addObject:sat];
+            [lists addObject:tofle];
+        }
 
         self.allWordLists = lists;
     }

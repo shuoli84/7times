@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableArray *freshPosts;
 @property (nonatomic, strong) NSMutableSet *showedPostIds;
 @property (nonatomic, strong) NSMutableDictionary *wordShowedPostsNumber;
+@property (nonatomic, strong) NSFetchedResultsController *wordsFetchedResultsController;
 @end
 
 @implementation PostManager {
@@ -34,6 +35,7 @@
         self.freshPosts = [NSMutableArray array];
         self.showedPostIds = [NSMutableSet set];
         self.wordShowedPostsNumber = [NSMutableDictionary dictionary];
+        self.wordsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[PostManager fetchRequest] managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:nil cacheName:@"wordsCacheInPostManager"];
     }
     return self;
 }
@@ -60,19 +62,22 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Word"];
     fetchRequest.fetchLimit = 50;
     NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:
-        @"checkNumber < 7 AND nextCheckTime <= %@", [NSDate date]];
+        @"checkNumber < 7 AND nextCheckTime <= %@ && postNumber > 0", [NSDate date]];
     fetchRequest.predicate = fetchPredicate;
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"checkNumber" ascending:NO];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *checkNumberSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"checkNumber" ascending:NO];
+    NSSortDescriptor *addTimeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"added" ascending:YES];
+    [fetchRequest setSortDescriptors:@[checkNumberSortDescriptor, addTimeSortDescriptor]];
     return fetchRequest;
 }
 
--(void)loadPost{
-    NSFetchRequest *fetchRequest = [[self class] fetchRequest];
-    NSArray* wordArray = [Word MR_executeFetchRequest:fetchRequest];
+-(BOOL)needNewPost{
+    return self.freshPosts.count < 50;
+}
 
-    for(Word *word in wordArray){
+-(void)loadPost{
+    [self.wordsFetchedResultsController performFetch:nil];
+    for(Word *word in self.wordsFetchedResultsController.fetchedObjects){
         if(word.lastCheckExpired){
             [self loadPostForWord:word];
         }
@@ -80,6 +85,10 @@
 }
 
 -(void)loadPostForWord:(Word *)word{
+    if(![self needNewPost]){
+        return;
+    }
+
     if(word.word && [self.wordShowedPostsNumber[word.word] integerValue] < 2){
         NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO]]];
         for(Post *p in posts){

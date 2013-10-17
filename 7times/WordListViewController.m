@@ -16,6 +16,7 @@
 #import "Word.h"
 #import "MagicalRecordShorthand.h"
 #import "SVProgressHUD.h"
+#import "Flurry.h"
 
 @interface WordListViewController()
 @property (nonatomic, strong) FVDeclaration *viewDeclare;
@@ -126,6 +127,10 @@
                         NSLog(@"Start loading wordlist: %@", wordList.name);
 
                         NSArray* words = wordList.words;
+                        NSString* source = wordList.name;
+
+                        [Flurry logEvent:@"load_wordlist" withParameters:@{@"name":wordList.name, @"count":@(words.count)}];
+
                         int __block i = 0;
                         int count = words.count;
 
@@ -138,6 +143,7 @@
                                     Word *wordEntity = [Word MR_createEntity];
                                     wordEntity.word = word;
                                     wordEntity.added = [NSDate date];
+                                    wordEntity.source = source;
 
                                     [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
                                 }
@@ -153,6 +159,10 @@
                                         [SVProgressHUD dismiss];
                                     });
                                 }
+                            }
+
+                            if(self.finishLoadWordlist){
+                                self.finishLoadWordlist();
                             }
                         });
 

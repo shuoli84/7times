@@ -106,6 +106,7 @@ BOOL pureTextFont(RXMLElement* element){
             }
 
             post.word = word;
+            word.postNumber = @(word.postNumber.integerValue + 1);
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
     }

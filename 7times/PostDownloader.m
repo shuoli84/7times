@@ -32,18 +32,22 @@
     return self;
 }
 
--(void)start{
+-(void)startWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{
     typeof(self) __weak weakSelf = self;
     self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
             if(weakSelf.readyForLoad){
-                [weakSelf download];
+                [weakSelf downloadWithOneWordFinish:oneWordFinish completion:completion];
             }
         });
     } repeats:YES];
     [self.timer fire];
 
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+}
+
+-(void)fire{
+    [self.timer fire];
 }
 
 -(void)end{
@@ -67,7 +71,7 @@
     [NSThread sleepForTimeInterval:1];
 }
 
--(void)download{
+-(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{
     NSLog(@"Start download posts for words");
     NSArray *wordArray = self.wordListNeedPosts;
 
@@ -75,19 +79,28 @@
         if(word.lastCheckExpired){
             [self throttleRequest];
             [self.googleNewsSource download:word];
+            if(oneWordFinish){
+                oneWordFinish(word.word);
+            }
         }
+    }
+    if(completion){
+        completion();
     }
 
     NSLog(@"Posts download finished");
 }
 
--(void)downloadForWord:(NSString*)word{
+-(void)downloadForWord:(NSString*)word completion:(void(^)())completion{
     dispatch_async(_downloadQueue, ^{
         Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word];
         if(word1.lastCheckExpired){
             NSLog(@"Start download posts for word: %@", word);
             [self.googleNewsSource download:word1];
             NSLog(@"Finish download for word: %@", word);
+        }
+        if(completion){
+            completion();
         }
     });
 }

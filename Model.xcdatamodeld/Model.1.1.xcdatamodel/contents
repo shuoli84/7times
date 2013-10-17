@@ -23,7 +23,7 @@
         <attribute name="nextCheckTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-31608000" syncable="YES"/>
         <attribute name="postNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="source" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="word" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="word" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
         <relationship name="check" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Check" inverseName="word" inverseEntity="Check" syncable="YES"/>
         <relationship name="post" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="word" inverseEntity="Post" syncable="YES"/>
     </entity>

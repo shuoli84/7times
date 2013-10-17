@@ -13,11 +13,12 @@
 
 @interface PostDownloader : NSObject
 
--(void)start;
+-(void)startWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion;
 -(void)end;
+-(void)fire;
 
--(void)download;
--(void)downloadForWord:(NSString*)word;
+-(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion;
+-(void)downloadForWord:(NSString*)word completion:(void(^)())completion;
 
 -(NSArray*)wordListNeedPosts;
 @end

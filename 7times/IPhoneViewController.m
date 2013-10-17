@@ -26,6 +26,7 @@
 #import "NSURL+QueryString.h"
 #import "PostDownloader.h"
 #import "WordListViewController.h"
+#import "UIAlertView+BlocksKit.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -51,7 +52,7 @@
 
     typeof(self) __weak weakSelf = self;
 
-    self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"added" ascending:NO withPredicate:nil groupBy:nil delegate:self];
+    self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"added" ascending:YES withPredicate:nil groupBy:nil delegate:self];
 
     [SLSharedConfig sharedInstance].coreDataReady = ^{
         [weakSelf.wordFetchedResultsController performFetch:nil];
@@ -102,7 +103,7 @@
                                 view.clipsToBounds = YES;
                                 return view;
                             }()) $:@[
-                                dec(@"word", CGRectMake(10, FVCenter, 120, 30), ^{
+                                dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), ^{
                                     UITextView *label = [[UITextView alloc] init];
                                     label.tag = 101;
                                     label.font = [UIFont boldSystemFontOfSize:18];
@@ -176,6 +177,10 @@
 
                     [button addEventHandler:^(id sender) {
                         WordListViewController *wordListViewController = [[WordListViewController alloc] init];
+                        wordListViewController.finishLoadWordlist = ^{
+                            NSLog(@"word list load finished, fire the downloader");
+                            [weakSelf.postDownloader fire];
+                        };
                         [weakSelf presentViewController:wordListViewController animated:YES completion:nil];
                     } forControlEvents:UIControlEventTouchUpInside];
                     return button;
@@ -396,7 +401,12 @@
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
 
-    [self.postDownloader start];
+    [self.postDownloader startWithOneWordFinish:^(NSString *word) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            Word* wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
+            [weakSelf.postManager loadPostForWord:wordRecord];
+        });
+    } completion:nil];
     [self.postManager start];
 }
 
@@ -423,6 +433,11 @@
 -(void)addWord:(NSString*)word{
     word = [word stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
+    if(word.length == 0){
+        [UIAlertView alertViewWithTitle:@"Failed to add" message:@"No letter contained"];
+        return;
+    }
+
     Word *wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
     if(wordRecord){
         NSLog(@"Word already there, no need to create a new one");
@@ -436,7 +451,11 @@
     [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
 
     NSLog(@"Word saved");
-    [self.postDownloader downloadForWord:word];
+    [self.postDownloader downloadForWord:word completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.postManager loadPostForWord:wordRecord];
+        });
+    }];
 }
 
 -(void)addWordMenuAction:(id)sender{

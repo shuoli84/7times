@@ -10,4 +10,6 @@
 
 
 @interface WordListViewController : UIViewController
+
+@property (nonatomic, copy) void(^finishLoadWordlist)();
 @end

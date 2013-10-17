@@ -32,13 +32,16 @@
 		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
 		9CF0CA02180F83BC00658EBA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA01180F83BC00658EBA /* Post.m */; };
 		9CF0CA05180F83BC00658EBA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA04180F83BC00658EBA /* Check.m */; };
-		9CF0CA0E180F865E00658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA0D180F865E00658EBA /* Word.m */; };
+		9CF0CA11180F997C00658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA10180F997C00658EBA /* Word.m */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
 		BE48E1977E655489A78ED8EA /* WordList.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0B6C37D4E4EC987410 /* WordList.m */; };
 		BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EBCDEC1039A77311A1BD /* tofle.txt */; };
+		BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EA746404EF689745BBCD /* cet6.txt */; };
 		BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E555847B0457DC217B20 /* WordListManager.m */; };
 		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
+		BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */; };
+		BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E4C71A8D463466C56BC4 /* gre.txt */; };
 		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
 		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
 		BE48E93D591D8E1B176496DC /* GoogleNewsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE296B7C5DECC279AD67 /* GoogleNewsSource.m */; };
@@ -49,6 +52,7 @@
 		BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E8A2AC414440211607D4 /* PostDownloader.m */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
+		BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E2F53444BB8067BED03C /* gmat.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,14 +101,16 @@
 		9CF0CA01180F83BC00658EBA /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		9CF0CA03180F83BC00658EBA /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
 		9CF0CA04180F83BC00658EBA /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
-		9CF0CA0C180F865E00658EBA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
-		9CF0CA0D180F865E00658EBA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		9CF0CA0F180F997C00658EBA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		9CF0CA10180F997C00658EBA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
 		BE48E1EBCA1B38425D9197FB /* WordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListViewController.h; sourceTree = "<group>"; };
 		BE48E29FC619F4D67CAD7289 /* WordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListViewController.m; sourceTree = "<group>"; };
+		BE48E2F53444BB8067BED03C /* gmat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gmat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
+		BE48E4C71A8D463466C56BC4 /* gre.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gre.txt; sourceTree = SOURCE_ROOT; };
 		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E5426FA50E7B12BA3C9F /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
 		BE48E555847B0457DC217B20 /* WordListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListManager.m; sourceTree = "<group>"; };
@@ -116,11 +122,13 @@
 		BE48E8201149365399524F87 /* WordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordList.h; sourceTree = "<group>"; };
 		BE48E8A2AC414440211607D4 /* PostDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDownloader.m; sourceTree = "<group>"; };
 		BE48E8B97A0F96995FA5CD69 /* Word+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Word+Util.h"; sourceTree = "<group>"; };
+		BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet4.txt; sourceTree = SOURCE_ROOT; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA0B6C37D4E4EC987410 /* WordList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordList.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
+		BE48EA746404EF689745BBCD /* cet6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet6.txt; sourceTree = SOURCE_ROOT; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
 		BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryString.m"; sourceTree = "<group>"; };
 		BE48EBCDEC1039A77311A1BD /* tofle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tofle.txt; sourceTree = SOURCE_ROOT; };
@@ -165,8 +173,8 @@
 		9C1C9BF917DF081800BCC341 = {
 			isa = PBXGroup;
 			children = (
-				9CF0CA0C180F865E00658EBA /* Word.h */,
-				9CF0CA0D180F865E00658EBA /* Word.m */,
+				9CF0CA0F180F997C00658EBA /* Word.h */,
+				9CF0CA10180F997C00658EBA /* Word.m */,
 				9CF0CA03180F83BC00658EBA /* Check.h */,
 				9CF0CA04180F83BC00658EBA /* Check.m */,
 				9CF0CA00180F83BC00658EBA /* Post.h */,
@@ -260,6 +268,10 @@
 				9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */,
 				BE48E50A0F0BFC0D59E731EB /* sat.txt */,
 				BE48EBCDEC1039A77311A1BD /* tofle.txt */,
+				BE48E2F53444BB8067BED03C /* gmat.txt */,
+				BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */,
+				BE48EA746404EF689745BBCD /* cet6.txt */,
+				BE48E4C71A8D463466C56BC4 /* gre.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -375,6 +387,10 @@
 				9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */,
 				BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */,
 				BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */,
+				BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */,
+				BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */,
+				BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */,
+				BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +490,7 @@
 				9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */,
 				9CF0CA02180F83BC00658EBA /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
-				9CF0CA0E180F865E00658EBA /* Word.m in Sources */,
+				9CF0CA11180F997C00658EBA /* Word.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
