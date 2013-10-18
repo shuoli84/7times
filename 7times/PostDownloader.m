@@ -10,7 +10,6 @@
 #import "GoogleNewsSource.h"
 #import "NSTimer+BlocksKit.h"
 #import "Word+Util.h"
-#import "Word.h"
 
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
@@ -32,10 +31,14 @@
     return self;
 }
 
--(void)startWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{
+- (void)startWithShouldBeginBlock:(BOOL(^)())shouldBeginBlock oneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion {
     typeof(self) __weak weakSelf = self;
     self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
+            if (shouldBeginBlock && !shouldBeginBlock()) {
+                return;
+            }
+
             if(weakSelf.readyForLoad){
                 [weakSelf downloadWithOneWordFinish:oneWordFinish completion:completion];
             }

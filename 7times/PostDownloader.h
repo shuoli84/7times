@@ -13,7 +13,8 @@
 
 @interface PostDownloader : NSObject
 
--(void)startWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion;
+- (void)startWithShouldBeginBlock:(BOOL(^)())shouldBeginBlock oneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion;
+
 -(void)end;
 -(void)fire;
 

@@ -10,7 +10,6 @@
 
 
 #import "PostManager.h"
-#import "Check.h"
 #import "Word.h"
 #import "Post.h"
 #import "Word+Util.h"
@@ -40,10 +39,14 @@
     return self;
 }
 
--(void)start{
+- (void)startWithShouldBeginBlock:(BOOL (^)())shouldBeginBlock {
     typeof(self) __weak weakSelf = self;
     _timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
-        [weakSelf loadPost];
+        if (shouldBeginBlock != nil) {
+            if (shouldBeginBlock()) {
+                [weakSelf loadPost];
+            }
+        }
     } repeats:YES];
     [_timer fire];
 

@@ -30,9 +30,10 @@
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
 		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
-		9CF0CA02180F83BC00658EBA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA01180F83BC00658EBA /* Post.m */; };
-		9CF0CA05180F83BC00658EBA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA04180F83BC00658EBA /* Check.m */; };
-		9CF0CA11180F997C00658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA10180F997C00658EBA /* Word.m */; };
+		9CF0CA13180FEFE800658EBA /* 7times logo@120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF0CA12180FEEB400658EBA /* 7times logo@120.png */; };
+		9CF0CA161810C61000658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA151810C61000658EBA /* Word.m */; };
+		9CF0CA191810C61100658EBA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA181810C61100658EBA /* Check.m */; };
+		9CF0CA1C1810C61100658EBA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA1B1810C61100658EBA /* Post.m */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
 		BE48E1977E655489A78ED8EA /* WordList.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0B6C37D4E4EC987410 /* WordList.m */; };
@@ -97,12 +98,13 @@
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		9C74866E1807DC27000C0E42 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9CF0C9DE180E9B0900658EBA /* Model.1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.1.1.xcdatamodel; sourceTree = "<group>"; };
-		9CF0CA00180F83BC00658EBA /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		9CF0CA01180F83BC00658EBA /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		9CF0CA03180F83BC00658EBA /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
-		9CF0CA04180F83BC00658EBA /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
-		9CF0CA0F180F997C00658EBA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
-		9CF0CA10180F997C00658EBA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		9CF0CA12180FEEB400658EBA /* 7times logo@120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@120.png"; sourceTree = "<group>"; };
+		9CF0CA141810C61000658EBA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		9CF0CA151810C61000658EBA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		9CF0CA171810C61100658EBA /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
+		9CF0CA181810C61100658EBA /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
+		9CF0CA1A1810C61100658EBA /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		9CF0CA1B1810C61100658EBA /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
@@ -173,17 +175,18 @@
 		9C1C9BF917DF081800BCC341 = {
 			isa = PBXGroup;
 			children = (
-				9CF0CA0F180F997C00658EBA /* Word.h */,
-				9CF0CA10180F997C00658EBA /* Word.m */,
-				9CF0CA03180F83BC00658EBA /* Check.h */,
-				9CF0CA04180F83BC00658EBA /* Check.m */,
-				9CF0CA00180F83BC00658EBA /* Post.h */,
-				9CF0CA01180F83BC00658EBA /* Post.m */,
+				9CF0CA12180FEEB400658EBA /* 7times logo@120.png */,
 				9C1C9C0B17DF081900BCC341 /* 7times */,
 				9C1C9C3217DF081900BCC341 /* 7timesTests */,
 				9C1C9C0417DF081900BCC341 /* Frameworks */,
 				9C1C9C0317DF081900BCC341 /* Products */,
 				9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */,
+				9CF0CA141810C61000658EBA /* Word.h */,
+				9CF0CA151810C61000658EBA /* Word.m */,
+				9CF0CA171810C61100658EBA /* Check.h */,
+				9CF0CA181810C61100658EBA /* Check.m */,
+				9CF0CA1A1810C61100658EBA /* Post.h */,
+				9CF0CA1B1810C61100658EBA /* Post.m */,
 				6841FC7D7A04498584CCBE78 /* Pods.xcconfig */,
 				04544EC315E9449C8A0EC3F9 /* Pods-7timesTests.xcconfig */,
 			);
@@ -379,6 +382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CF0CA13180FEFE800658EBA /* 7times logo@120.png in Resources */,
 				9C1C9C1017DF081900BCC341 /* InfoPlist.strings in Resources */,
 				9C1C9C1817DF081900BCC341 /* Default.png in Resources */,
 				9C1C9C1A17DF081900BCC341 /* Default@2x.png in Resources */,
@@ -483,14 +487,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C1C9C1217DF081900BCC341 /* main.m in Sources */,
-				9CF0CA05180F83BC00658EBA /* Check.m in Sources */,
+				9CF0CA191810C61100658EBA /* Check.m in Sources */,
 				9C1C9C1617DF081900BCC341 /* AppDelegate.m in Sources */,
 				9C1C9C2517DF081900BCC341 /* IPadViewController.m in Sources */,
 				BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */,
 				9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */,
-				9CF0CA02180F83BC00658EBA /* Post.m in Sources */,
+				9CF0CA1C1810C61100658EBA /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
-				9CF0CA11180F997C00658EBA /* Word.m in Sources */,
+				9CF0CA161810C61000658EBA /* Word.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
@@ -626,9 +630,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -644,9 +650,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};

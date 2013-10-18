@@ -2,7 +2,7 @@
 //  Check.h
 //  7times
 //
-//  Created by Li Shuo on 13-10-17.
+//  Created by Li Shuo on 13-10-18.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface Check : NSManagedObject
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) Post *post;
-@property (nonatomic, retain) Word *word;
+@property(nonatomic, retain) NSDate *date;
+@property(nonatomic, retain) Post *post;
+@property(nonatomic, retain) Word *word;
 
 @end

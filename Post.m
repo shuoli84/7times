@@ -2,13 +2,11 @@
 //  Post.m
 //  7times
 //
-//  Created by Li Shuo on 13-10-17.
+//  Created by Li Shuo on 13-10-18.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
 #import "Post.h"
-#import "Check.h"
-#import "Word.h"
 
 
 @implementation Post

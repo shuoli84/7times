@@ -66,6 +66,7 @@
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
+        scrollView.bounces = NO;
         scrollView.contentSize = CGSizeMake(weakSelf.view.bounds.size.width * 2, weakSelf.view.bounds.size.height);
         return scrollView;
     }()) $:@[
@@ -257,7 +258,7 @@
                             }()),
 
                         ]],
-                        dec(@"doneButton", CGRectMake(0, FVT(50), FVT(52), 50), ^{
+                        dec(@"doneButton", CGRectMake(0, FVT(50), FVT(104), 50), ^{
                             UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
                             button.layer.borderWidth = 3.f;
                             [button setTitle:@"Dismiss" forState:UIControlStateNormal];
@@ -302,9 +303,9 @@
 
                             return button;
                         }()),
-                        dec(@"openInBrowserButton", CGRectMake(FVA(2), FVSameAsPrev, FVTillEnd, FVTillEnd), ^{
+                        dec(@"lookupButton", CGRectMake(FVT(102), FVSameAsPrev, 50, FVTillEnd), ^{
                             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                            [button setTitle:@">" forState:UIControlStateNormal];
+                            [button setTitle:@"?" forState:UIControlStateNormal];
                             button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
                             button.tag = 108;
 
@@ -312,6 +313,24 @@
                                 NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
                                 if(idx != nil){
                                     Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
+                                    Word *w = p.word;
+
+                                    UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:w.word];
+                                    [weakSelf presentViewController:dictionViewController animated:YES   completion:nil];
+                                }
+                            } forControlEvents:UIControlEventTouchUpInside];
+                            return button;
+                        }()),
+                        dec(@"openInBrowserButton", CGRectMake(FVT(50), FVSameAsPrev, 50, FVTillEnd), ^{
+                            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                            [button setTitle:@">" forState:UIControlStateNormal];
+                            button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+                            button.tag = 109;
+
+                            [button addEventHandler:^(id sender) {
+                                NSIndexPath *idx = [weakTableView indexPathForCell:weakCell];
+                                if (idx != nil) {
+                                    Post *p = (Post *) [weakCell associatedValueForKey:&postKey];
                                     NSURL *url = [NSURL URLWithString:p.url];
                                     if(url.dictionaryForQueryString[@"url"]){
                                         url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
@@ -354,7 +373,10 @@
                 dismissButton.backgroundColor = wordColor;
                 [dismissButton setTitle:word.word forState:UIControlStateNormal];
 
-                UIButton *openLinkButton = (UIButton*)[cell viewWithTag:108];
+                UIButton *lookUpButton = (UIButton *) [cell viewWithTag:108];
+                lookUpButton.backgroundColor = wordColor;
+
+                UIButton *openLinkButton = (UIButton *) [cell viewWithTag:109];
                 openLinkButton.backgroundColor = wordColor;
 
                 UITextView *label = (UITextView *)[cell viewWithTag:101];
@@ -401,13 +423,18 @@
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
 
-    [self.postDownloader startWithOneWordFinish:^(NSString *word) {
+    [self.postManager startWithShouldBeginBlock:^BOOL {
+        return YES;
+    }];
+
+    [self.postDownloader startWithShouldBeginBlock:^{
+        return weakSelf.postManager.needNewPost;
+    }                                oneWordFinish:^(NSString *word) {
         dispatch_async(dispatch_get_main_queue(), ^{
             Word* wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
             [weakSelf.postManager loadPostForWord:wordRecord];
         });
     } completion:nil];
-    [self.postManager start];
 }
 
 -(void)viewWillLayoutSubviews {

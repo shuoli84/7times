@@ -17,7 +17,8 @@
 
 @property (nonatomic, copy) void (^postChangeBlock)(PostManager *postManager, Post* post, int index, int newIndex);
 
--(void)start;
+- (void)startWithShouldBeginBlock:(BOOL (^)())shouldBeginBlock;
+
 -(void)end;
 
 -(void)loadPost;
@@ -26,6 +27,8 @@
 -(int)postCount;
 -(Post*)postForIndexPath:(NSIndexPath *)indexPath;
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath;
+
+- (BOOL)needNewPost;
 
 +(NSFetchRequest *)fetchRequest;
 
