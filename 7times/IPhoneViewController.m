@@ -270,7 +270,8 @@
                             [button addEventHandler:^(id sender) {
                                 NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
                                 if(idx != nil){
-                                    Post *p = (Post*) [weakCell associatedValueForKey:&postKey];
+                                    Post *pTmp = (Post *) [weakCell associatedValueForKey:&postKey];
+                                    Post *p = (Post *) [[NSManagedObjectContext MR_contextForCurrentThread] existingObjectWithID:pTmp.objectID error:nil];
 
                                     Check *check = [Check MR_createEntity];
                                     check.date = [NSDate date];
@@ -288,7 +289,7 @@
                                         NSLog(@"Not ready for a new check, ignore");
                                     }
 
-                                    [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+                                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
 
                                     [weakSelf.postManager removePostAtIndexPath:idx];
                                     [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];

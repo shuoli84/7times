@@ -76,7 +76,7 @@ BOOL pureTextFont(RXMLElement* element){
             RXMLElement *doc = [[RXMLElement alloc] initFromXMLData:[item.summary dataUsingEncoding:NSUTF8StringEncoding]];
             NSString *title = item.title;
             NSString *__block source;
-            NSString *__block summary;
+            NSString *__block summary = @"";
 
             NSMutableArray *textArray = [NSMutableArray array];
 
@@ -105,9 +105,10 @@ BOOL pureTextFont(RXMLElement* element){
                 post.url = item.link;
             }
 
-            post.word = word;
-            word.postNumber = @(word.postNumber.integerValue + 1);
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+            Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word.word];
+            post.word = word1;
+            word1.postNumber = @(word1.postNumber.integerValue + 1);
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
         }
     }
 

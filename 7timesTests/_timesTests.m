@@ -69,24 +69,54 @@ SPEC_BEGIN(WordSpec)
             [[theValue(word.lastCheckExpired) should] beNo];
         });
 
-        it(@"should able to select out word", ^{
+        it(@"should able to select out word from PostManager", ^{
             Word *word1 = [Word MR_createEntity];
             word1.word = @"word1";
             word1.added = [NSDate date];
+            word1.postNumber = @(14);
 
             Word *word2 = [Word MR_createEntity];
             word2.word = @"word2";
             word2.added = [NSDate date];
             word2.nextCheckTime = [[NSDate date] dateByAddingTimeInterval:20];
+            word2.postNumber = @(14);
 
             Word *word3 = [Word MR_createEntity];
             word3.word = @"word1";
             word3.added = [NSDate date];
             word3.checkNumber = @(7);
+            word3.postNumber = @(14);
 
             [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
 
             NSFetchRequest *fetchRequest = [PostManager fetchRequest];
+            NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
+            [[theValue(array.count) should] equal:theValue(1)];
+        });
+
+
+        it(@"should able to select out word from PostDownloader", ^{
+            Word *word1 = [Word MR_createEntity];
+            word1.word = @"word1";
+            word1.added = [NSDate date];
+
+            word1.postNumber = @(0);
+
+            Word *word2 = [Word MR_createEntity];
+            word2.word = @"word2";
+            word2.added = [NSDate date];
+            word2.nextCheckTime = [[NSDate date] dateByAddingTimeInterval:20];
+            word2.postNumber = @(14);
+
+            Word *word3 = [Word MR_createEntity];
+            word3.word = @"word1";
+            word3.added = [NSDate date];
+            word3.checkNumber = @(7);
+            word3.postNumber = @(0);
+
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
+
+            NSFetchRequest *fetchRequest = [PostDownloader fetchRequest];
             NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
             [[theValue(array.count) should] equal:theValue(1)];
         });

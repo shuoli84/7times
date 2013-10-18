@@ -88,8 +88,10 @@
 }
 
 -(void)loadPostForWord:(Word *)word{
-    if(![self needNewPost]){
-        return;
+    if (word.checkNumber.integerValue == 0) {
+        if (!self.needNewPost) {
+            return;
+        }
     }
 
     if(word.word && [self.wordShowedPostsNumber[word.word] integerValue] < 2){

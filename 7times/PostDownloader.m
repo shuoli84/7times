@@ -14,6 +14,7 @@
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
 @property (nonatomic, strong) NSTimer *timer;
+@property(nonatomic, strong) NSFetchedResultsController *wordsFetchedResultsController;
 @end
 
 @implementation PostDownloader {
@@ -26,6 +27,8 @@
     if (self){
         self.googleNewsSource = [[GoogleNewsSource alloc] init];
         _downloadQueue = dispatch_queue_create(NULL, NULL);
+
+        self.wordsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[[self class] fetchRequest] managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:nil cacheName:@"wordsCacheInPostDownloader"];
     }
 
     return self;
@@ -61,12 +64,23 @@
     return YES;
 }
 
++ (NSFetchRequest *)fetchRequest {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Word"];
+    fetchRequest.fetchLimit = 5;
+    NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:
+        @"checkNumber < 7 AND postNumber == 0"];
+    fetchRequest.predicate = fetchPredicate;
+
+    NSSortDescriptor *addTimeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"added" ascending:YES];
+    [fetchRequest setSortDescriptors:@[addTimeSortDescriptor]];
+    return fetchRequest;
+}
+
 -(NSArray*)wordListNeedPosts {
-    NSArray* wordArray = [Word MR_findAll];
-    wordArray = [wordArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(Word * evaluatedObject, NSDictionary *bindings) {
-        return evaluatedObject.post.count == 0;
-    }]];
-    return wordArray;
+    if ([self.wordsFetchedResultsController performFetch:nil]) {
+        return self.wordsFetchedResultsController.fetchedObjects;
+    }
+    return nil;
 }
 
 -(void)throttleRequest{

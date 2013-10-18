@@ -22,4 +22,6 @@
 -(void)downloadForWord:(NSString*)word completion:(void(^)())completion;
 
 -(NSArray*)wordListNeedPosts;
+
++ (NSFetchRequest *)fetchRequest;
 @end
