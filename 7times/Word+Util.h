@@ -18,4 +18,6 @@
 
 +(NSComparator)comparator;
 
+- (void)addCheckHelper:(Check *)check;
+
 @end

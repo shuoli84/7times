@@ -9,7 +9,6 @@
 #import "Word+Util.h"
 #import "Check.h"
 #import "SLSharedConfig.h"
-#import "Post.h"
 
 
 @implementation Word (Util)
@@ -24,8 +23,8 @@
         lastCheckDate = [NSDate dateWithTimeIntervalSince1970:0];
     }
 
-    int shouldWaitHours = [[SLSharedConfig sharedInstance].timeIntervals[self.check.count] integerValue];
-    return [[NSDate date] timeIntervalSinceDate:lastCheckDate] >= shouldWaitHours * 60 * 60;
+    int shouldWaitHours = [[SLSharedConfig sharedInstance].timeIntervals[self.checkNumber.integerValue] integerValue];
+    return ABS([[NSDate date] timeIntervalSinceDate:lastCheckDate]) >= shouldWaitHours * 60 * 60;
 }
 
 -(Check *)lastCheck {
@@ -60,6 +59,13 @@
 
         return [time1 compare:time2];
     };
+}
+
+- (void)addCheckHelper:(Check *)check {
+    [self addCheck:[NSSet setWithObject:check]];
+    self.lastCheckTime = check.date;
+    self.checkNumber = @(self.checkNumber.integerValue + 1);
+    self.nextCheckTime = [check.date dateByAddingTimeInterval:[[SLSharedConfig sharedInstance].timeIntervals[self.checkNumber.integerValue] integerValue] * 60 * 60];
 }
 
 @end

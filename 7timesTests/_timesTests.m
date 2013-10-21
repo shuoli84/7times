@@ -8,6 +8,7 @@
 #import "PostManager.h"
 #import "WordList.h"
 #import "WordListManager.h"
+#import "SLSharedConfig.h"
 
 SPEC_BEGIN(WordSpec)
 
@@ -62,11 +63,24 @@ SPEC_BEGIN(WordSpec)
 
             check.date = [NSDate date];
             check.post = post;
-            check.word = word;
+            [word addCheckHelper:check];
             word.lastCheckTime = check.date;
 
             [[NSManagedObjectContext MR_defaultContext] save:nil];
             [[theValue(word.lastCheckExpired) should] beNo];
+        });
+
+        it(@"should able to add check", ^{
+            Word *word = [Word MR_createEntity];
+            Check *check = [Check MR_createEntity];
+            check.date = [NSDate date];
+
+            [word addCheckHelper:check];
+
+            [[word.checkNumber should] equal:theValue(1)];
+            [[word.lastCheckTime should] equal:check.date];
+            [[word.nextCheckTime should] equal:[check.date dateByAddingTimeInterval:[[SLSharedConfig sharedInstance].timeIntervals[1] integerValue] * 60 * 60]];
+
         });
 
         it(@"should able to select out word from PostManager", ^{
@@ -120,9 +134,24 @@ SPEC_BEGIN(WordSpec)
             NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
             [[theValue(array.count) should] equal:theValue(1)];
         });
+
+        it(@"should able to detect whether last check expired", ^{
+            Word *word = [Word MR_createEntity];
+            word.checkNumber = @(0);
+            [[theValue(word.lastCheckExpired) should] beYes];
+
+            word.checkNumber = @(1);
+            word.lastCheckTime = [NSDate date];
+            [[theValue(word.lastCheckExpired) should] beNo];
+
+            word.checkNumber = @(1);
+            word.lastCheckTime = [[NSDate date] dateByAddingTimeInterval:-12 * 60 * 60 - 1];
+            [[theValue(word.lastCheckExpired) should] beYes];
+        });
     });
 
-SPEC_END
+
+    SPEC_END
 
 SPEC_BEGIN(DownloadPostSpec)
 

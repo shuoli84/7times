@@ -281,9 +281,7 @@
 
                                     Word *w = p.word;
                                     if([w lastCheckExpired]){
-                                        [w addCheck:[NSSet setWithObject:check]];
-                                        w.lastCheckTime = check.date;
-                                        w.checkNumber = @(w.checkNumber.integerValue + 1);
+                                        [w addCheckHelper:check];
                                     }
                                     else{
                                         NSLog(@"Not ready for a new check, ignore");
