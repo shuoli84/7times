@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface WordListViewController : UIViewController
+@interface WordListViewController : UITableViewController
 
 @property (nonatomic, copy) void(^finishLoadWordlist)();
 @end

@@ -17,14 +17,20 @@
 #import "MagicalRecordShorthand.h"
 #import "SVProgressHUD.h"
 #import "Flurry.h"
+#import
+ "StoreKit/StoreKit.h"
+#import
+ "SevenTimesIAPHelper.h"
 
 @interface WordListViewController()
 @property (nonatomic, strong) FVDeclaration *viewDeclare;
 @property (nonatomic, strong) WordListManager *wordListManager;
+@property (nonatomic, strong) NSArray *products;
+
 @end
 
 @implementation WordListViewController {
-
+NSNumberFormatter * _priceFormatter;
 }
 
 -(void)viewDidLoad {
@@ -34,15 +40,13 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
 
-    typeof(self) __weak weakSelf = self;
+self.refreshControl = [[UIRefreshControl alloc] init];
+[self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
+
+self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+typeof(self) __weak weakSelf = self;
     self.viewDeclare = [dec(@"root") $:@[
-        dec(@"wordListTableView", CGRectMake(0, 0, FVP(1), FVT(50)), ^{
-            UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            tableView.allowsSelection = NO;
-            tableView.dataSource = [weakSelf dataSourceForTableView:tableView];
-            return tableView;
-        }()),
         [dec(@"leftContainer", CGRectMake(0, FVT(50), FVP(0.5), 50)) $:@[
             dec(@"backButton", CGRectMake(0, 0, FVT(1), FVP(1.f)), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -68,14 +72,21 @@
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
                 [button addEventHandler:^(id sender) {
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
-                } forControlEvents:UIControlEventTouchUpInside];
+[[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
+} forControlEvents:UIControlEventTouchUpInside];
                 return button;
             }()),
         ]],
     ]];
 
     [self.viewDeclare setupViewTreeInto:self.view];
+
+[self reload];
+[self.refreshControl beginRefreshing];
+
+_priceFormatter = [[NSNumberFormatter alloc] init];
+[_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+[_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
 }
 
 -(void)viewWillLayoutSubviews {
@@ -85,111 +96,159 @@
     [self.viewDeclare updateViewFrame];
 }
 
--(id<UITableViewDataSource>)dataSourceForTableView:(UITableView*)tableView{
-    A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
+-(void)reload{
+self.products = nil;
+[self.tableView reloadData];
+[[SevenTimesIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+if (success){
+self.products = products;
+[self.tableView reloadData];
+}
 
-    typeof(self) __weak weakSelf = self;
-    [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^int(UITableView *tv, int section){
-        return weakSelf.wordListManager.allWordLists.count;
-    }];
+[self.refreshControl endRefreshing];
+}];
+}
 
-    [dataSource implementMethod:@selector(tableView:cellForRowAtIndexPath:) withBlock:^(UITableView *tv, NSIndexPath *indexPath){
-        UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"cell"];
-        static char declarationKey;
+-(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+return self.products.count;
+}
 
-        if(cell == nil){
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+typeof(self) __weak weakSelf = self;
+static char declarationKey;
 
-            typeof(cell) __weak weakCell = cell;
-            typeof(tv) __weak weakTV = tv;
-            FVDeclaration *declaration = [dec(@"cell") $:@[
-                dec(@"title", CGRectMake(10, FVCenter, FVT(55), 30), ^{
-                    UILabel *label = [[UILabel alloc] init];
-                    label.tag = 101;
-                    label.font = [UIFont boldSystemFontOfSize:19.f];
-                    label.textColor = [UIColor blackColor];
-                    label.backgroundColor = [UIColor whiteColor];
-                    return label;
-                }()),
-                dec(@"button", CGRectMake(FVT(55), FVCenter, 50, 30), ^{
-                    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+if (cell == nil){
+cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
 
-                    button.titleLabel.font = [UIFont systemFontOfSize:15];
-                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    button.backgroundColor = [UIColor colorWithRed:231.f/255.f green:76/255.f blue:60/255.f alpha:1.f];
-                    button.layer.cornerRadius = 5.f;
-                    button.tag = 102;
+typeof(cell) __weak weakCell = cell;
+typeof(tableView) __weak weakTV = tableView;
+FVDeclaration *declaration = [dec(@"cell") $:@[
+dec(@"title", CGRectMake(10, FVCenter, FVT(55), 30), ^{
+UILabel *label = [[UILabel alloc] init];
+label.tag = 101;
+label.font = [UIFont boldSystemFontOfSize:19.f];
+label.textColor = [UIColor blackColor];
+label.backgroundColor = [UIColor whiteColor];
+return label;
+}()),
+dec(@"button", CGRectMake(FVT(90), FVCenter, 80, 30), ^{
+UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 
-                    [button addEventHandler:^(id sender) {
-                        NSIndexPath* idx = [weakTV indexPathForCell:weakCell];
-                        WordList* wordList = [weakSelf.wordListManager.allWordLists objectAtIndex:(uint)idx.row];
+button.titleLabel.font = [UIFont systemFontOfSize:15];
+[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+button.backgroundColor = [UIColor colorWithRed:231.f/255.f green:76/255.f blue:60/255.f alpha:1.f];
+button.layer.cornerRadius = 5.f;
+button.tag = 102;
 
-                        NSLog(@"Start loading wordlist: %@", wordList.name);
+[button addEventHandler:^(id sender) {
+NSIndexPath* idx = [weakTV indexPathForCell:weakCell];
+SKProduct *product = weakSelf.products[(uint)idx.row];
+if (![[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]){
+NSLog(@"The product is not bought, buy it");
+[Flurry logEvent:@"start_buy" withParameters:@{
+@"name":product.localizedTitle
+}];
+[[SevenTimesIAPHelper sharedInstance] buyProduct:product];
+return;
+}
 
-                        NSArray* words = wordList.words;
-                        NSString* source = wordList.name;
+NSLog(@"The product already bought, load it");
+WordList* wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
 
-                        [Flurry logEvent:@"load_wordlist" withParameters:@{@"name":wordList.name, @"count":@(words.count)}];
+NSLog(@"Start loading wordlist: %@", wordList.name);
 
-                        int __block i = 0;
-                        int count = words.count;
+NSArray* words = wordList.words;
+NSString* source = wordList.name;
 
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            for(NSString *word in words){
-                                i++;
-                                BOOL alreadyIn = [Word MR_findFirstByAttribute:@"word" withValue:word] != nil;
-                                if(!alreadyIn){
-                                    NSLog(@"create word: %@", word);
-                                    Word *wordEntity = [Word MR_createEntity];
-                                    wordEntity.word = word;
-                                    wordEntity.added = [NSDate date];
-                                    wordEntity.source = source;
+[Flurry logEvent:@"load_wordlist" withParameters:@{
+@"name":wordList.name, @"count":@(words.count)
+}];
 
-                                    [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
-                                }
+int __block i = 0;
+int count = words.count;
 
-                                if(i % 30 == 0){
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                       [SVProgressHUD showProgress:(float)i/(float)count status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
-                                    });
-                                }
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+for (NSString *word in words){
+i++;
+BOOL alreadyIn = [Word MR_findFirstByAttribute:@"word" withValue:word] != nil;
+if (!alreadyIn){
+NSLog(@"create word: %@", word);
+Word *wordEntity = [Word MR_createEntity];
+wordEntity.word = word;
+wordEntity.added = [NSDate date];
+wordEntity.source = source;
 
-                                if(i >= count){
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [SVProgressHUD dismiss];
-                                    });
-                                }
-                            }
+[[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+}
 
-                            if(self.finishLoadWordlist){
-                                self.finishLoadWordlist();
-                            }
-                        });
+if (i % 30 == 0){
+dispatch_async(dispatch_get_main_queue(), ^{
+[SVProgressHUD showProgress:(float)i/(float)count status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
+});
+}
 
-                    } forControlEvents:UIControlEventTouchUpInside];
-                    return button;
-                }()),
-            ]];
+if (i >= count){
+dispatch_async(dispatch_get_main_queue(), ^{
+[SVProgressHUD dismiss];
+});
+}
+}
 
-            [declaration setupViewTreeInto:cell];
-            [cell associateValue:declaration withKey:&declarationKey];
-        }
+if (self.finishLoadWordlist){
+self.finishLoadWordlist();
+}
+});
 
-        WordList *wordList = [weakSelf.wordListManager.allWordLists objectAtIndex:(uint)indexPath.row];
-        cell.textLabel.text = wordList.name;
+} forControlEvents:UIControlEventTouchUpInside];
+return button;
+}()),
+]];
 
-        UILabel *title = (UILabel *)[cell viewWithTag:101];
-        title.text = wordList.name;
+[declaration setupViewTreeInto:cell];
+[cell associateValue:declaration withKey:&declarationKey];
+}
 
-        UIButton *button = (UIButton *)[cell viewWithTag:102];
-        [button setTitle:@"load" forState:UIControlStateNormal];
+SKProduct *product = (SKProduct *)self.products[(uint)indexPath.row];
 
-        FVDeclaration *declaration = [cell associatedValueForKey:&declarationKey];
-        declaration.unExpandedFrame = CGRectMake(0, 0, tv.bounds.size.width, tv.rowHeight);
-        [declaration updateViewFrame];
-        return cell;
-    }];
+UILabel *title = (UILabel *)[cell viewWithTag:101];
+title.text = product.localizedTitle;
 
-    return (id)dataSource;
+
+[_priceFormatter setLocale:product.priceLocale];
+NSString *priceTag = [_priceFormatter stringFromNumber:product.price];
+
+UIButton *button = (UIButton *)[cell viewWithTag:102];
+if ([[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+[button setTitle:@"load" forState:UIControlStateNormal];
+} else {
+[button setTitle:priceTag forState:UIControlStateNormal];
+}
+
+FVDeclaration *declaration = [cell associatedValueForKey:&declarationKey];
+declaration.unExpandedFrame = CGRectMake(0, 0, tableView.bounds.size.width, tableView.rowHeight);
+[declaration updateViewFrame];
+
+return cell;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)productPurchased:(NSNotification *)notification {
+
+NSString * productIdentifier = notification.object;
+[_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
+if ([product.productIdentifier isEqualToString:productIdentifier]) {
+[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+*stop = YES;
+}
+}];
+
 }
 @end

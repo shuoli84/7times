@@ -10,12 +10,15 @@
 #import "SLSharedConfig.h"
 #import "Flurry.h"
 #import "iRate.h"
+#import
+ "SeventimesIAPHelper.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Flurry setCrashReportingEnabled:YES];
+[SevenTimesIAPHelper sharedInstance];
+[Flurry setCrashReportingEnabled:YES];
     [Flurry startSession:@"CB3JTGXRXMST9B99K452"];
     [Flurry setEventLoggingEnabled:YES];
 

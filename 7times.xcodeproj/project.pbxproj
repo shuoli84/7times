@@ -34,6 +34,7 @@
 		9CF0CA161810C61000658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA151810C61000658EBA /* Word.m */; };
 		9CF0CA191810C61100658EBA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA181810C61100658EBA /* Check.m */; };
 		9CF0CA1C1810C61100658EBA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA1B1810C61100658EBA /* Post.m */; };
+		9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF0CA1D181116FB00658EBA /* StoreKit.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */; };
 		BE48E1977E655489A78ED8EA /* WordList.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0B6C37D4E4EC987410 /* WordList.m */; };
@@ -43,9 +44,11 @@
 		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */; };
 		BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E4C71A8D463466C56BC4 /* gre.txt */; };
+		BE48E80458BFB00F9527A19B /* SevenTimesIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E036A8ED107FD1996A9A /* SevenTimesIAPHelper.m */; };
 		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
 		BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */; };
 		BE48E93D591D8E1B176496DC /* GoogleNewsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE296B7C5DECC279AD67 /* GoogleNewsSource.m */; };
+		BE48EAA2680114DDD9AC7EAD /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E496618D97DEECA1002C /* IAPHelper.m */; };
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
 		BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE43F2591308B9B53D2A /* Word+Util.m */; };
 		BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* PostManager.m */; };
@@ -105,13 +108,17 @@
 		9CF0CA181810C61100658EBA /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
 		9CF0CA1A1810C61100658EBA /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		9CF0CA1B1810C61100658EBA /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		9CF0CA1D181116FB00658EBA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9CFB492617E715E9005755B6 /* 7times.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = 7times.entitlements; sourceTree = "<group>"; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
+		BE48E036A8ED107FD1996A9A /* SevenTimesIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SevenTimesIAPHelper.m; sourceTree = "<group>"; };
 		BE48E1EBCA1B38425D9197FB /* WordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListViewController.h; sourceTree = "<group>"; };
+		BE48E1FEFA03D077EA4C5B45 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		BE48E29FC619F4D67CAD7289 /* WordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListViewController.m; sourceTree = "<group>"; };
 		BE48E2F53444BB8067BED03C /* gmat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gmat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
+		BE48E496618D97DEECA1002C /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		BE48E4C71A8D463466C56BC4 /* gre.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gre.txt; sourceTree = SOURCE_ROOT; };
 		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E5426FA50E7B12BA3C9F /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
@@ -137,6 +144,7 @@
 		BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FindFirstResponder.m"; sourceTree = "<group>"; };
 		BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPhoneViewController.m; sourceTree = "<group>"; };
 		BE48ECD8C3AC4174F3920BB8 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = SOURCE_ROOT; };
+		BE48EDB7DD8664B38CDFDDC7 /* SevenTimesIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SevenTimesIAPHelper.h; sourceTree = "<group>"; };
 		BE48EE296B7C5DECC279AD67 /* GoogleNewsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleNewsSource.m; sourceTree = "<group>"; };
 		BE48EE43F2591308B9B53D2A /* Word+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Word+Util.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */,
 				9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */,
 				9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */,
 				9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */,
@@ -204,6 +213,7 @@
 		9C1C9C0417DF081900BCC341 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CF0CA1D181116FB00658EBA /* StoreKit.framework */,
 				9C74866E1807DC27000C0E42 /* CoreData.framework */,
 				9C74866C18053A3D000C0E42 /* AdSupport.framework */,
 				9C74866A18053A2E000C0E42 /* Security.framework */,
@@ -255,6 +265,10 @@
 				BE48E8201149365399524F87 /* WordList.h */,
 				BE48E555847B0457DC217B20 /* WordListManager.m */,
 				BE48E5426FA50E7B12BA3C9F /* WordListManager.h */,
+				BE48E496618D97DEECA1002C /* IAPHelper.m */,
+				BE48E1FEFA03D077EA4C5B45 /* IAPHelper.h */,
+				BE48E036A8ED107FD1996A9A /* SevenTimesIAPHelper.m */,
+				BE48EDB7DD8664B38CDFDDC7 /* SevenTimesIAPHelper.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -505,6 +519,8 @@
 				BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */,
 				BE48E1977E655489A78ED8EA /* WordList.m in Sources */,
 				BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */,
+				BE48EAA2680114DDD9AC7EAD /* IAPHelper.m in Sources */,
+				BE48E80458BFB00F9527A19B /* SevenTimesIAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,7 +649,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
+				PROVISIONING_PROFILE = "B9BF7F96-6DCD-4B67-B348-FE4223C45281";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
@@ -653,7 +669,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F5D9D7ED-53C7-4472-BEA0-C6A7EB6F40AF";
+				PROVISIONING_PROFILE = "B9BF7F96-6DCD-4B67-B348-FE4223C45281";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;

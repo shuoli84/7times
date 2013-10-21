@@ -11,6 +11,6 @@
 
 @interface WordListManager : NSObject
 
-@property (nonatomic, strong) NSArray* allWordLists;
+@property (nonatomic, strong) NSDictionary* allWordLists;
 
 @end
