@@ -4,12 +4,8 @@
 //
 
 
-#import
- <StoreKit/StoreKit.h>
-#import
- "IAPHelper.h"
-#import
- "StoreKit/StoreKit.h"
+#import <StoreKit/StoreKit.h>
+#import "IAPHelper.h"
 
 // Add to top of file
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
@@ -62,8 +58,7 @@ _productsRequest.delegate = self;
 
 }
 
-#pragma
- mark - SKProductsRequestDelegate
+#pragma mark - SKProductsRequestDelegate
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
 

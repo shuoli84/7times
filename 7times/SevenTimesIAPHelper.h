@@ -4,10 +4,8 @@
 //
 
 
-#import
- <Foundation/Foundation.h>
-#import
- "IAPHelper.h"
+#import <Foundation/Foundation.h>
+#import "IAPHelper.h"
 
 
 @interface SevenTimesIAPHelper : IAPHelper

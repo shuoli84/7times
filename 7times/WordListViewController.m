@@ -14,13 +14,10 @@
 #import "WordList.h"
 #import "NSObject+AssociatedObjects.h"
 #import "Word.h"
-#import "MagicalRecordShorthand.h"
 #import "SVProgressHUD.h"
 #import "Flurry.h"
-#import
- "StoreKit/StoreKit.h"
-#import
- "SevenTimesIAPHelper.h"
+#import "StoreKit/StoreKit.h"
+#import "SevenTimesIAPHelper.h"
 
 @interface WordListViewController()
 @property (nonatomic, strong) FVDeclaration *viewDeclare;

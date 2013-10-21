@@ -7,11 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "SLSharedConfig.h"
 #import "Flurry.h"
 #import "iRate.h"
-#import
- "SeventimesIAPHelper.h"
+#import "SevenTimesIAPHelper.h"
 
 @implementation AppDelegate
 
