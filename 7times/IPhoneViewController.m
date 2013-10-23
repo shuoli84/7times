@@ -422,9 +422,7 @@
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
 
-    [self.postManager startWithShouldBeginBlock:^BOOL {
-        return YES;
-    }];
+    [self.postManager start];
 
     [self.postDownloader startWithShouldBeginBlock:^{
         return weakSelf.postManager.needNewPost;
@@ -442,6 +440,11 @@
     [self.declaration resetLayout];
     self.declaration.unExpandedFrame = self.view.bounds;
     [self.declaration updateViewFrame];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.postManager loadPost];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -494,20 +497,31 @@
     [self addWord:highlightedText];
 }
 
+#pragma mark NSFetchedResultsControllerDelegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.wordListTableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.wordListTableView endUpdates];
+}
+
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     if([controller isEqual:self.wordFetchedResultsController]){
+        UITableView *tableView = self.wordListTableView;
         switch (type){
             case NSFetchedResultsChangeInsert:
-                [self.wordListTableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
             case NSFetchedResultsChangeUpdate:
-                [self.wordListTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 break;
             case NSFetchedResultsChangeMove:
-                [self.wordListTableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+                [tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
                 break;
             case NSFetchedResultsChangeDelete:
-                [self.wordListTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
         }
     }

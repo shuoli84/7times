@@ -19,12 +19,13 @@
 NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
 NSArray *wordlistArray = @[
-@[@"com.menic.7times.cet4", @"cet4"],
-@[@"com.menic.7times.cet6", @"cet6"],
-@[@"com.menic.7times.tofle", @"tofle"],
-@[@"com.menic.7times.sat", @"sat"],
-@[@"com.menic.7times.gmat", @"gmat"],
-@[@"com.menic.7times.gre", @"gre"],
+    @[@"com.menic.7times.cet4", @"cet4"],
+    @[@"com.menic.7times.cet6", @"cet6"],
+    @[@"com.menic.7times.tofle", @"tofle"],
+    @[@"com.menic.7times.sat", @"sat"],
+    @[@"com.menic.7times.gmat", @"gmat"],
+    @[@"com.menic.7times.gre", @"gre"],
+    @[@"com.menic.7times.ielts1200", @"ielts1200"]
 ];
 
         for(NSArray *l in wordlistArray){

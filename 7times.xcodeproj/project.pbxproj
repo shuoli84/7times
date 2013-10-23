@@ -54,6 +54,7 @@
 		BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* PostManager.m */; };
 		BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E29FC619F4D67CAD7289 /* WordListViewController.m */; };
 		BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E8A2AC414440211607D4 /* PostDownloader.m */; };
+		BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EAA18C9FF9818A7215AB /* ielts1200.txt */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
 		BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E2F53444BB8067BED03C /* gmat.txt */; };
@@ -138,6 +139,7 @@
 		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
 		BE48EA746404EF689745BBCD /* cet6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet6.txt; sourceTree = SOURCE_ROOT; };
+		BE48EAA18C9FF9818A7215AB /* ielts1200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ielts1200.txt; sourceTree = SOURCE_ROOT; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
 		BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryString.m"; sourceTree = "<group>"; };
 		BE48EBCDEC1039A77311A1BD /* tofle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tofle.txt; sourceTree = SOURCE_ROOT; };
@@ -289,6 +291,7 @@
 				BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */,
 				BE48EA746404EF689745BBCD /* cet6.txt */,
 				BE48E4C71A8D463466C56BC4 /* gre.txt */,
+				BE48EAA18C9FF9818A7215AB /* ielts1200.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */,
 				BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */,
 				BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */,
+				BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

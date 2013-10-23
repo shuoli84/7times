@@ -22,6 +22,7 @@
             @"com.menic.7times.sat",
             @"com.menic.7times.gmat",
             @"com.menic.7times.gre",
+            @"com.menic.7times.ielts1200",
             nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

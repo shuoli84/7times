@@ -39,14 +39,10 @@
     return self;
 }
 
-- (void)startWithShouldBeginBlock:(BOOL (^)())shouldBeginBlock {
+- (void)start {
     typeof(self) __weak weakSelf = self;
     _timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
-        if (shouldBeginBlock != nil) {
-            if (shouldBeginBlock()) {
-                [weakSelf loadPost];
-            }
-        }
+        [weakSelf loadPost];
     } repeats:YES];
     [_timer fire];
 

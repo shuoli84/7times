@@ -17,7 +17,7 @@
 
 @property (nonatomic, copy) void (^postChangeBlock)(PostManager *postManager, Post* post, int index, int newIndex);
 
-- (void)startWithShouldBeginBlock:(BOOL (^)())shouldBeginBlock;
+- (void)start;
 
 -(void)end;
 
