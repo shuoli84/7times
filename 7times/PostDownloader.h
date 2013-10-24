@@ -15,13 +15,13 @@
 
 - (void)startWithShouldBeginBlock:(BOOL(^)())shouldBeginBlock oneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion;
 
--(void)end;
--(void)fire;
+- (void)end;
 
--(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion;
--(void)downloadForWord:(NSString*)word completion:(void(^)())completion;
+- (void)fire;
 
--(NSArray*)wordListNeedPosts;
+- (void)downloadWithOneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion;
 
-+ (NSFetchRequest *)fetchRequest;
+- (void)downloadForWord:(NSString *)word completion:(void (^)())completion;
+
+- (NSArray *)wordListNeedPosts;
 @end

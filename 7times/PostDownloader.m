@@ -28,7 +28,8 @@
         self.googleNewsSource = [[GoogleNewsSource alloc] init];
         _downloadQueue = dispatch_queue_create(NULL, NULL);
 
-        self.wordsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[[self class] fetchRequest] managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:nil cacheName:@"wordsCacheInPostDownloader"];
+        self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"checkNumber < 7 AND postNumber == 0"] sortedBy:@"added" ascending:YES];
+        self.wordsFetchedResultsController.fetchRequest.fetchLimit = 10;
     }
 
     return self;
@@ -62,18 +63,6 @@
 
 -(BOOL)readyForLoad{
     return YES;
-}
-
-+ (NSFetchRequest *)fetchRequest {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Word"];
-    fetchRequest.fetchLimit = 5;
-    NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:
-        @"checkNumber < 7 AND postNumber == 0"];
-    fetchRequest.predicate = fetchPredicate;
-
-    NSSortDescriptor *addTimeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"added" ascending:YES];
-    [fetchRequest setSortDescriptors:@[addTimeSortDescriptor]];
-    return fetchRequest;
 }
 
 -(NSArray*)wordListNeedPosts {

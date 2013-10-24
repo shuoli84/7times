@@ -13,13 +13,14 @@
 #import "Word.h"
 #import "Post.h"
 #import "Word+Util.h"
+#import "Check.h"
+#import "Flurry.h"
 
 @interface PostManager ()
 @property (nonatomic, strong) NSMutableArray *posts;
 @property (nonatomic, strong) NSMutableArray *freshPosts;
 @property (nonatomic, strong) NSMutableSet *showedPostIds;
 @property (nonatomic, strong) NSMutableDictionary *wordShowedPostsNumber;
-@property (nonatomic, strong) NSFetchedResultsController *wordsFetchedResultsController;
 @end
 
 @implementation PostManager {
@@ -34,7 +35,6 @@
         self.freshPosts = [NSMutableArray array];
         self.showedPostIds = [NSMutableSet set];
         self.wordShowedPostsNumber = [NSMutableDictionary dictionary];
-        self.wordsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:[PostManager fetchRequest] managedObjectContext:[NSManagedObjectContext MR_defaultContext] sectionNameKeyPath:nil cacheName:@"wordsCacheInPostManager"];
     }
     return self;
 }
@@ -57,26 +57,12 @@
     [_timer invalidate];
 }
 
-+(NSFetchRequest *)fetchRequest {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Word"];
-    fetchRequest.fetchLimit = 50;
-    NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:
-        @"checkNumber < 7 AND nextCheckTime <= %@ && postNumber > 0", [NSDate date]];
-    fetchRequest.predicate = fetchPredicate;
-
-    NSSortDescriptor *checkNumberSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"checkNumber" ascending:NO];
-    NSSortDescriptor *addTimeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"added" ascending:YES];
-    [fetchRequest setSortDescriptors:@[checkNumberSortDescriptor, addTimeSortDescriptor]];
-    return fetchRequest;
-}
-
 -(BOOL)needNewPost{
     return self.freshPosts.count < 50;
 }
 
 -(void)loadPost{
-    [self.wordsFetchedResultsController performFetch:nil];
-    for(Word *word in self.wordsFetchedResultsController.fetchedObjects){
+    for (Word *word in self.wordListNeedToProcess) {
         if(word.lastCheckExpired){
             [self loadPostForWord:word];
         }
@@ -134,11 +120,65 @@
 }
 
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath{
+    Post *post = [self postForIndexPath:indexPath];
+    [self dismissPost:post];
     if(self.posts.count > indexPath.row){
         [self.posts removeObjectAtIndex:(uint)indexPath.row];
     }
     else{
         [self.freshPosts removeObjectAtIndex:(uint)indexPath.row - self.posts.count];
     }
+}
+
+- (void)dismissPost:(Post *)post {
+    Word *word = post.word;
+    [self.showedPostIds removeObject:post.objectID];
+    int wordShowedPostNumber = [self.wordShowedPostsNumber[word.word] integerValue];
+    self.wordShowedPostsNumber[word.word] = @(wordShowedPostNumber - 1);
+}
+
+- (NSArray *)allPosts {
+    NSMutableArray *resultArray = [NSMutableArray arrayWithArray:self.posts];
+    [resultArray addObjectsFromArray:self.freshPosts];
+    return resultArray;
+}
+
+- (void)markPostAsRead:(NSIndexPath *)indexPath {
+    Post *p = [self postForIndexPath:indexPath];
+    Check *check = [Check MR_createEntity];
+    check.date = [NSDate date];
+    [p setCheck:check];
+
+    p.checked = [NSNumber numberWithBool:YES];
+
+    Word *w = p.word;
+    if ([w lastCheckExpired]) {
+        [w addCheckHelper:check];
+    }
+    else {
+        NSLog(@"Not ready for a new check, ignore");
+    }
+
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+
+    [self removePostAtIndexPath:indexPath];
+    if (self.postChangeBlock) {
+        self.postChangeBlock(self, p, indexPath.row, -1);
+    }
+
+    [Flurry logEvent:@"Post_dismiss" withParameters:@{
+        @"word" : [p.word word],
+        @"post" : p.title ? p.title : @"",
+        @"post_url" : p.url ? p.url : @"",
+    }];
+}
+
+- (NSArray *)wordListNeedToProcess {
+    NSFetchedResultsController *fetchController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"checkNumber < 7 AND nextCheckTime <= %@ && postNumber > 0" argumentArray:@[NSDate.date]] sortedBy:@"checkNumber" ascending:NO];
+    fetchController.fetchRequest.fetchLimit = 50;
+    if ([fetchController performFetch:nil]) {
+        return fetchController.fetchedObjects;
+    }
+    return nil;
 }
 @end

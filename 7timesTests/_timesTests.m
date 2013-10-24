@@ -40,8 +40,6 @@ SPEC_BEGIN(WordSpec)
             check.post = post;
             check.word = word;
 
-            [[NSManagedObjectContext MR_defaultContext] save:nil];
-
             [[word.lastCheck should] equal:check];
 
             Check *check2 = [Check MR_createEntity];
@@ -50,7 +48,6 @@ SPEC_BEGIN(WordSpec)
             check2.word = word;
             check2.post = post;
 
-            [[NSManagedObjectContext MR_defaultContext] save:nil];
             [[word.lastCheck should] equal:check2];
         });
 
@@ -60,13 +57,9 @@ SPEC_BEGIN(WordSpec)
 
             Post *post = [Post MR_createEntity];
             Check *check = [Check MR_createEntity];
-
             check.date = [NSDate date];
             check.post = post;
             [word addCheckHelper:check];
-            word.lastCheckTime = check.date;
-
-            [[NSManagedObjectContext MR_defaultContext] save:nil];
             [[theValue(word.lastCheckExpired) should] beNo];
         });
 
@@ -101,11 +94,10 @@ SPEC_BEGIN(WordSpec)
             word3.checkNumber = @(7);
             word3.postNumber = @(14);
 
-            [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+            PostManager *postManager = [[PostManager alloc] init];
 
-            NSFetchRequest *fetchRequest = [PostManager fetchRequest];
-            NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
-            [[theValue(array.count) should] equal:theValue(1)];
+            [postManager loadPost];
+            [[theValue(postManager.wordListNeedToProcess.count) should] equal:theValue(1)];
         });
 
 
@@ -128,24 +120,19 @@ SPEC_BEGIN(WordSpec)
             word3.checkNumber = @(7);
             word3.postNumber = @(0);
 
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
-
-            NSFetchRequest *fetchRequest = [PostDownloader fetchRequest];
-            NSArray *array = [Word MR_executeFetchRequest:fetchRequest];
+            PostDownloader *postDownloader = [[PostDownloader alloc] init];
+            NSArray *array = [postDownloader wordListNeedPosts];
             [[theValue(array.count) should] equal:theValue(1)];
         });
 
         it(@"should able to detect whether last check expired", ^{
             Word *word = [Word MR_createEntity];
-            word.checkNumber = @(0);
             [[theValue(word.lastCheckExpired) should] beYes];
 
-            word.checkNumber = @(1);
-            word.lastCheckTime = [NSDate date];
+            word.nextCheckTime = [NSDate dateWithTimeIntervalSinceNow:5];
             [[theValue(word.lastCheckExpired) should] beNo];
 
-            word.checkNumber = @(1);
-            word.lastCheckTime = [[NSDate date] dateByAddingTimeInterval:-12 * 60 * 60 - 1];
+            word.nextCheckTime = [[NSDate date] dateByAddingTimeInterval:-1];
             [[theValue(word.lastCheckExpired) should] beYes];
         });
     });
@@ -190,11 +177,10 @@ SPEC_BEGIN(DownloadPostSpec)
 
             Post *post1 = [Post MR_createEntity];
             post1.word = word2;
+            word2.postNumber = @(1);
 
             Check *check = [Check MR_createEntity];
-            check.word = word3;
-
-            [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+            [word3 addCheckHelper:check];
 
             PostDownloader* downLoader = [[PostDownloader alloc] init];
             NSArray *list = downLoader.wordListNeedPosts;
@@ -207,8 +193,20 @@ SPEC_END
 
 SPEC_BEGIN(PostManagerSpec)
     describe(@"basic operations", ^{
+        Word *__block word;
         beforeEach(^{
             [MagicalRecord setupCoreDataStackWithInMemoryStore];
+            word = [Word MR_createEntity];
+            word.word = @"word1";
+
+            NSArray *posts = @[@"POST1", @"POST2", @"POST3", @"POST4"];
+            for (NSString *id in posts) {
+                Post *post = [Post MR_createEntity];
+                post.id = id;
+                post.word = word;
+            }
+
+            word.postNumber = @(posts.count);
         });
 
         afterEach(^{
@@ -218,12 +216,30 @@ SPEC_BEGIN(PostManagerSpec)
         it(@"able to load posts", ^{
             PostManager* postManager = [[PostManager alloc]init];
             [[theValue(postManager.postCount) should] equal:theValue(0)];
+
             [postManager loadPost];
+            NSArray *a = [postManager.allPosts filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(Post *evaluatedObject, NSDictionary *bindings) {
+                return [evaluatedObject.id isEqualToString:@"POST1"];
+            }]];
 
-            NSLog(@"%d posts loaded", postManager.postCount);
-            [[theValue(postManager.postCount) shouldNot] equal:theValue(0)];
+            [[theValue(a.count) should] equal:@(1)];
+
+            [postManager markPostAsRead:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [[theValue(postManager.allPosts.count) should] equal:@(1)];
+
+            [postManager markPostAsRead:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [[theValue(postManager.allPosts.count) should] equal:@(0)];
+
+            //Right after the post read, reload posts will not load the posts again
+            [postManager loadPost];
+            [[theValue(postManager.allPosts.count) should] equal:@(0)];
+
+            word.nextCheckTime = [NSDate dateWithTimeIntervalSince1970:0];
+
+            [postManager loadPost];
+            [[theValue(postManager.allPosts.count) should] equal:@(2)];
+
         });
-
     });
 SPEC_END
 

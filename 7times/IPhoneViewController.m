@@ -18,7 +18,6 @@
 #import "PostManager.h"
 #import "Post.h"
 #import "SLSharedConfig.h"
-#import "Check.h"
 #import "UIView+FindFirstResponder.h"
 #import "Word+Util.h"
 #import "Flurry.h"
@@ -52,7 +51,11 @@
 
     typeof(self) __weak weakSelf = self;
 
-    self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"added" ascending:YES withPredicate:nil groupBy:nil delegate:self];
+    self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"lastCheckTime" ascending:NO withPredicate:nil groupBy:nil delegate:self];
+    [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
+        self.wordFetchedResultsController.fetchRequest.sortDescriptors[0],
+        [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
+    ]];
 
     [SLSharedConfig sharedInstance].coreDataReady = ^{
         [weakSelf.wordFetchedResultsController performFetch:nil];
@@ -270,33 +273,7 @@
                             [button addEventHandler:^(id sender) {
                                 NSIndexPath*idx = [weakTableView indexPathForCell:weakCell];
                                 if(idx != nil){
-                                    Post *pTmp = (Post *) [weakCell associatedValueForKey:&postKey];
-                                    Post *p = (Post *) [[NSManagedObjectContext MR_contextForCurrentThread] existingObjectWithID:pTmp.objectID error:nil];
-
-                                    Check *check = [Check MR_createEntity];
-                                    check.date = [NSDate date];
-                                    [p setCheck:check];
-
-                                    p.checked = [NSNumber numberWithBool:YES];
-
-                                    Word *w = p.word;
-                                    if([w lastCheckExpired]){
-                                        [w addCheckHelper:check];
-                                    }
-                                    else{
-                                        NSLog(@"Not ready for a new check, ignore");
-                                    }
-
-                                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
-
-                                    [weakSelf.postManager removePostAtIndexPath:idx];
-                                    [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[idx] withRowAnimation:UITableViewRowAnimationFade];
-
-                                    [Flurry logEvent:@"Post_dismiss" withParameters:@{
-                                        @"word": [p.word word],
-                                        @"post": p.title,
-                                        @"post_url" : p.url,
-                                    }];
+                                    [weakSelf.postManager markPostAsRead:idx];
                                 }
                             } forControlEvents:UIControlEventTouchUpInside];
 
@@ -415,7 +392,12 @@
     [self.declaration setupViewTreeInto:self.view];
 
     [self.postManager setPostChangeBlock:^(PostManager *postManager, Post *post, int index, int newIndex) {
-        [weakSelf.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if (newIndex < 0) {
+            [weakSelf.itemListTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        else {
+            [weakSelf.itemListTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndex inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
     }];
 
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
@@ -518,7 +500,8 @@
                 [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 break;
             case NSFetchedResultsChangeMove:
-                [tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
                 break;
             case NSFetchedResultsChangeDelete:
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

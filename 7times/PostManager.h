@@ -17,6 +17,8 @@
 
 @property (nonatomic, copy) void (^postChangeBlock)(PostManager *postManager, Post* post, int index, int newIndex);
 
+- (NSArray *)allPosts;
+
 - (void)start;
 
 -(void)end;
@@ -28,8 +30,9 @@
 -(Post*)postForIndexPath:(NSIndexPath *)indexPath;
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)markPostAsRead:(NSIndexPath *)indexPath;
+
 - (BOOL)needNewPost;
 
-+(NSFetchRequest *)fetchRequest;
-
+- (NSArray *)wordListNeedToProcess;
 @end
