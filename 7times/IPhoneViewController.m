@@ -74,7 +74,7 @@
         return scrollView;
     }()) $:@[
         [dec(@"wordView", CGRectMake(0, 0, FVP(1), FVP(1))) $:@[
-            dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
+            [dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
                 UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
                 self.wordListTableView = tableView;
 
@@ -82,6 +82,7 @@
                 tableView.rowHeight = 48;
                 tableView.allowsSelection = NO;
                 tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 
                 A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
 
@@ -153,7 +154,10 @@
 
                 tableView.dataSource = (id)dataSource;
                 return tableView;
-            }()),
+            }()) postProcess:^(FVDeclaration *declaration) {
+                UITableView *tableView = (UITableView *) declaration.object;
+                tableView.backgroundView = [weakSelf wordlistTutorial:declaration.expandedFrame];
+            }],
             [dec(@"addButton", CGRectMake(0, FVT(50), FVP(.5), 50)) $:@[
                 dec(@"button", CGRectMake(0, 0, FVT(1), FVP(1)), ^{
                     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -175,8 +179,8 @@
             [dec(@"loadButton", CGRectMake(FVA(0), FVT(50), FVP(.5), 50)) $:@[
                 dec(@"button", CGRectMake(1, FVT(50), FVT(1), 50), ^{
                      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                     [button setTitle:@"load" forState:UIControlStateNormal];
-                     button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
+                    [button setTitle:@"list" forState:UIControlStateNormal];
+                    button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
                      button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
 
                     [button addEventHandler:^(id sender) {
@@ -192,7 +196,7 @@
             ]],
 
         ]],
-        dec(@"itemView", CGRectMake(FVA(0), 0, FVP(1), FVT(0)), ^{
+        [dec(@"itemView", CGRectMake(FVA(0), 0, FVP(1), FVT(0)), ^{
             UITableView *tableView = [[UITableView alloc] init];
             A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
             [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView *tv, NSInteger section){
@@ -386,7 +390,10 @@
 
             weakSelf.itemListTableView = tableView;
             return tableView;
-        }()),
+        }()) postProcess:^(FVDeclaration *declaration) {
+            UITableView *tableView = (UITableView *) declaration.object;
+            tableView.backgroundView = [weakSelf postlistTutorial:declaration.expandedFrame];
+        }],
     ]];
 
     [self.declaration setupViewTreeInto:self.view];
@@ -508,5 +515,75 @@
                 break;
         }
     }
+}
+
+- (UIView *)wordlistTutorial:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+
+    FVDeclaration *declaration = [dec(@"root", CGRectMake(0, 0, frame.size.width, frame.size.height)) $:@[
+        [dec(@"labelContainer", CGRectMake(FVCenter, FVCenter, FVP(1.f), 150.f)) $:@[
+            dec(@"label1", CGRectMake(0, 0, FVP(1.f), 20), ^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"Click '+' to add word";
+                label.font = [UIFont boldSystemFontOfSize:20];
+                label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
+                label.textAlignment = NSTextAlignmentCenter;
+                return label;
+            }()),
+            dec(@"label2", CGRectMake(0, FVA(10), FVP(1.f), 20), ^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"'list' to load list";
+                label.font = [UIFont boldSystemFontOfSize:20];
+                label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
+                label.textAlignment = NSTextAlignmentCenter;
+                return label;
+            }()),
+            dec(@"label3", CGRectMake(0, FVA(30), FVP(1.f), 25), ^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"then swipe to right";
+                label.font = [UIFont boldSystemFontOfSize:20];
+                label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
+                label.textAlignment = NSTextAlignmentCenter;
+                return label;
+            }()),
+
+        ]]
+    ]];
+
+    [declaration setupViewTreeInto:view];
+    [declaration updateViewFrame];
+
+    return view;
+}
+
+
+- (UIView *)postlistTutorial:(CGRect)frame {
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+
+    FVDeclaration *declaration = [dec(@"root", CGRectMake(0, 0, frame.size.width, frame.size.height)) $:@[
+        [dec(@"labelContainer", CGRectMake(FVCenter, FVCenter, FVP(1.f), 120.f)) $:@[
+            dec(@"label1", CGRectMake(0, 0, FVP(1.f), 20), ^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"add a new word";
+                label.font = [UIFont boldSystemFontOfSize:20];
+                label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
+                label.textAlignment = NSTextAlignmentCenter;
+                return label;
+            }()),
+            dec(@"label2", CGRectMake(0, FVA(10), FVP(1.f), 20), ^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"7times will loads posts for you";
+                label.font = [UIFont boldSystemFontOfSize:20];
+                label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
+                label.textAlignment = NSTextAlignmentCenter;
+                return label;
+            }())
+        ]]
+    ]];
+
+    [declaration setupViewTreeInto:view];
+    [declaration updateViewFrame];
+
+    return view;
 }
 @end

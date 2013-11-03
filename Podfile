@@ -10,7 +10,8 @@ pod 'UbiquityStoreManager'
 pod 'TSMiniWebBrowser'
 pod 'SVProgressHUD'
 pod 'iRate'
+pod 'UITableView-NXEmptyView'
 
 target :'7timesTests', :exclusive => true do
-    pod 'Kiwi'
+  pod 'Kiwi'
 end
