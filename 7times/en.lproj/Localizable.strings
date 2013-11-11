@@ -1,0 +1,22 @@
+/****************************************************************************/
+/* Localization file */
+
+
+"recover" = "recover";
+"ListTitle" = "list";
+"RECOVER_MESSAGE" = "Recovering from previous purchases";
+"BackButton" = "back";
+"LoadingMessage" = "loading";
+"LoadButton" = "load";
+"PurchaseMessage" = "Connecting App Store";
+"Addword_Tutorial_Message" = "Click '+' to add word";
+"LoadList_Totorial_Message" = "'list' to load list";
+"SwipeToPosts_Tutorial_Message" = "then swipe left";
+"NewWord_Title" = "New Word";
+"Cancel" = "Cancel";
+"Add" = "Add";
+"Add_Word_Tutorial_Message" = "add a new word";
+"LoadPosts_Tutorial_Message" = "7times will loads posts for you";
+"Failed" = "Failed";
+"FailedLoadProducts_Message" = "Failed to load list of products, please try again later";
+"Ok" = "Ok";

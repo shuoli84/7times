@@ -59,7 +59,7 @@
             dec(@"backButton", CGRectMake(0, 0, FVT(1), FVP(1.f)), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.backgroundColor = [UIColor colorWithRed:52 / 255.f green:152 / 255.f blue:219 / 255.f alpha:1.f];
-                [button setTitle:@"back" forState:UIControlStateNormal];
+                [button setTitle:NSLocalizedString(@"BackButton", @"back") forState:UIControlStateNormal];
 
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -74,14 +74,14 @@
             dec(@"recoverButton", CGRectMake(1, FVT(50), FVTillEnd, 50), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.backgroundColor = [UIColor colorWithRed:52 / 255.f green:152 / 255.f blue:219 / 255.f alpha:1.f];
-                [button setTitle:@"recover" forState:UIControlStateNormal];
+                [button setTitle:NSLocalizedString(@"recover", @"recover title") forState:UIControlStateNormal];
 
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 
                 [button addEventHandler:^(id sender) {
-                    [SVProgressHUD showWithStatus:@"Recovering from previous purchases" maskType:SVProgressHUDMaskTypeGradient];
+                    [SVProgressHUD showWithStatus:NSLocalizedString(@"RECOVER_MESSAGE", @"Recovering from previous purchases") maskType:SVProgressHUDMaskTypeGradient];
                     [[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
                 } forControlEvents:UIControlEventTouchUpInside];
                 return button;
@@ -165,7 +165,7 @@
 
                         [[SevenTimesIAPHelper sharedInstance] buyProduct:product];
 
-                        [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Purchasing %@", product.localizedTitle] maskType:SVProgressHUDMaskTypeGradient];
+                        [SVProgressHUD showWithStatus:[NSString stringWithFormat:NSLocalizedString(@"PurchaseMessage", @"Purchasing %@"), product.localizedTitle] maskType:SVProgressHUDMaskTypeGradient];
                         return;
                     }
 
@@ -200,7 +200,7 @@
 
                             if (i % 30 == 0) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    [SVProgressHUD showProgress:(float) i / (float) count status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
+                                    [SVProgressHUD showProgress:(float) i / (float) count status:NSLocalizedString(@"LoadingMessage", @"loading") maskType:SVProgressHUDMaskTypeGradient];
                                 });
                             }
 
@@ -236,7 +236,7 @@
 
     UIButton *button = (UIButton *) [cell viewWithTag:102];
     if ([[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-        [button setTitle:@"load" forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"LoadButton", @"load") forState:UIControlStateNormal];
     } else {
         [button setTitle:priceTag forState:UIControlStateNormal];
     }

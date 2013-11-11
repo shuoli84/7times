@@ -84,7 +84,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _completionHandler(NO, nil);
     _completionHandler = nil;
 
-    [UIAlertView showAlertViewWithTitle:@"Failed" message:@"Failed to load list of products, please try again later" cancelButtonTitle:@"Ok" otherButtonTitles:nil handler:nil];
+    [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Failed", @"Failed") message:NSLocalizedString(@"FailedLoadProducts_Message", @"Failed to load list of products, please try again later") cancelButtonTitle:NSLocalizedString(@"Ok", @"Ok") otherButtonTitles:nil handler:nil];
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {

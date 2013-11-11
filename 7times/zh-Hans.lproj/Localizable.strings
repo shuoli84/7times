@@ -1,0 +1,22 @@
+/****************************************************************************/
+/* Localization file */
+
+
+"recover" = "恢复";
+"ListTitle" = "单词表";
+"RECOVER_MESSAGE" = "正在恢复曾经购买过的内容";
+"BackButton" = "返回";
+"LoadingMessage" = "导入中";
+"LoadButton" = "导入";
+"PurchaseMessage" = "正在连接App Store";
+"Addword_Tutorial_Message" = "点击'+'号添加一个单词";
+"LoadList_Totorial_Message" = "点击'单词表'导入";
+"SwipeToPosts_Tutorial_Message" = "然后左划 开始!";
+"NewWord_Title" = "添加单词";
+"Cancel" = "取消";
+"Add" = "添加";
+"Add_Word_Tutorial_Message" = "添加单词";
+"LoadPosts_Tutorial_Message" = "让 小七 帮你选择找文章";
+"Failed" = "失败";
+"FailedLoadProducts_Message" = "未能加载产品列表，请稍后再试";
+"Ok" = "知道了";

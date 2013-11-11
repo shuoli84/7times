@@ -26,6 +26,7 @@
 		9C1C9C3717DF081900BCC341 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3517DF081900BCC341 /* InfoPlist.strings */; };
 		9C1C9C3A17DF081900BCC341 /* _timesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3917DF081900BCC341 /* _timesTests.m */; };
 		9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */; };
+		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
@@ -104,6 +105,10 @@
 		9C1C9C3617DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9C1C9C3917DF081900BCC341 /* _timesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _timesTests.m; sourceTree = "<group>"; };
 		9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9C56C1651830B0DF00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9C74866A18053A2E000C0E42 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -289,6 +294,7 @@
 				BE48E555847B0457DC217B20 /* WordListManager.m */,
 				BE48E5426FA50E7B12BA3C9F /* WordListManager.h */,
 				BE48ECF04E81B8EE57B43120 /* IAP */,
+				9C56C1641830B0DA00A8CD95 /* Localizable.strings */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -399,7 +405,7 @@
 						DevelopmentTeam = Q658KUUNJA;
 						SystemCapabilities = {
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -411,6 +417,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 9C1C9BF917DF081800BCC341;
 			productRefGroup = 9C1C9C0317DF081900BCC341 /* Products */;
@@ -449,6 +456,7 @@
 				BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */,
 				BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */,
 				BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */,
+				9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +595,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				9C1C9C0F17DF081900BCC341 /* en */,
+				9C56C1601830B03F00A8CD95 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -611,8 +620,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				9C1C9C3617DF081900BCC341 /* en */,
+				9C56C1611830B03F00A8CD95 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		9C56C1641830B0DA00A8CD95 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C56C1631830B0DA00A8CD95 /* en */,
+				9C56C1651830B0DF00A8CD95 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -689,7 +708,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A5729F0A-BDEC-4E81-A306-001E0394CCD4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
@@ -701,14 +720,14 @@
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shuo Li";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22FB5705-3AF0-4A79-92BE-767448E17152";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;

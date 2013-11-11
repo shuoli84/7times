@@ -168,7 +168,7 @@
                     button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
 
                     [button addEventHandler:^(id sender) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Word" message:nil delegate:weakSelf cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NewWord_Title", @"New Word") message:nil delegate:weakSelf cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"Add", @"Add"), nil];
                         alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
                         [alertView show];
                     } forControlEvents:UIControlEventTouchUpInside];
@@ -179,7 +179,7 @@
             [dec(@"loadButton", CGRectMake(FVA(0), FVT(50), FVP(.5), 50)) $:@[
                 dec(@"button", CGRectMake(1, FVT(50), FVT(1), 50), ^{
                      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [button setTitle:@"list" forState:UIControlStateNormal];
+                    [button setTitle:NSLocalizedString(@"ListTitle", @"list") forState:UIControlStateNormal];
                     button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
                      button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
 
@@ -437,8 +437,8 @@
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    if([title isEqualToString:@"Add"]){
+    NSLog(@"The button index: %d", buttonIndex);
+    if(buttonIndex == 1){
         NSString* word = [alertView textFieldAtIndex:0].text;
         [self addWord:word];
 
@@ -524,7 +524,7 @@
         [dec(@"labelContainer", CGRectMake(FVCenter, FVCenter, FVP(1.f), 150.f)) $:@[
             dec(@"label1", CGRectMake(0, 0, FVP(1.f), 20), ^{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = @"Click '+' to add word";
+                label.text = NSLocalizedString(@"Addword_Tutorial_Message", @"Click '+' to add word");
                 label.font = [UIFont boldSystemFontOfSize:20];
                 label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
                 label.textAlignment = NSTextAlignmentCenter;
@@ -532,7 +532,7 @@
             }()),
             dec(@"label2", CGRectMake(0, FVA(10), FVP(1.f), 20), ^{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = @"'list' to load list";
+                label.text = NSLocalizedString(@"LoadList_Totorial_Message", @"'list' to load list");
                 label.font = [UIFont boldSystemFontOfSize:20];
                 label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
                 label.textAlignment = NSTextAlignmentCenter;
@@ -540,7 +540,7 @@
             }()),
             dec(@"label3", CGRectMake(0, FVA(30), FVP(1.f), 25), ^{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = @"then swipe to right";
+                label.text = NSLocalizedString(@"SwipeToPosts_Tutorial_Message", @"then swipe to right");
                 label.font = [UIFont boldSystemFontOfSize:20];
                 label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
                 label.textAlignment = NSTextAlignmentCenter;
@@ -564,7 +564,7 @@
         [dec(@"labelContainer", CGRectMake(FVCenter, FVCenter, FVP(1.f), 120.f)) $:@[
             dec(@"label1", CGRectMake(0, 0, FVP(1.f), 20), ^{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = @"add a new word";
+                label.text = NSLocalizedString(@"Add_Word_Tutorial_Message", @"add a new word");
                 label.font = [UIFont boldSystemFontOfSize:20];
                 label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
                 label.textAlignment = NSTextAlignmentCenter;
@@ -572,7 +572,7 @@
             }()),
             dec(@"label2", CGRectMake(0, FVA(10), FVP(1.f), 20), ^{
                 UILabel *label = [[UILabel alloc] init];
-                label.text = @"7times will loads posts for you";
+                label.text = NSLocalizedString(@"LoadPosts_Tutorial_Message", @"7times will loads posts for you");
                 label.font = [UIFont boldSystemFontOfSize:20];
                 label.textColor = [UIColor colorWithRed:149 / 255.f green:165 / 255.f blue:166 / 255.f alpha:1.f];
                 label.textAlignment = NSTextAlignmentCenter;
