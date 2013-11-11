@@ -32,6 +32,11 @@
 		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
 		9CBEC838181F84A7002FE3FB /* splash@1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC81C18178C5E002FE3FB /* splash@1136.png */; };
 		9CBEC839181F84A7002FE3FB /* splash@960.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC81B18178C51002FE3FB /* splash@960.PNG */; };
+		9CBEC8A21826A4DE002FE3FB /* 7times logo@58.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC81A18178200002FE3FB /* 7times logo@58.png */; };
+		9CBEC8A31826A4DE002FE3FB /* 7times logo@80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC8191817817A002FE3FB /* 7times logo@80.png */; };
+		9CD4471A1826A71F00EC1D04 /* 7times logo@29.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC8A61826A6BE002FE3FB /* 7times logo@29.png */; };
+		9CD4471B1826A71F00EC1D04 /* 7times logo@114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC8A51826A693002FE3FB /* 7times logo@114.png */; };
+		9CD4471C1826A71F00EC1D04 /* 7times logo@57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEC8A41826A680002FE3FB /* 7times logo@57.png */; };
 		9CF0CA13180FEFE800658EBA /* 7times logo@120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF0CA12180FEEB400658EBA /* 7times logo@120.png */; };
 		9CF0CA161810C61000658EBA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA151810C61000658EBA /* Word.m */; };
 		9CF0CA191810C61100658EBA /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CF0CA181810C61100658EBA /* Check.m */; };
@@ -107,6 +112,9 @@
 		9CBEC81A18178200002FE3FB /* 7times logo@58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@58.png"; sourceTree = "<group>"; };
 		9CBEC81B18178C51002FE3FB /* splash@960.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@960.PNG"; sourceTree = "<group>"; };
 		9CBEC81C18178C5E002FE3FB /* splash@1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@1136.png"; sourceTree = "<group>"; };
+		9CBEC8A41826A680002FE3FB /* 7times logo@57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@57.png"; sourceTree = "<group>"; };
+		9CBEC8A51826A693002FE3FB /* 7times logo@114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@114.png"; sourceTree = "<group>"; };
+		9CBEC8A61826A6BE002FE3FB /* 7times logo@29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@29.png"; sourceTree = "<group>"; };
 		9CF0C9DE180E9B0900658EBA /* Model.1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.1.1.xcdatamodel; sourceTree = "<group>"; };
 		9CF0CA12180FEEB400658EBA /* 7times logo@120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@120.png"; sourceTree = "<group>"; };
 		9CF0CA141810C61000658EBA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
@@ -192,6 +200,9 @@
 		9C1C9BF917DF081800BCC341 = {
 			isa = PBXGroup;
 			children = (
+				9CBEC8A61826A6BE002FE3FB /* 7times logo@29.png */,
+				9CBEC8A51826A693002FE3FB /* 7times logo@114.png */,
+				9CBEC8A41826A680002FE3FB /* 7times logo@57.png */,
 				9CBEC81C18178C5E002FE3FB /* splash@1136.png */,
 				9CBEC81B18178C51002FE3FB /* splash@960.PNG */,
 				9CBEC81A18178200002FE3FB /* 7times logo@58.png */,
@@ -417,6 +428,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CD4471A1826A71F00EC1D04 /* 7times logo@29.png in Resources */,
+				9CD4471B1826A71F00EC1D04 /* 7times logo@114.png in Resources */,
+				9CD4471C1826A71F00EC1D04 /* 7times logo@57.png in Resources */,
+				9CBEC8A21826A4DE002FE3FB /* 7times logo@58.png in Resources */,
+				9CBEC8A31826A4DE002FE3FB /* 7times logo@80.png in Resources */,
 				9CBEC838181F84A7002FE3FB /* splash@1136.png in Resources */,
 				9CBEC839181F84A7002FE3FB /* splash@960.PNG in Resources */,
 				9CF0CA13180FEFE800658EBA /* 7times logo@120.png in Resources */,

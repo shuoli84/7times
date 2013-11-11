@@ -17,6 +17,7 @@
 #import "SVProgressHUD.h"
 #import "Flurry.h"
 #import "StoreKit/StoreKit.h"
+#import "SevenTimesIAPHelper.h"
 
 @interface WordListViewController ()
 @property(nonatomic, strong) FVDeclaration *viewDeclare;

@@ -14,6 +14,9 @@
             <dict>
                 <key>CFBundleIconFiles</key>
                 <array>
+                    <string>7times logo@29</string>
+                    <string>7times logo@114</string>
+                    <string>7times logo@57</string>
                     <string>7times logo@58</string>
                     <string>7times logo@80</string>
                     <string>7times logo@120</string>
