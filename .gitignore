@@ -1,3 +1,5 @@
 Pods/*
 .idea/*
 *.lock
+*.xcworkspace
+*DS_Store

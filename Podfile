@@ -11,6 +11,7 @@ pod 'TSMiniWebBrowser'
 pod 'SVProgressHUD'
 pod 'iRate'
 pod 'UITableView-NXEmptyView'
+pod 'ODRefreshControl'
 
 target :'7timesTests', :exclusive => true do
   pod 'Kiwi'

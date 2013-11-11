@@ -18,12 +18,14 @@
 #import "Flurry.h"
 #import "StoreKit/StoreKit.h"
 #import "SevenTimesIAPHelper.h"
+#import "ODRefreshControl.h"
 
-@interface WordListViewController ()
+@interface WordListViewController () <UITableViewDataSource>
 @property(nonatomic, strong) FVDeclaration *viewDeclare;
 @property(nonatomic, strong) WordListManager *wordListManager;
 @property(nonatomic, strong) NSArray *products;
-
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) ODRefreshControl *refreshControl;
 @end
 
 @implementation WordListViewController {
@@ -33,17 +35,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [SevenTimesIAPHelper sharedInstance].transactionFinishBlock = ^(NSError *error){
+        NSLog(@"In transaction finish block: %@", error.localizedDescription);
+        [SVProgressHUD dismiss];
+    };
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+
     self.wordListManager = [[WordListManager alloc] init];
 
     self.view.backgroundColor = [UIColor whiteColor];
 
-    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl = [ODRefreshControl.alloc initInScrollView:self.tableView];
     [self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     typeof (self) __weak weakSelf = self;
     self.viewDeclare = [dec(@"root") $:@[
+        dec(@"tableView", CGRectMake(0, 0, FVP(1.f), FVT(50)), self.tableView),
         [dec(@"leftContainer", CGRectMake(0, FVT(50), FVP(0.5), 50)) $:@[
             dec(@"backButton", CGRectMake(0, 0, FVT(1), FVP(1.f)), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -67,8 +78,10 @@
 
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 
                 [button addEventHandler:^(id sender) {
+                    [SVProgressHUD showWithStatus:@"Recovering from previous purchases" maskType:SVProgressHUDMaskTypeGradient];
                     [[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
                 } forControlEvents:UIControlEventTouchUpInside];
                 return button;
@@ -94,9 +107,11 @@
 }
 
 - (void)reload {
+    NSLog(@"Reloading products");
     self.products = nil;
     [self.tableView reloadData];
     [[SevenTimesIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        NSLog(@"Request products completed");
         if (success) {
             self.products = products;
             [self.tableView reloadData];
@@ -134,11 +149,12 @@
 
                 button.titleLabel.font = [UIFont systemFontOfSize:15];
                 [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
                 button.backgroundColor = [UIColor colorWithRed:231.f / 255.f green:76 / 255.f blue:60 / 255.f alpha:1.f];
                 button.layer.cornerRadius = 5.f;
                 button.tag = 102;
 
-                [button addEventHandler:^(id sender) {
+                [button addEventHandler:^(UIButton *sender) {
                     NSIndexPath *idx = [weakTV indexPathForCell:weakCell];
                     SKProduct *product = weakSelf.products[(uint) idx.row];
                     if (![[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
@@ -146,7 +162,10 @@
                         [Flurry logEvent:@"start_buy" withParameters:@{
                             @"name" : product.localizedTitle
                         }];
+
                         [[SevenTimesIAPHelper sharedInstance] buyProduct:product];
+
+                        [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Purchasing %@", product.localizedTitle] maskType:SVProgressHUDMaskTypeGradient];
                         return;
                     }
 

@@ -22,4 +22,6 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray *products
 - (void)buyProduct:(SKProduct *)product;
 
 - (BOOL)productPurchased:(NSString *)productIdentifier;
+
+@property (nonatomic, copy) void (^transactionFinishBlock)(NSError* error);
 @end

@@ -5,6 +5,7 @@
 
 
 #import <StoreKit/StoreKit.h>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "IAPHelper.h"
 
 // Add to top of file
@@ -78,13 +79,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
-
     NSLog(@"Failed to load list of products.");
     _productsRequest = nil;
-
     _completionHandler(NO, nil);
     _completionHandler = nil;
 
+    [UIAlertView showAlertViewWithTitle:@"Failed" message:@"Failed to load list of products, please try again later" cancelButtonTitle:@"Ok" otherButtonTitles:nil handler:nil];
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier {
@@ -115,6 +115,34 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
                 break;
         }
     };
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions {
+    NSLog(@"removed transactions");
+    if(self.transactionFinishBlock){
+        self.transactionFinishBlock(nil);
+    }
+}
+
+-(void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
+    NSLog(@"restore completed transactions failed with error: %@", error.localizedDescription);
+    if(self.transactionFinishBlock){
+        self.transactionFinishBlock(error);
+    }
+}
+
+-(void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue {
+    NSLog(@"restore completed transactions finished: %@", queue);
+    if (self.transactionFinishBlock){
+        self.transactionFinishBlock(nil);
+    }
+}
+
+-(void)paymentQueue:(SKPaymentQueue *)queue updatedDownloads:(NSArray *)downloads {
+    NSLog(@"updatedDownloads:%@", downloads);
+    if (self.transactionFinishBlock){
+        self.transactionFinishBlock(nil);
+    }
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
