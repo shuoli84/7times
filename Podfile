@@ -9,7 +9,7 @@ pod 'MagicalRecord'
 pod 'UbiquityStoreManager'
 pod 'TSMiniWebBrowser'
 pod 'SVProgressHUD'
-pod 'iRate'
+pod 'iRate', :podspec => "https://raw.github.com/nicklockwood/iRate/master/iRate.podspec"
 pod 'UITableView-NXEmptyView'
 pod 'ODRefreshControl'
 
