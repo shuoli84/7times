@@ -10,4 +10,6 @@
 
 
 @interface IPhoneViewController : UIViewController
+
+@property (nonatomic, strong) IBOutlet UIBarButtonItem* addButton;
 @end

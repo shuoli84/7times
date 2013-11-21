@@ -31,8 +31,16 @@
 -(void)setPost:(Post *)post{
     _post = post;
     self.textLabel.text = post.title;
+
+    if(post.checked.boolValue){
+        self.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else{
+        self.accessoryType = UITableViewCellAccessoryNone;
+    }
+
     CGSize titleSize = [self.textLabel sizeThatFits:self.bounds.size];
-    _cellHeight = titleSize.height + 50.f;
+    _cellHeight = titleSize.height + 20.f;
 }
 
 @end

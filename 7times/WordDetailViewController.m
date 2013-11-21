@@ -11,6 +11,7 @@
 #import "WordDetailViewController.h"
 #import "Word.h"
 #import "Post.h"
+#import "UIColor+FlatUI.h"
 
 @interface WordDetailViewController() <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *postsFetchedResultsController;
@@ -23,48 +24,41 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+
+    self.title = self.word.word;
     
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
 
-    typeof(self) __weak weakSelf = self;
     self.declare = [dec(@"root", CGRectZero) $:@[
-        dec(@"Title", CGRectMake(0, 0, FVP(1.f), 50), ^{
-            UILabel *label = [[UILabel alloc]init];
-            label.font = [UIFont boldSystemFontOfSize:17];
-        label.textAlignment = NSTextAlignmentCenter;
-            label.backgroundColor = [UIColor lightGrayColor];
-        
-            label.text = weakSelf.word.word;
-            return label;
+        dec(@"info", CGRectMake(0, 0, FVP(1.f), 150), ^{
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = [UIColor greenSeaColor];
+            return view;
         }()),
         dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVFill), ^{
-        UITableView *tableView = [[UITableView alloc]
-                                  initWithFrame:CGRectZero
-                                  style:UITableViewStylePlain];
-        [tableView registerClass:[PostTableViewCell class] forCellReuseIdentifier:@"cell"];
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        return tableView;
-    }()),
-        dec(@"Back", CGRectMake(0, FVT(50), FVP(1.f), 50), ^{
-            UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-            [button setTitle:@"back" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
-            button.backgroundColor = [UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1.f];
-
-            [button addEventHandler:^(id sender) {
-                [weakSelf dismissViewControllerAnimated:NO completion:nil];
-            } forControlEvents:UIControlEventTouchUpInside];
-
-            return button;
-        }())
+            UITableView *tableView = [[UITableView alloc]
+                                      initWithFrame:CGRectZero
+                                      style:UITableViewStylePlain];
+            [tableView registerClass:[PostTableViewCell class] forCellReuseIdentifier:@"cell"];
+            tableView.delegate = self;
+            tableView.dataSource = self;
+            return tableView;
+        }()),
     ]];
 
     [self.declare setupViewTreeInto:self.view];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    self.tabBarController.tabBar.hidden = NO;
+    [super viewWillDisappear:animated];
 }
 
 -(void)viewWillLayoutSubviews {

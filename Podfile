@@ -12,6 +12,7 @@ pod 'SVProgressHUD'
 pod 'iRate', :podspec => "https://raw.github.com/nicklockwood/iRate/master/iRate.podspec"
 pod 'UITableView-NXEmptyView'
 pod 'ODRefreshControl'
+pod 'FlatUIKit', :podspec => "https://raw.github.com/Grouper/FlatUIKit/master/FlatUIKit.podspec"
 
 target :'7timesTests', :exclusive => true do
   pod 'Kiwi'

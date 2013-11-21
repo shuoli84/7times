@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
+#import <FlatUIKit/UIColor+FlatUI.h>
 #import "AppDelegate.h"
 #import "Flurry.h"
 #import "iRate.h"
@@ -21,6 +22,9 @@
     [Flurry setEventLoggingEnabled:YES];
 
     [MagicalRecord setupAutoMigratingCoreDataStack];
+    
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor greenSeaColor]];
     return YES;
 }
 

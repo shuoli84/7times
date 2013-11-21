@@ -12,4 +12,6 @@
 @interface WordListViewController : UIViewController
 
 @property (nonatomic, copy) void(^finishLoadWordlist)();
+
+- (IBAction)recover:(id)sender;
 @end

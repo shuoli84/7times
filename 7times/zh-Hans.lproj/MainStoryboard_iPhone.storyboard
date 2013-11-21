@@ -17,20 +17,23 @@
                     </tabBar>
                     <connections>
                         <segue destination="JLy-bd-Nz6" kind="relationship" relationship="viewControllers" id="Vdn-TH-7Ml"/>
-                        <segue destination="VZO-wj-dKF" kind="relationship" relationship="viewControllers" id="dad-Xx-kVB"/>
-                        <segue destination="lkV-MJ-dUj" kind="relationship" relationship="viewControllers" id="iPN-yM-ata"/>
+                        <segue destination="Cjm-Ub-u1Z" kind="relationship" relationship="viewControllers" id="x1E-Pz-pmd"/>
+                        <segue destination="dJA-3b-6S2" kind="relationship" relationship="viewControllers" id="GwR-JR-B8X"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obc-Yo-mO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1741" y="-1"/>
         </scene>
-        <!--Navigation Controller - words-->
+        <!--Navigation Controller - 单词-->
         <scene sceneID="voj-F3-yjJ">
             <objects>
                 <navigationController definesPresentationContext="YES" id="JLy-bd-Nz6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="words" id="CKJ-1s-DFy"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="74W-Lc-36p">
+                    <tabBarItem key="tabBarItem" title="单词" id="CKJ-1s-DFy"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="74W-Lc-36p">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="yBp-7H-omS">
@@ -45,7 +48,7 @@
             </objects>
             <point key="canvasLocation" x="-1129" y="-390"/>
         </scene>
-        <!--Word List View Controller - list-->
+        <!--Word List View Controller-->
         <scene sceneID="3fR-hT-kmi">
             <objects>
                 <viewController id="lkV-MJ-dUj" customClass="WordListViewController" sceneMemberID="viewController">
@@ -58,44 +61,66 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="list" id="4wb-gA-oME"/>
+                    <navigationItem key="navigationItem" id="hyA-XP-3A5">
+                        <barButtonItem key="rightBarButtonItem" title="恢复" id="rLF-w5-j5E">
+                            <connections>
+                                <action selector="recover:" destination="lkV-MJ-dUj" id="y6D-UV-Hj9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onh-3b-uya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1129" y="981"/>
+            <point key="canvasLocation" x="-1015" y="953"/>
         </scene>
-        <!--Posts View Controller - Remember-->
-        <scene sceneID="N3C-fB-NK3">
+        <!--Navigation Controller - 词表-->
+        <scene sceneID="zGZ-oD-cIx">
             <objects>
-                <viewController id="VZO-wj-dKF" customClass="PostsViewController" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="dJA-3b-6S2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="词表" id="ebN-Oo-SNW"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1G7-Wh-dYf">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lkV-MJ-dUj" kind="relationship" relationship="rootViewController" id="r0H-Lw-dU8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EAv-Ai-okd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1406" y="953"/>
+        </scene>
+        <!--Posts View Controller - 开始背-->
+        <scene sceneID="O32-a2-6se">
+            <objects>
+                <viewController id="Cjm-Ub-u1Z" customClass="PostsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IuP-qX-vEy"/>
-                        <viewControllerLayoutGuide type="bottom" id="hp7-dg-yuH"/>
+                        <viewControllerLayoutGuide type="top" id="6FB-VW-n5Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="WOE-ja-Ex8"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Kvi-iG-W5j">
+                    <view key="view" contentMode="scaleToFill" id="ooy-dl-1eQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="32j-nL-OxW">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RQQ-DC-15S">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="VZO-wj-dKF" id="ZOM-3c-mZT"/>
-                                    <outlet property="delegate" destination="VZO-wj-dKF" id="pL6-ei-Jyk"/>
+                                    <outlet property="dataSource" destination="Cjm-Ub-u1Z" id="ImX-xW-EDc"/>
+                                    <outlet property="delegate" destination="Cjm-Ub-u1Z" id="YcA-Jo-X3W"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Remember" id="BrK-jH-QfZ"/>
+                    <tabBarItem key="tabBarItem" title="开始背" id="Gsp-5Y-lGB"/>
                     <connections>
-                        <outlet property="itemListTableView" destination="32j-nL-OxW" id="kaE-6S-uRD"/>
+                        <outlet property="itemListTableView" destination="RQQ-DC-15S" id="4Bs-MS-P1U"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OWj-hD-WyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jnF-Oh-puM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1129" y="287"/>
+            <point key="canvasLocation" x="-1129" y="305"/>
         </scene>
         <!--Phone View Controller - word list-->
         <scene sceneID="5">
@@ -106,12 +131,12 @@
                         <viewControllerLayoutGuide type="bottom" id="Bx4-zJ-EON"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="words" id="IZe-fd-8jb">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="dlz-L2-X1j">
+                    <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
+                        <barButtonItem key="rightBarButtonItem" title="添加" id="dlz-L2-X1j">
                             <connections>
                                 <action selector="addWordAction:" destination="2" id="lii-S0-gCq"/>
                             </connections>
@@ -123,9 +148,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-768" y="-390"/>
+            <point key="canvasLocation" x="-704" y="-390"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

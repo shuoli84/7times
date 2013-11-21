@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class PostDownloader;
+@class PostManager;
 
 @interface SLSharedConfig : NSObject
 
 @property (nonatomic, strong) NSArray* colors;
 @property (nonatomic, strong) NSArray* timeIntervals;
+@property (nonatomic, strong) PostDownloader *postDownloader;
+@property(nonatomic, strong) PostManager *postManager;
 
 -(UIColor*)colorForCount:(int)count;
 

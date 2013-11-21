@@ -34,7 +34,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.title = NSLocalizedString(@"ListTitle", @"WordLists");
+    
     [SevenTimesIAPHelper sharedInstance].transactionFinishBlock = ^(NSError *error){
         NSLog(@"In transaction finish block: %@", error.localizedDescription);
         [SVProgressHUD dismiss];
@@ -52,41 +54,8 @@
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    typeof (self) __weak weakSelf = self;
     self.viewDeclare = [dec(@"root") $:@[
-        dec(@"tableView", CGRectMake(0, 0, FVP(1.f), FVT(50)), self.tableView),
-        [dec(@"leftContainer", CGRectMake(0, FVT(50), FVP(0.5), 50)) $:@[
-            dec(@"backButton", CGRectMake(0, 0, FVT(1), FVP(1.f)), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.backgroundColor = [UIColor colorWithRed:52 / 255.f green:152 / 255.f blue:219 / 255.f alpha:1.f];
-                [button setTitle:NSLocalizedString(@"BackButton", @"back") forState:UIControlStateNormal];
-
-                button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-                [button addEventHandler:^(id sender) {
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
-                } forControlEvents:UIControlEventTouchUpInside];
-                return button;
-            }()),
-        ]],
-        [dec(@"rightContainer", CGRectMake(FVA(0), FVT(50), FVP(0.5), 50)) $:@[
-            dec(@"recoverButton", CGRectMake(1, FVT(50), FVTillEnd, 50), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.backgroundColor = [UIColor colorWithRed:52 / 255.f green:152 / 255.f blue:219 / 255.f alpha:1.f];
-                [button setTitle:NSLocalizedString(@"recover", @"recover title") forState:UIControlStateNormal];
-
-                button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-
-                [button addEventHandler:^(id sender) {
-                    [SVProgressHUD showWithStatus:NSLocalizedString(@"RECOVER_MESSAGE", @"Recovering from previous purchases") maskType:SVProgressHUDMaskTypeGradient];
-                    [[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
-                } forControlEvents:UIControlEventTouchUpInside];
-                return button;
-            }()),
-        ]],
+        dec(@"tableView", CGRectMake(0, FVA(50), FVP(1.f), FVTillEnd), self.tableView),
     ]];
 
     [self.viewDeclare setupViewTreeInto:self.view];
@@ -263,5 +232,9 @@
         }
     }];
 
+}
+- (IBAction)recover:(id)sender {
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"RECOVER_MESSAGE", @"Recovering from previous purchases") maskType:SVProgressHUDMaskTypeGradient];
+    [[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 @end

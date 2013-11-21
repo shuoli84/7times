@@ -7,6 +7,8 @@
 
 
 #import "SLSharedConfig.h"
+#import "PostDownloader.h"
+#import "PostManager.h"
 
 
 @implementation SLSharedConfig {
@@ -35,6 +37,9 @@
         ];
 
         _timeIntervals = @[@0, @8, @18, @40, @(3 * 24 - 8), @(5 * 24 - 8), @(7 * 24 - 8), @(10 * 24 - 8), @(1024 * 24)];
+        self.postDownloader = [[PostDownloader alloc] init];
+        self.postManager = [[PostManager alloc] init];
+
     }
 
     return self;

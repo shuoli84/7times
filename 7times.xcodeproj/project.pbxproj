@@ -18,14 +18,13 @@
 		9C1C9C1A17DF081900BCC341 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C1917DF081900BCC341 /* Default@2x.png */; };
 		9C1C9C1C17DF081900BCC341 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */; };
 		9C1C9C1F17DF081900BCC341 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */; };
-		9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C2017DF081900BCC341 /* MainStoryboard_iPad.storyboard */; };
-		9C1C9C2517DF081900BCC341 /* IPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C2417DF081900BCC341 /* IPadViewController.m */; };
 		9C1C9C2D17DF081900BCC341 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C2C17DF081900BCC341 /* SenTestingKit.framework */; };
 		9C1C9C2E17DF081900BCC341 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C0517DF081900BCC341 /* UIKit.framework */; };
 		9C1C9C2F17DF081900BCC341 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C0717DF081900BCC341 /* Foundation.framework */; };
 		9C1C9C3717DF081900BCC341 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3517DF081900BCC341 /* InfoPlist.strings */; };
 		9C1C9C3A17DF081900BCC341 /* _timesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3917DF081900BCC341 /* _timesTests.m */; };
 		9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */; };
+		9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC465183E0C2100C2EB68 /* PostsViewController.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1A918366F3100A8CD95 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1A818366F3100A8CD95 /* Word.m */; };
 		9C56C1B4183DF65800A8CD95 /* PostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostTableViewCell.m */; };
@@ -98,15 +97,15 @@
 		9C1C9C1917DF081900BCC341 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9C1C9C1B17DF081900BCC341 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9C1C9C1E17DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		9C1C9C2117DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		9C1C9C2317DF081900BCC341 /* IPadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPadViewController.h; sourceTree = "<group>"; };
-		9C1C9C2417DF081900BCC341 /* IPadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPadViewController.m; sourceTree = "<group>"; };
 		9C1C9C2B17DF081900BCC341 /* 7timesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 7timesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C1C9C2C17DF081900BCC341 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9C1C9C3417DF081900BCC341 /* 7timesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "7timesTests-Info.plist"; sourceTree = "<group>"; };
 		9C1C9C3617DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9C1C9C3917DF081900BCC341 /* _timesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _timesTests.m; sourceTree = "<group>"; };
 		9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		9C3FC463183E0A7B00C2EB68 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard_iPhone.storyboard"; sourceTree = "<group>"; };
+		9C3FC464183E0C2100C2EB68 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
+		9C3FC465183E0C2100C2EB68 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -269,13 +268,14 @@
 				9C1C9C1417DF081900BCC341 /* AppDelegate.h */,
 				9C1C9C1517DF081900BCC341 /* AppDelegate.m */,
 				9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */,
-				9C1C9C2017DF081900BCC341 /* MainStoryboard_iPad.storyboard */,
-				9C1C9C2317DF081900BCC341 /* IPadViewController.h */,
-				9C1C9C2417DF081900BCC341 /* IPadViewController.m */,
 				9C56C1B2183DF65800A8CD95 /* PostTableViewCell.h */,
 				9C56C1B3183DF65800A8CD95 /* PostTableViewCell.m */,
 				BE48E06E31969545ABEBB1C0 /* WordDetailViewController.m */,
+				9C3FC464183E0C2100C2EB68 /* PostsViewController.h */,
+				9C3FC465183E0C2100C2EB68 /* PostsViewController.m */,
 				BE48E67296806E138409D68F /* WordDetailViewController.h */,
+				BE48E29FC619F4D67CAD7289 /* WordListViewController.m */,
+				BE48E1EBCA1B38425D9197FB /* WordListViewController.h */,
 				9C1C9C0C17DF081900BCC341 /* Supporting Files */,
 				BE48EA0106C59259FE320B37 /* SLSharedConfig.m */,
 				BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */,
@@ -297,8 +297,6 @@
 				BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */,
 				BE48EE296B7C5DECC279AD67 /* GoogleNewsSource.m */,
 				BE48E58BA5FE61849BB6CFB9 /* GoogleNewsSource.h */,
-				BE48E29FC619F4D67CAD7289 /* WordListViewController.m */,
-				BE48E1EBCA1B38425D9197FB /* WordListViewController.h */,
 				BE48EA0B6C37D4E4EC987410 /* WordList.m */,
 				BE48E8201149365399524F87 /* WordList.h */,
 				BE48E555847B0457DC217B20 /* WordListManager.m */,
@@ -458,7 +456,6 @@
 				9C1C9C1A17DF081900BCC341 /* Default@2x.png in Resources */,
 				9C1C9C1C17DF081900BCC341 /* Default-568h@2x.png in Resources */,
 				9C1C9C1F17DF081900BCC341 /* MainStoryboard_iPhone.storyboard in Resources */,
-				9C1C9C2217DF081900BCC341 /* MainStoryboard_iPad.storyboard in Resources */,
 				BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */,
 				BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */,
 				BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */,
@@ -561,9 +558,9 @@
 				9C1C9C1217DF081900BCC341 /* main.m in Sources */,
 				9CF0CA191810C61100658EBA /* Check.m in Sources */,
 				9C1C9C1617DF081900BCC341 /* AppDelegate.m in Sources */,
-				9C1C9C2517DF081900BCC341 /* IPadViewController.m in Sources */,
 				BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */,
 				9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */,
+				9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */,
 				9CF0CA1C1810C61100658EBA /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
@@ -616,16 +613,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				9C1C9C1E17DF081900BCC341 /* en */,
+				9C3FC463183E0A7B00C2EB68 /* zh-Hans */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		9C1C9C2017DF081900BCC341 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C1C9C2117DF081900BCC341 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		9C1C9C3517DF081900BCC341 /* InfoPlist.strings */ = {
@@ -717,7 +707,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A5729F0A-BDEC-4E81-A306-001E0394CCD4";
@@ -736,7 +726,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "22FB5705-3AF0-4A79-92BE-767448E17152";
