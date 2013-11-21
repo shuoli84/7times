@@ -26,6 +26,7 @@
 #import "PostDownloader.h"
 #import "WordListViewController.h"
 #import "UIAlertView+BlocksKit.h"
+#import "WordDetailViewController.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -46,21 +47,16 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
-    NSArray *versionCompatibility = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    BOOL ios7 = 7 <= [[versionCompatibility objectAtIndex:0] intValue];
-
     typeof(self) __weak weakSelf = self;
 
     self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"lastCheckTime" ascending:NO withPredicate:nil groupBy:nil delegate:self];
     [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-        self.wordFetchedResultsController.fetchRequest.sortDescriptors[0],
+        [NSSortDescriptor sortDescriptorWithKey:@"lastCheckTime" ascending:NO],
+        [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
     ]];
-
-    [SLSharedConfig sharedInstance].coreDataReady = ^{
-        [weakSelf.wordFetchedResultsController performFetch:nil];
-        [weakSelf.wordListTableView reloadData];
-    };
+    [self.wordFetchedResultsController performFetch:nil];
 
     self.postManager = [[PostManager alloc]init];
     self.postDownloader = [[PostDownloader alloc] init];
@@ -80,9 +76,9 @@
 
                 tableView.backgroundColor = [UIColor whiteColor];
                 tableView.rowHeight = 48;
-                tableView.allowsSelection = NO;
-                tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                tableView.allowsSelection = YES;
 
+                [weakSelf setTableDelegateForWordTable:tableView];
 
                 A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
 
@@ -102,26 +98,19 @@
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
 
                         FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, 48)) $:@[
-                            [dec(@"content", CGRectMake(5, 5, FVT(10), FVTillEnd), ^{
+                            [dec(@"content", CGRectMake(0, 0, FVP(1.f), FVP(1.f)), ^{
                                 UIView *view = [[UIView alloc] init];
                                 view.backgroundColor =[UIColor colorWithRed:236/255.f green:240/255.f blue:241/255.f alpha:1.f];
                                 view.clipsToBounds = YES;
                                 return view;
                             }()) $:@[
                                 dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), ^{
-                                    UITextView *label = [[UITextView alloc] init];
+                                    UILabel *label = [[UILabel alloc] init];
                                     label.tag = 101;
                                     label.font = [UIFont boldSystemFontOfSize:18];
                                     label.textColor = [UIColor blackColor];
                                     label.backgroundColor = [UIColor clearColor];
-                                    label.editable = NO;
 
-                                    if (ios7) {
-                                        label.contentInset = UIEdgeInsetsMake(-4, 0, 0, 0);
-                                    } else { /// iOS4 is installed
-                                        label.contentInset = UIEdgeInsetsMake(-4, -8, 0, 0);
-                                    }
-                                    label.scrollEnabled = NO;
                                     return label;
                                 }()),
                                 dec(@"dotView", CGRectMake(FVT(80), FVCenter, 75, 25), ^{
@@ -283,7 +272,7 @@
 
                             return button;
                         }()),
-                        dec(@"lookupButton", CGRectMake(FVT(102), FVSameAsPrev, 50, FVTillEnd), ^{
+                        dec(@"lookupButton", CGRectMake(FVA(2), FVSameAsPrev, 50, FVTillEnd), ^{
                             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                             [button setTitle:@"?" forState:UIControlStateNormal];
                             button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
@@ -466,6 +455,7 @@
 
     wordRecord.word = word;
     wordRecord.added = [NSDate date];
+    wordRecord.source = @"0";
     [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
 
     NSLog(@"Word saved");
@@ -585,5 +575,19 @@
     [declaration updateViewFrame];
 
     return view;
+}
+
+-(void)setTableDelegateForWordTable:(UITableView *)wordTable{
+    A2DynamicDelegate *delegate = wordTable.dynamicDelegate;
+
+    typeof(self) __weak weakSelf = self;
+    [delegate implementMethod:@selector(tableView:didSelectRowAtIndexPath:) withBlock:^(UITableView *tableView, NSIndexPath* indexPath){
+        Word* word = [weakSelf.wordFetchedResultsController objectAtIndexPath:indexPath];
+        WordDetailViewController *wordDetailViewController = [[WordDetailViewController alloc] init];
+        wordDetailViewController.word = word;
+        [self presentViewController:wordDetailViewController animated:NO completion:nil];
+    }];
+
+    wordTable.delegate = (id)delegate;
 }
 @end

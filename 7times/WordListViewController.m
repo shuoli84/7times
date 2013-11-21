@@ -187,16 +187,11 @@
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         for (NSString *word in words) {
                             i++;
-                            BOOL alreadyIn = [Word MR_findFirstByAttribute:@"word" withValue:word] != nil;
-                            if (!alreadyIn) {
-                                NSLog(@"create word: %@", word);
-                                Word *wordEntity = [Word MR_createEntity];
-                                wordEntity.word = word;
-                                wordEntity.added = [NSDate date];
-                                wordEntity.source = source;
-
-                                [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
-                            }
+                            Word *wordEntity = [Word MR_createEntity];
+                            wordEntity.word = word;
+                            wordEntity.added = [NSDate date];
+                            wordEntity.source = source;
+                            wordEntity.sortOrder = @(i);
 
                             if (i % 30 == 0) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -211,6 +206,8 @@
                             }
                         }
 
+                        [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
+                        
                         if (self.finishLoadWordlist) {
                             self.finishLoadWordlist();
                         }

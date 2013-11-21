@@ -77,7 +77,7 @@
     }
 
     if(word.word && [self.wordShowedPostsNumber[word.word] integerValue] < 2){
-        NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO]]];
+        NSArray* posts = [word.post sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES]]];
         for(Post *p in posts){
             if(!p.checked){
                 if(![self.showedPostIds containsObject:p.objectID]){

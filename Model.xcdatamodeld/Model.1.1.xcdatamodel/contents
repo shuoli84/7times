@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="1.1" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="1.1" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Check" representedClassName="Check" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="post" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="check" inverseEntity="Post" syncable="YES"/>
@@ -22,6 +22,7 @@
         <attribute name="lastCheckTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-31608000" syncable="YES"/>
         <attribute name="nextCheckTime" optional="YES" attributeType="Date" defaultDateTimeInterval="-31608000" syncable="YES"/>
         <attribute name="postNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="source" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="word" attributeType="String" minValueString="1" indexed="YES" syncable="YES"/>
         <relationship name="check" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Check" inverseName="word" inverseEntity="Check" syncable="YES"/>
