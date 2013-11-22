@@ -10,6 +10,7 @@
 
 @class PostDownloader;
 @class PostManager;
+@class TTTTimeIntervalFormatter;
 
 @interface SLSharedConfig : NSObject
 
@@ -17,6 +18,7 @@
 @property (nonatomic, strong) NSArray* timeIntervals;
 @property (nonatomic, strong) PostDownloader *postDownloader;
 @property(nonatomic, strong) PostManager *postManager;
+@property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
 
 -(UIColor*)colorForCount:(int)count;
 

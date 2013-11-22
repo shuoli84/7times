@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Post;
-@interface PostTableViewCell : UITableViewCell
+@interface PostBriefTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Post* post;
 @property (nonatomic, readonly, assign) float cellHeight;

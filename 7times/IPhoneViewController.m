@@ -52,7 +52,7 @@
         self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     }
 
-    self.navigationController.navigationBar.titleTextAttributes = @{UITextAttributeTextColor : [UIColor whiteColor]};
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
     typeof(self) __weak weakSelf = self;
 
@@ -259,9 +259,11 @@
 
     wordTable.delegate = (id)delegate;
 }
+
 - (IBAction)addWordAction:(id)sender {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NewWord_Title", @"New Word") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"Add", @"Add"), nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView show];
 }
+
 @end

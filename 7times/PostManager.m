@@ -119,6 +119,30 @@
     }
 }
 
+-(NSIndexPath*)indexPathForPost:(Post *)post{
+    NSIndexSet *indexSet = [self.posts indexesOfObjectsPassingTest:^BOOL(Post *obj, NSUInteger idx, BOOL *stop) {
+        if ([post.objectID isEqual:obj.objectID]){
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    if(indexSet.count == 0){
+        indexSet = [self.freshPosts indexesOfObjectsPassingTest:^BOOL(Post *obj, NSUInteger idx, BOOL *stop) {
+            if([post.objectID isEqual:obj.objectID]){
+                *stop = YES;
+                return YES;
+            }
+            return NO;
+        }];
+    }
+
+    if(indexSet.count > 0){
+        return [NSIndexPath indexPathForRow:indexSet.firstIndex inSection:0];
+    }
+    return nil;
+}
+
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath{
     Post *post = [self postForIndexPath:indexPath];
     [self dismissPost:post];
@@ -143,7 +167,7 @@
     return resultArray;
 }
 
-- (void)markPostAsRead:(NSIndexPath *)indexPath {
+- (void)markPostAsReadAtIndex:(NSIndexPath *)indexPath {
     Post *p = [self postForIndexPath:indexPath];
     Check *check = [Check MR_createEntity];
     check.date = [NSDate date];
@@ -171,6 +195,11 @@
         @"post" : p.title ? p.title : @"",
         @"post_url" : p.url ? p.url : @"",
     }];
+}
+
+- (void)markPostAsRead:(Post *)post{
+    NSIndexPath *indexPath = [self indexPathForPost:post];
+    [self markPostAsReadAtIndex:indexPath];
 }
 
 - (NSArray *)wordListNeedToProcess {

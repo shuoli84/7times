@@ -224,10 +224,10 @@ SPEC_BEGIN(PostManagerSpec)
 
             [[theValue(a.count) should] equal:@(1)];
 
-            [postManager markPostAsRead:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [postManager markPostAsReadAtIndex:[NSIndexPath indexPathForRow:0 inSection:0]];
             [[theValue(postManager.allPosts.count) should] equal:@(1)];
 
-            [postManager markPostAsRead:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [postManager markPostAsReadAtIndex:[NSIndexPath indexPathForRow:0 inSection:0]];
             [[theValue(postManager.allPosts.count) should] equal:@(0)];
 
             //Right after the post read, reload posts will not load the posts again

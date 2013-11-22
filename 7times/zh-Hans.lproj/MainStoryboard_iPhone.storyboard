@@ -1,30 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="CEa-DK-NNe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="JLy-bd-Nz6">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
-        <scene sceneID="HSA-hu-WJW">
-            <objects>
-                <tabBarController definesPresentationContext="YES" id="CEa-DK-NNe" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="dmm-Oa-7t2">
-                        <rect key="frame" x="129" y="330" width="163" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="JLy-bd-Nz6" kind="relationship" relationship="viewControllers" id="Vdn-TH-7Ml"/>
-                        <segue destination="Cjm-Ub-u1Z" kind="relationship" relationship="viewControllers" id="x1E-Pz-pmd"/>
-                        <segue destination="dJA-3b-6S2" kind="relationship" relationship="viewControllers" id="GwR-JR-B8X"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Obc-Yo-mO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1741" y="-1"/>
-        </scene>
         <!--Navigation Controller - 单词-->
         <scene sceneID="voj-F3-yjJ">
             <objects>
@@ -47,47 +27,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Skg-4B-NFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1129" y="-390"/>
-        </scene>
-        <!--Word List View Controller-->
-        <scene sceneID="3fR-hT-kmi">
-            <objects>
-                <viewController id="lkV-MJ-dUj" customClass="WordListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hoq-eG-kaI"/>
-                        <viewControllerLayoutGuide type="bottom" id="ogO-Kq-8Xx"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="QIN-EG-21U">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="hyA-XP-3A5">
-                        <barButtonItem key="rightBarButtonItem" title="恢复" id="rLF-w5-j5E">
-                            <connections>
-                                <action selector="recover:" destination="lkV-MJ-dUj" id="y6D-UV-Hj9"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="onh-3b-uya" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1015" y="953"/>
-        </scene>
-        <!--Navigation Controller - 词表-->
-        <scene sceneID="zGZ-oD-cIx">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="dJA-3b-6S2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="词表" id="ebN-Oo-SNW"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1G7-Wh-dYf">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="lkV-MJ-dUj" kind="relationship" relationship="rootViewController" id="r0H-Lw-dU8"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EAv-Ai-okd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1406" y="953"/>
         </scene>
         <!--Posts View Controller - 开始背-->
         <scene sceneID="O32-a2-6se">
@@ -136,19 +75,47 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
-                        <barButtonItem key="rightBarButtonItem" title="添加" id="dlz-L2-X1j">
+                        <barButtonItem key="leftBarButtonItem" title="添加" id="cW8-xb-ToZ">
                             <connections>
-                                <action selector="addWordAction:" destination="2" id="lii-S0-gCq"/>
+                                <action selector="addWordAction:" destination="2" id="8CD-Dx-8c3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="单词表" id="dlz-L2-X1j">
+                            <connections>
+                                <action selector="loadWordList:" destination="2" id="7hl-Pc-HcD"/>
+                                <segue destination="6UC-j4-CfS" kind="push" id="RK2-Fr-sJ3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="addButton" destination="dlz-L2-X1j" id="Qbj-hl-haF"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-704" y="-390"/>
+        </scene>
+        <!--Word List View Controller-->
+        <scene sceneID="HIB-Vs-jTn">
+            <objects>
+                <viewController id="6UC-j4-CfS" customClass="WordListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fRY-DY-xYb"/>
+                        <viewControllerLayoutGuide type="bottom" id="0dp-qE-0EB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AQV-Fk-4rP">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gIO-5S-iwc">
+                        <barButtonItem key="rightBarButtonItem" title="恢复购买" id="8FG-Rd-N0j">
+                            <connections>
+                                <action selector="recover:" destination="6UC-j4-CfS" id="FCJ-Ji-90a"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-244" y="-390"/>
         </scene>
     </scenes>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

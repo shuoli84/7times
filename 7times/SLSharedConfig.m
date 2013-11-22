@@ -6,6 +6,7 @@
 //
 
 
+#import <FormatterKit/TTTTimeIntervalFormatter.h>
 #import "SLSharedConfig.h"
 #import "PostDownloader.h"
 #import "PostManager.h"
@@ -40,6 +41,7 @@
         self.postDownloader = [[PostDownloader alloc] init];
         self.postManager = [[PostManager alloc] init];
 
+        self.timeFormmater = [[TTTTimeIntervalFormatter alloc] init];
     }
 
     return self;

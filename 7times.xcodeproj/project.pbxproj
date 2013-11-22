@@ -27,7 +27,7 @@
 		9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC465183E0C2100C2EB68 /* PostsViewController.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1A918366F3100A8CD95 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1A818366F3100A8CD95 /* Word.m */; };
-		9C56C1B4183DF65800A8CD95 /* PostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostTableViewCell.m */; };
+		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
@@ -48,6 +48,7 @@
 		BE48E1977E655489A78ED8EA /* WordList.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0B6C37D4E4EC987410 /* WordList.m */; };
 		BE48E3AB1ED3D1DB95DF68F4 /* tofle.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EBCDEC1039A77311A1BD /* tofle.txt */; };
 		BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EA746404EF689745BBCD /* cet6.txt */; };
+		BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */; };
 		BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E555847B0457DC217B20 /* WordListManager.m */; };
 		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */; };
@@ -64,6 +65,7 @@
 		BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E8A2AC414440211607D4 /* PostDownloader.m */; };
 		BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EAA18C9FF9818A7215AB /* ielts1200.txt */; };
 		BE48EDA98BEA6CFFB55BF858 /* SevenTimesIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48ED0F8FAEE26BF481C120 /* SevenTimesIAPHelper.m */; };
+		BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
 		BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E2F53444BB8067BED03C /* gmat.txt */; };
@@ -112,8 +114,8 @@
 		9C56C1651830B0DF00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9C56C1A718366F3100A8CD95 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
 		9C56C1A818366F3100A8CD95 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
-		9C56C1B2183DF65800A8CD95 /* PostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTableViewCell.h; path = ../PostTableViewCell.h; sourceTree = "<group>"; };
-		9C56C1B3183DF65800A8CD95 /* PostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTableViewCell.m; path = ../PostTableViewCell.m; sourceTree = "<group>"; };
+		9C56C1B2183DF65800A8CD95 /* PostBriefTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostBriefTableViewCell.h; path = ../PostBriefTableViewCell.h; sourceTree = "<group>"; };
+		9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostBriefTableViewCell.m; path = ../PostBriefTableViewCell.m; sourceTree = "<group>"; };
 		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9C74866A18053A2E000C0E42 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -136,16 +138,19 @@
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.2.4.a; path = Flurry/libFlurry_4.2.4.a; sourceTree = SOURCE_ROOT; };
 		BE48E06E31969545ABEBB1C0 /* WordDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordDetailViewController.m; sourceTree = "<group>"; };
+		BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailViewController.m; sourceTree = SOURCE_ROOT; };
 		BE48E1EBCA1B38425D9197FB /* WordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListViewController.h; sourceTree = "<group>"; };
 		BE48E29FC619F4D67CAD7289 /* WordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListViewController.m; sourceTree = "<group>"; };
 		BE48E2F53444BB8067BED03C /* gmat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gmat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E32881AE19D976820BC6 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
 		BE48E4C71A8D463466C56BC4 /* gre.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gre.txt; sourceTree = SOURCE_ROOT; };
 		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E5426FA50E7B12BA3C9F /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
 		BE48E555847B0457DC217B20 /* WordListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListManager.m; sourceTree = "<group>"; };
 		BE48E58BA5FE61849BB6CFB9 /* GoogleNewsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleNewsSource.h; sourceTree = "<group>"; };
+		BE48E604695DD82D51AB3D07 /* PostDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		BE48E663F77584937365BCA3 /* NSURL+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryString.h"; sourceTree = "<group>"; };
 		BE48E67296806E138409D68F /* WordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordDetailViewController.h; sourceTree = "<group>"; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
@@ -162,6 +167,7 @@
 		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
 		BE48EA746404EF689745BBCD /* cet6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet6.txt; sourceTree = SOURCE_ROOT; };
+		BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		BE48EAA18C9FF9818A7215AB /* ielts1200.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ielts1200.txt; sourceTree = SOURCE_ROOT; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
 		BE48EAE1979969C6B7907A23 /* NSURL+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QueryString.m"; sourceTree = "<group>"; };
@@ -268,8 +274,8 @@
 				9C1C9C1417DF081900BCC341 /* AppDelegate.h */,
 				9C1C9C1517DF081900BCC341 /* AppDelegate.m */,
 				9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */,
-				9C56C1B2183DF65800A8CD95 /* PostTableViewCell.h */,
-				9C56C1B3183DF65800A8CD95 /* PostTableViewCell.m */,
+				9C56C1B2183DF65800A8CD95 /* PostBriefTableViewCell.h */,
+				9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */,
 				BE48E06E31969545ABEBB1C0 /* WordDetailViewController.m */,
 				9C3FC464183E0C2100C2EB68 /* PostsViewController.h */,
 				9C3FC465183E0C2100C2EB68 /* PostsViewController.m */,
@@ -303,6 +309,10 @@
 				BE48E5426FA50E7B12BA3C9F /* WordListManager.h */,
 				BE48ECF04E81B8EE57B43120 /* IAP */,
 				9C56C1641830B0DA00A8CD95 /* Localizable.strings */,
+				BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */,
+				BE48E604695DD82D51AB3D07 /* PostDetailTableViewCell.h */,
+				BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */,
+				BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -566,7 +576,7 @@
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
-				9C56C1B4183DF65800A8CD95 /* PostTableViewCell.m in Sources */,
+				9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */,
 				BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */,
 				BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */,
 				BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */,
@@ -578,6 +588,8 @@
 				BE48EDA98BEA6CFFB55BF858 /* SevenTimesIAPHelper.m in Sources */,
 				9C56C1A918366F3100A8CD95 /* Word.m in Sources */,
 				BE48EA24F149743D88B3CAC5 /* WordDetailViewController.m in Sources */,
+				BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */,
+				BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

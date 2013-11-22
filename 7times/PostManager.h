@@ -30,7 +30,8 @@
 -(Post*)postForIndexPath:(NSIndexPath *)indexPath;
 -(void)removePostAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)markPostAsRead:(NSIndexPath *)indexPath;
+- (void)markPostAsReadAtIndex:(NSIndexPath *)indexPath;
+- (void)markPostAsRead:(Post *)post;
 
 - (BOOL)needNewPost;
 

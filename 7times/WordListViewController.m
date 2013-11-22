@@ -55,7 +55,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     self.viewDeclare = [dec(@"root") $:@[
-        dec(@"tableView", CGRectMake(0, FVA(50), FVP(1.f), FVTillEnd), self.tableView),
+        dec(@"tableView", CGRectMake(0, 0, FVP(1.f), FVTillEnd), self.tableView),
     ]];
 
     [self.viewDeclare setupViewTreeInto:self.view];
@@ -231,8 +231,8 @@
             *stop = YES;
         }
     }];
-
 }
+
 - (IBAction)recover:(id)sender {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"RECOVER_MESSAGE", @"Recovering from previous purchases") maskType:SVProgressHUDMaskTypeGradient];
     [[SevenTimesIAPHelper sharedInstance] restoreCompletedTransactions];
