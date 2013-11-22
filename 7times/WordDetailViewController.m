@@ -13,6 +13,9 @@
 #import "Post.h"
 #import "UIColor+FlatUI.h"
 #import "PostDetailViewController.h"
+#import "SLSharedConfig.h"
+#import "PostDownloader.h"
+#import "SVProgressHUD.h"
 
 @interface WordDetailViewController() <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *postsFetchedResultsController;
@@ -34,12 +37,47 @@
 
     self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
 
+    typeof(self) __weak weakSelf = self;
+
     self.declare = [dec(@"root", CGRectZero) $:@[
-        dec(@"info", CGRectMake(0, 0, FVP(1.f), 150), ^{
+        [dec(@"info", CGRectMake(0, 0, FVP(1.f), 150), ^{
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = [UIColor greenSeaColor];
             return view;
-        }()),
+        }()) $:@[
+            dec(@"dictionary", CGRectMake(20, FVT(40), 50, 40), ^{
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+                [button setTitle:@"词典" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
+
+                [button addEventHandler:^(id sender) {
+                    Word *w = weakSelf.word;
+                    UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:w.word];
+                    [weakSelf presentViewController:dictionViewController animated:YES completion:nil];
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+            }()),
+            dec(@"load", CGRectMake(FVA(10), FVT(40), 100, 40), ^{
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+                [button setTitle:@"加载新闻" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
+
+                [button addEventHandler:^(id sender) {
+                    Word *w = weakSelf.word;
+                    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeGradient];
+                    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
+                        [SVProgressHUD dismiss];
+                    }];
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+            }()),
+        ]],
         dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVFill), self.postsTable = ^{
             UITableView *tableView = [[UITableView alloc]
                                       initWithFrame:CGRectZero

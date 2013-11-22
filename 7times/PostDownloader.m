@@ -106,7 +106,9 @@
             NSLog(@"Finish download for word: %@", word);
         }
         if(completion){
-            completion();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion();
+            });
         }
     });
 }
