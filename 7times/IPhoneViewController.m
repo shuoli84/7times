@@ -133,6 +133,12 @@
                     label.text = word.word;
 
                     DotView *dotView = (DotView*)[cell viewWithTag:102];
+                    if(word.postNumber.integerValue > 0){
+                        dotView.showPlaceHolder = YES;
+                    }
+                    else{
+                        dotView.showPlaceHolder = NO;
+                    }
                     dotView.dotNumber = word.checkNumber.integerValue;
                     [dotView setNeedsDisplay];
                     return cell;
