@@ -2,7 +2,7 @@
 //  Word.m
 //  7times
 //
-//  Created by Li Shuo on 13-11-15.
+//  Created by Li Shuo on 13-11-23.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
@@ -18,9 +18,11 @@
 @dynamic lastCheckTime;
 @dynamic nextCheckTime;
 @dynamic postNumber;
+@dynamic sortOrder;
 @dynamic source;
 @dynamic word;
-@dynamic sortOrder;
+@dynamic star;
+@dynamic ignore;
 @dynamic check;
 @dynamic post;
 

@@ -86,6 +86,7 @@
                 [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
 
                 [button addEventHandler:^(id sender) {
+                    /*
                     WBAuthorizeRequest *request = [WBAuthorizeRequest request];
                     request.redirectURI = kWeiboRedirectURI;
                     request.scope = @"all";
@@ -94,6 +95,9 @@
                         @"Word_word" : weakSelf.word.word
                     };
                     [WeiboSDK sendRequest:request];
+                    */
+
+
                 } forControlEvents:UIControlEventTouchUpInside];
 
                 return button;

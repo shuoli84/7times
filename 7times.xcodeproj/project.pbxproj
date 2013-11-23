@@ -28,8 +28,8 @@
 		9C3FC46A183F562B00C2EB68 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */; };
 		9C3FC46B183F562B00C2EB68 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */; };
 		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
+		9C3FC47118405E2D00C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC47018405E2D00C2EB68 /* Word.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
-		9C56C1A918366F3100A8CD95 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1A818366F3100A8CD95 /* Word.m */; };
 		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
@@ -53,6 +53,7 @@
 		BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EA746404EF689745BBCD /* cet6.txt */; };
 		BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */; };
 		BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E555847B0457DC217B20 /* WordListManager.m */; };
+		BE48E5685199819C43FFFF3A /* WordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E321CCB9FD143FEF1CAE /* WordTableViewCell.m */; };
 		BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */; };
 		BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E4C71A8D463466C56BC4 /* gre.txt */; };
 		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
@@ -113,12 +114,13 @@
 		9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		9C3FC469183F562B00C2EB68 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Model.1. 2.xcdatamodel"; sourceTree = "<group>"; };
+		9C3FC46F18405E2D00C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		9C3FC47018405E2D00C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9C56C1651830B0DF00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		9C56C1A718366F3100A8CD95 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
-		9C56C1A818366F3100A8CD95 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C56C1B2183DF65800A8CD95 /* PostBriefTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostBriefTableViewCell.h; path = ../PostBriefTableViewCell.h; sourceTree = "<group>"; };
 		9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostBriefTableViewCell.m; path = ../PostBriefTableViewCell.m; sourceTree = "<group>"; };
 		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -146,7 +148,9 @@
 		BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailViewController.m; sourceTree = SOURCE_ROOT; };
 		BE48E1EBCA1B38425D9197FB /* WordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListViewController.h; sourceTree = "<group>"; };
 		BE48E29FC619F4D67CAD7289 /* WordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordListViewController.m; sourceTree = "<group>"; };
+		BE48E2C61332CF9330901D5A /* WordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordTableViewCell.h; sourceTree = "<group>"; };
 		BE48E2F53444BB8067BED03C /* gmat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gmat.txt; sourceTree = SOURCE_ROOT; };
+		BE48E321CCB9FD143FEF1CAE /* WordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordTableViewCell.m; sourceTree = "<group>"; };
 		BE48E32881AE19D976820BC6 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
@@ -235,9 +239,9 @@
 				9C1C9C3217DF081900BCC341 /* 7timesTests */,
 				9C1C9C0417DF081900BCC341 /* Frameworks */,
 				9C1C9C0317DF081900BCC341 /* Products */,
-				9C56C1A718366F3100A8CD95 /* Word.h */,
-				9C56C1A818366F3100A8CD95 /* Word.m */,
 				9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */,
+				9C3FC46F18405E2D00C2EB68 /* Word.h */,
+				9C3FC47018405E2D00C2EB68 /* Word.m */,
 				9CF0CA171810C61100658EBA /* Check.h */,
 				9CF0CA181810C61100658EBA /* Check.m */,
 				9CF0CA1A1810C61100658EBA /* Post.h */,
@@ -320,6 +324,8 @@
 				BE48E604695DD82D51AB3D07 /* PostDetailTableViewCell.h */,
 				BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */,
 				BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */,
+				BE48E321CCB9FD143FEF1CAE /* WordTableViewCell.m */,
+				BE48E2C61332CF9330901D5A /* WordTableViewCell.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -603,11 +609,12 @@
 				BE48E1977E655489A78ED8EA /* WordList.m in Sources */,
 				BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */,
 				BE48ECD8F70E647D2C23BDF2 /* IAPHelper.m in Sources */,
+				9C3FC47118405E2D00C2EB68 /* Word.m in Sources */,
 				BE48EDA98BEA6CFFB55BF858 /* SevenTimesIAPHelper.m in Sources */,
-				9C56C1A918366F3100A8CD95 /* Word.m in Sources */,
 				BE48EA24F149743D88B3CAC5 /* WordDetailViewController.m in Sources */,
 				BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */,
 				BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */,
+				BE48E5685199819C43FFFF3A /* WordTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,10 +855,11 @@
 		9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */,
 				9CF0C9DE180E9B0900658EBA /* Model.1.1.xcdatamodel */,
 				9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9CF0C9DE180E9B0900658EBA /* Model.1.1.xcdatamodel */;
+			currentVersion = 9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

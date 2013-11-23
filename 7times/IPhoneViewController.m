@@ -28,8 +28,9 @@
 #import "WordListViewController.h"
 #import "UIAlertView+BlocksKit.h"
 #import "WordDetailViewController.h"
+#import "WordTableViewCell.h"
 
-@interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate>
+@interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
 
 @property (nonatomic, strong) UITableView *wordListTableView;
@@ -56,13 +57,20 @@
 
     typeof(self) __weak weakSelf = self;
 
-    self.wordFetchedResultsController = [Word MR_fetchAllSortedBy:@"lastCheckTime" ascending:NO withPredicate:nil groupBy:nil delegate:self];
+    self.wordFetchedResultsController = [Word
+                                         MR_fetchAllSortedBy:@"lastCheckTime"
+                                         ascending:NO
+                                         withPredicate:
+                                         [NSPredicate predicateWithFormat:@"ignore == NULL OR ignore = %@", [NSNumber numberWithBool:NO]]
+                                         groupBy:nil
+                                         delegate:self];
     [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
         [NSSortDescriptor sortDescriptorWithKey:@"lastCheckTime" ascending:NO],
         [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
     ]];
+
     [self.wordFetchedResultsController performFetch:nil];
 
     self.declaration = [dec(@"root", CGRectZero) $:@[
@@ -75,76 +83,10 @@
                 tableView.rowHeight = 48;
                 tableView.allowsSelection = YES;
 
-                [weakSelf setTableDelegateForWordTable:tableView];
+                [tableView registerClass:[WordTableViewCell class] forCellReuseIdentifier:@"cell"];
+                tableView.dataSource = self;
+                tableView.delegate = self;
 
-                A2DynamicDelegate *dataSource = tableView.dynamicDataSource;
-
-                [dataSource implementMethod:@selector(numberOfSectionsInTableView:) withBlock:^NSInteger(UITableView *tv){
-                    return (NSInteger)weakSelf.wordFetchedResultsController.sections.count;
-                }];
-
-                [dataSource implementMethod:@selector(tableView:numberOfRowsInSection:) withBlock:^NSInteger(UITableView* tv, NSInteger section){
-                    return [weakSelf.wordFetchedResultsController.sections[(NSUInteger)section] numberOfObjects];
-                }];
-
-                [dataSource implementMethod:@selector(tableView:cellForRowAtIndexPath:) withBlock:^(UITableView *tv, NSIndexPath* indexPath){
-                    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"cell"];
-                    static char key;
-
-                    if(cell == nil){
-                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-
-                        FVDeclaration *declaration = [dec(@"cell", CGRectMake(0, 0, tv.bounds.size.width, 48)) $:@[
-                            [dec(@"content", CGRectMake(0, 0, FVP(1.f), FVP(1.f)), ^{
-                                UIView *view = [[UIView alloc] init];
-                                view.backgroundColor =[UIColor colorWithRed:236/255.f green:240/255.f blue:241/255.f alpha:1.f];
-                                view.clipsToBounds = YES;
-                                return view;
-                            }()) $:@[
-                                dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), ^{
-                                    UILabel *label = [[UILabel alloc] init];
-                                    label.tag = 101;
-                                    label.font = [UIFont boldSystemFontOfSize:18];
-                                    label.textColor = [UIColor blackColor];
-                                    label.backgroundColor = [UIColor clearColor];
-
-                                    return label;
-                                }()),
-                                dec(@"dotView", CGRectMake(FVT(80), FVCenter, 75, 25), ^{
-                                    DotView *dotView = [[DotView alloc]init];
-                                    dotView.backgroundColor = [UIColor clearColor];
-                                    dotView.leftMargin = 1.f;
-                                    dotView.dotRadius = 3.f;
-                                    dotView.spaceBetween = 3.f;
-                                    dotView.tag = 102;
-                                    return dotView;
-                                }()),
-                            ]]
-                        ]];
-
-                        [declaration setupViewTreeInto:cell];
-                        [declaration updateViewFrame];
-                        [cell associateValue:declaration withKey:&key];
-                    }
-
-                    UITextView *label = (UITextView *)[cell viewWithTag:101];
-
-                    Word *word = [weakSelf.wordFetchedResultsController objectAtIndexPath:indexPath];
-                    label.text = word.word;
-
-                    DotView *dotView = (DotView*)[cell viewWithTag:102];
-                    if(word.postNumber.integerValue > 0){
-                        dotView.showPlaceHolder = YES;
-                    }
-                    else{
-                        dotView.showPlaceHolder = NO;
-                    }
-                    dotView.dotNumber = word.checkNumber.integerValue;
-                    [dotView setNeedsDisplay];
-                    return cell;
-                }];
-
-                tableView.dataSource = (id)dataSource;
                 return tableView;
             }()),
         ]],
@@ -252,19 +194,6 @@
     }
 }
 
--(void)setTableDelegateForWordTable:(UITableView *)wordTable{
-    A2DynamicDelegate *delegate = wordTable.dynamicDelegate;
-
-    typeof(self) __weak weakSelf = self;
-    [delegate implementMethod:@selector(tableView:didSelectRowAtIndexPath:) withBlock:^(UITableView *tableView, NSIndexPath* indexPath){
-        Word* word = [weakSelf.wordFetchedResultsController objectAtIndexPath:indexPath];
-        WordDetailViewController *wordDetailViewController = [[WordDetailViewController alloc] init];
-        wordDetailViewController.word = word;
-        [weakSelf.navigationController pushViewController:wordDetailViewController animated:YES];
-    }];
-
-    wordTable.delegate = (id)delegate;
-}
 
 - (IBAction)addWordAction:(id)sender {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NewWord_Title", @"New Word") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"Add", @"Add"), nil];
@@ -272,4 +201,43 @@
     [alertView show];
 }
 
+#pragma mark UITableViewDataSource & Delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    id<NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[0];
+    return sectionInfo.numberOfObjects;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WordTableViewCell *cell = (WordTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    Word* word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
+    cell.word = word;
+    return cell;
+}
+
+-(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
+    Word* word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
+    WordDetailViewController *wordDetailViewController = [[WordDetailViewController alloc] init];
+    wordDetailViewController.word = word;
+    [self.navigationController pushViewController:wordDetailViewController animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        Word *word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
+        word.ignore = @(YES);
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    }
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"隐藏";
+}
 @end
