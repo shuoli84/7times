@@ -25,6 +25,9 @@
 		9C1C9C3A17DF081900BCC341 /* _timesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3917DF081900BCC341 /* _timesTests.m */; };
 		9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */; };
 		9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC465183E0C2100C2EB68 /* PostsViewController.m */; };
+		9C3FC46A183F562B00C2EB68 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */; };
+		9C3FC46B183F562B00C2EB68 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */; };
+		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1A918366F3100A8CD95 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1A818366F3100A8CD95 /* Word.m */; };
 		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
@@ -50,7 +53,6 @@
 		BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EA746404EF689745BBCD /* cet6.txt */; };
 		BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */; };
 		BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E555847B0457DC217B20 /* WordListManager.m */; };
-		BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */; };
 		BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E4C71A8D463466C56BC4 /* gre.txt */; };
 		BE48E89ED4B6C4ACAD7B2CAE /* sat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E50A0F0BFC0D59E731EB /* sat.txt */; };
@@ -108,6 +110,9 @@
 		9C3FC463183E0A7B00C2EB68 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard_iPhone.storyboard"; sourceTree = "<group>"; };
 		9C3FC464183E0C2100C2EB68 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		9C3FC465183E0C2100C2EB68 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
+		9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		9C3FC469183F562B00C2EB68 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -186,6 +191,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */,
+				9C3FC46A183F562B00C2EB68 /* libWeiboSDK.a in Frameworks */,
 				9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */,
 				9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */,
 				9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */,
@@ -194,7 +201,6 @@
 				9C1C9C0817DF081900BCC341 /* Foundation.framework in Frameworks */,
 				9C1C9C0A17DF081900BCC341 /* CoreGraphics.framework in Frameworks */,
 				B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */,
-				BE48E5C01B040F6108021898 /* libFlurry_4.2.4.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +222,7 @@
 		9C1C9BF917DF081800BCC341 = {
 			isa = PBXGroup;
 			children = (
+				9C3FC46C183F563600C2EB68 /* Weibo */,
 				9CBEC8A61826A6BE002FE3FB /* 7times logo@29.png */,
 				9CBEC8A51826A693002FE3FB /* 7times logo@114.png */,
 				9CBEC8A41826A680002FE3FB /* 7times logo@57.png */,
@@ -356,6 +363,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9C3FC46C183F563600C2EB68 /* Weibo */ = {
+			isa = PBXGroup;
+			children = (
+				9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */,
+				9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */,
+				9C3FC469183F562B00C2EB68 /* WeiboSDK.h */,
+			);
+			name = Weibo;
+			sourceTree = "<group>";
+		};
 		BE48ECF04E81B8EE57B43120 /* IAP */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +489,7 @@
 				BE48E609165404AAF6EE92B1 /* cet4.txt in Resources */,
 				BE48E41AC7A38C172F9C3770 /* cet6.txt in Resources */,
 				BE48E60DF0F351D5D27D62B7 /* gre.txt in Resources */,
+				9C3FC46B183F562B00C2EB68 /* WeiboSDK.bundle in Resources */,
 				BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */,
 				9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */,
 			);
@@ -720,7 +738,11 @@
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
+				LIBRARY_SEARCH_PATHS = (
+					"\\\"${PROJECT_DIR}/Flurry\\\"/**",
+					/Users/lishuo/Developer/7times/7times,
+					/Users/lishuo/Developer/7times/7times/Flurry,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A5729F0A-BDEC-4E81-A306-001E0394CCD4";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -739,7 +761,11 @@
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "\"${PROJECT_DIR}/Flurry\"/**";
+				LIBRARY_SEARCH_PATHS = (
+					"\\\"${PROJECT_DIR}/Flurry\\\"/**",
+					/Users/lishuo/Developer/7times/7times,
+					/Users/lishuo/Developer/7times/7times/Flurry,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "22FB5705-3AF0-4A79-92BE-767448E17152";
 				TARGETED_DEVICE_FAMILY = 1;

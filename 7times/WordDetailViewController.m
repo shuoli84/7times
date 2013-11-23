@@ -16,6 +16,7 @@
 #import "SLSharedConfig.h"
 #import "PostDownloader.h"
 #import "SVProgressHUD.h"
+#import "WeiboSDK.h"
 
 @interface WordDetailViewController() <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *postsFetchedResultsController;
@@ -73,6 +74,26 @@
                     [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
                         [SVProgressHUD dismiss];
                     }];
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+            }()),
+            dec(@"share", CGRectMake(FVA(10), FVT(40), 50, 40), ^{
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+                [button setTitle:@"分享" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
+
+                [button addEventHandler:^(id sender) {
+                    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+                    request.redirectURI = kWeiboRedirectURI;
+                    request.scope = @"all";
+                    request.userInfo = @{
+                        @"SSO_From" : @"WordDetailViewController",
+                        @"Word_word" : weakSelf.word.word
+                    };
+                    [WeiboSDK sendRequest:request];
                 } forControlEvents:UIControlEventTouchUpInside];
 
                 return button;

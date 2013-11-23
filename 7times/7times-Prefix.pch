@@ -14,5 +14,6 @@
     #import "CoreData+MagicalRecord.h"
 
     #define IRATE_USE_STOREKIT 1
+    #define kWeiboRedirectURI @"https://api.weibo.com/oauth2/default.html"
 #endif
 

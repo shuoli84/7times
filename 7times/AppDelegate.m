@@ -11,6 +11,10 @@
 #import "Flurry.h"
 #import "iRate.h"
 #import "SevenTimesIAPHelper.h"
+#import "WeiboSDK.h"
+
+@interface AppDelegate () <WeiboSDKDelegate>
+@end
 
 @implementation AppDelegate
 
@@ -25,7 +29,18 @@
     
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor greenSeaColor]];
+
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:@"2038284123"];
     return YES;
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WeiboSDK handleOpenURL:url delegate:self];
+}
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [WeiboSDK handleOpenURL:url delegate:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -53,6 +68,14 @@
 + (void)initialize {
     [iRate sharedInstance].daysUntilPrompt = 3;
     [iRate sharedInstance].usesUntilPrompt = 15;
+}
+
+-(void)didReceiveWeiboRequest:(WBBaseRequest *)request {
+    NSLog(@"ReceiveWeiboRequest %@", request);
+}
+
+-(void)didReceiveWeiboResponse:(WBBaseResponse *)response {
+    NSLog(@"ReceiveWeiboResponse %@", response);
 }
 
 @end

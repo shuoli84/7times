@@ -10,6 +10,8 @@
 #import <BlocksKit/UIControl+BlocksKit.h>
 #import "PostDetailViewController.h"
 #import "Post.h"
+#import "TSMiniWebBrowser.h"
+#import "NSURL+QueryString.h"
 
 @interface PostDetailViewController()
 
@@ -57,8 +59,17 @@
                 button.backgroundColor = [UIColor peterRiverColor];
                 [button setTitle:@"原文" forState:UIControlStateNormal];
                 [button addEventHandler:^(id sender) {
-                    weakSelf.post.checked = [NSNumber numberWithBool:YES];
-                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                    NSURL *url = [NSURL URLWithString:weakSelf.post.url];
+                    if (url.dictionaryForQueryString[@"url"]) {
+                        url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
+                        NSLog(@"Get real url:%@", url.absoluteString);
+                    }
+
+                    url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", url.absoluteString]];
+
+                    TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:url];
+                    browser.mode = TSMiniWebBrowserModeNavigation;
+                    [weakSelf.navigationController pushViewController:browser animated:YES];
                 } forControlEvents:UIControlEventTouchUpInside];
                 return button;
             }() ),
