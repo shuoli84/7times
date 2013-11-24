@@ -29,6 +29,7 @@
 		9C3FC46B183F562B00C2EB68 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */; };
 		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		9C3FC47118405E2D00C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC47018405E2D00C2EB68 /* Word.m */; };
+		9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
@@ -114,9 +115,11 @@
 		9C3FC467183F562B00C2EB68 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		9C3FC468183F562B00C2EB68 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		9C3FC469183F562B00C2EB68 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
-		9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Model.1. 2.xcdatamodel"; sourceTree = "<group>"; };
+		9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 2.xcdatamodel"; sourceTree = "<group>"; };
 		9C3FC46F18405E2D00C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
 		9C3FC47018405E2D00C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		9C3FC4721841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+flexibleSpaceItem.h"; sourceTree = "<group>"; };
+		9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+flexibleSpaceItem.m"; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -287,10 +290,10 @@
 				9C1C9C1D17DF081900BCC341 /* MainStoryboard_iPhone.storyboard */,
 				9C56C1B2183DF65800A8CD95 /* PostBriefTableViewCell.h */,
 				9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */,
+				BE48E67296806E138409D68F /* WordDetailViewController.h */,
 				BE48E06E31969545ABEBB1C0 /* WordDetailViewController.m */,
 				9C3FC464183E0C2100C2EB68 /* PostsViewController.h */,
 				9C3FC465183E0C2100C2EB68 /* PostsViewController.m */,
-				BE48E67296806E138409D68F /* WordDetailViewController.h */,
 				BE48E29FC619F4D67CAD7289 /* WordListViewController.m */,
 				BE48E1EBCA1B38425D9197FB /* WordListViewController.h */,
 				9C1C9C0C17DF081900BCC341 /* Supporting Files */,
@@ -299,6 +302,8 @@
 				BE48E7CC2B7021E380FDFC5C /* DotView.m */,
 				BE48EA2354CA3EBD5481DFC9 /* DotView.h */,
 				BE48ECC05168E10F9F382F43 /* IPhoneViewController.m */,
+				9C3FC4721841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.h */,
+				9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */,
 				BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */,
 				BE48E77AD3CF8872FFDD8E2E /* PostManager.m */,
 				BE48EA2F8A83E5038FAEF779 /* PostManager.h */,
@@ -598,6 +603,7 @@
 				9CF0CA1C1810C61100658EBA /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
+				9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
 				9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */,

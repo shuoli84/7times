@@ -17,12 +17,14 @@
 #import "PostDownloader.h"
 #import "SVProgressHUD.h"
 #import "WeiboSDK.h"
+#import "UIBarButtonItem+flexibleSpaceItem.h"
 
 @interface WordDetailViewController() <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *postsFetchedResultsController;
 @property (nonatomic, strong) FVDeclaration *declare;
 
 @property (nonatomic, strong) UITableView *postsTable;
+@property (nonatomic, strong) UIButton *dictionaryButton;
 @end
 
 @implementation WordDetailViewController {
@@ -37,73 +39,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
-
-    typeof(self) __weak weakSelf = self;
-
+    
     self.declare = [dec(@"root", CGRectZero) $:@[
-        [dec(@"info", CGRectMake(0, 0, FVP(1.f), 150), ^{
-            UIView *view = [[UIView alloc] init];
-            view.backgroundColor = [UIColor greenSeaColor];
-            return view;
-        }()) $:@[
-            dec(@"dictionary", CGRectMake(20, FVT(40), 50, 40), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-                [button setTitle:@"词典" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
-
-                [button addEventHandler:^(id sender) {
-                    Word *w = weakSelf.word;
-                    UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:w.word];
-                    [weakSelf presentViewController:dictionViewController animated:YES completion:nil];
-                } forControlEvents:UIControlEventTouchUpInside];
-
-                return button;
-            }()),
-            dec(@"load", CGRectMake(FVA(10), FVT(40), 100, 40), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-                [button setTitle:@"加载新闻" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
-
-                [button addEventHandler:^(id sender) {
-                    Word *w = weakSelf.word;
-                    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeGradient];
-                    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
-                        [SVProgressHUD dismiss];
-                    }];
-                } forControlEvents:UIControlEventTouchUpInside];
-
-                return button;
-            }()),
-            dec(@"share", CGRectMake(FVA(10), FVT(40), 50, 40), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-                [button setTitle:@"分享" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor alizarinColor] forState:UIControlStateHighlighted];
-
-                [button addEventHandler:^(id sender) {
-                    /*
-                    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
-                    request.redirectURI = kWeiboRedirectURI;
-                    request.scope = @"all";
-                    request.userInfo = @{
-                        @"SSO_From" : @"WordDetailViewController",
-                        @"Word_word" : weakSelf.word.word
-                    };
-                    [WeiboSDK sendRequest:request];
-                    */
-
-
-                } forControlEvents:UIControlEventTouchUpInside];
-
-                return button;
-            }()),
-        ]],
-        dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVFill), self.postsTable = ^{
+        dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVTillEnd), self.postsTable = ^{
             UITableView *tableView = [[UITableView alloc]
                                       initWithFrame:CGRectZero
                                       style:UITableViewStylePlain];
@@ -115,16 +53,32 @@
     ]];
 
     [self.declare setupViewTreeInto:self.view];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.tabBarController.tabBar.hidden = YES;
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    self.tabBarController.tabBar.hidden = NO;
-    [super viewWillDisappear:animated];
+    UIBarButtonItem *dictionaryItem = [UIBarButtonItem.alloc
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                       target:self
+                                       action:@selector(lookupWord:)];
+    dictionaryItem.tintColor = [UIColor greenSeaColor];
+    
+    UIBarButtonItem *loadNewsItem = [UIBarButtonItem.alloc
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                    target:self action:@selector(loadNews:)];
+    loadNewsItem.tintColor = [UIColor greenSeaColor];
+    
+    UIBarButtonItem *shareItem = [UIBarButtonItem.alloc
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                    target:self action:@selector(share:)];
+    shareItem.tintColor = [UIColor greenSeaColor];
+    
+    [self setToolbarItems:@[
+                            [UIBarButtonItem flexibleSpaceItem],
+                            dictionaryItem,
+                            [UIBarButtonItem flexibleSpaceItem],
+                            loadNewsItem,
+                            [UIBarButtonItem flexibleSpaceItem],
+                            shareItem,
+                            [UIBarButtonItem flexibleSpaceItem],
+                            ]];
+    self.navigationController.toolbarHidden = NO;
 }
 
 -(void)viewWillLayoutSubviews {
@@ -133,6 +87,32 @@
     self.declare.unExpandedFrame = self.view.bounds;
     [self.declare resetLayout];
     [self.declare updateViewFrame];
+}
+
+-(void)lookupWord:(id) sender{
+    UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.word.word];
+    [self presentViewController:dictionViewController animated:YES completion:nil];
+}
+
+-(void)loadNews:(id) sender{
+    Word *w = self.word;
+    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeGradient];
+    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
+        [SVProgressHUD dismiss];
+    }];
+}
+
+-(void)share:(id) sender{
+    /*
+                    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+                    request.redirectURI = kWeiboRedirectURI;
+                    request.scope = @"all";
+                    request.userInfo = @{
+                        @"SSO_From" : @"WordDetailViewController",
+                        @"Word_word" : weakSelf.word.word
+                    };
+                    [WeiboSDK sendRequest:request];
+                   */
 }
 
 #pragma mark TableViewDelegate & DataSource

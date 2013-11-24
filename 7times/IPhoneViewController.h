@@ -12,6 +12,4 @@
 @interface IPhoneViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* addButton;
-
-- (IBAction)loadWordList:(id)sender;
 @end

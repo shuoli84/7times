@@ -29,6 +29,7 @@
 #import "UIAlertView+BlocksKit.h"
 #import "WordDetailViewController.h"
 #import "WordTableViewCell.h"
+#import "UIBarButtonItem+flexibleSpaceItem.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -45,6 +46,7 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
+    self.navigationController.toolbarHidden = NO;
     NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
     if ([[ver objectAtIndex:0] intValue] >= 7) {
         self.navigationController.navigationBar.barTintColor = [UIColor greenSeaColor];
@@ -54,8 +56,6 @@
     }
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-
-    typeof(self) __weak weakSelf = self;
 
     self.wordFetchedResultsController = [Word
                                          MR_fetchAllSortedBy:@"lastCheckTime"
@@ -73,31 +73,42 @@
 
     [self.wordFetchedResultsController performFetch:nil];
 
-    self.declaration = [dec(@"root", CGRectZero) $:@[
-        [dec(@"wordView", CGRectMake(0, 0, FVP(1), FVP(1))) $:@[
-            dec(@"wordList", CGRectMake(0, FVA(0), FVP(1), FVFill), ^{
-                UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-                self.wordListTableView = tableView;
+    self.declaration = [dec(@"root") $:@[
+        dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVT(self.navigationController.toolbar.bounds.size.height)), ^{
+            UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+            self.wordListTableView = tableView;
 
-                tableView.backgroundColor = [UIColor whiteColor];
-                tableView.rowHeight = 48;
-                tableView.allowsSelection = YES;
+            tableView.backgroundColor = [UIColor whiteColor];
+            tableView.rowHeight = 48;
+            tableView.allowsSelection = YES;
 
-                [tableView registerClass:[WordTableViewCell class] forCellReuseIdentifier:@"cell"];
-                tableView.dataSource = self;
-                tableView.delegate = self;
+            [tableView registerClass:[WordTableViewCell class] forCellReuseIdentifier:@"cell"];
+            tableView.dataSource = self;
+            tableView.delegate = self;
 
-                return tableView;
-            }()),
-        ]],
+            return tableView;
+        }()),
     ]];
-
 
     [self.declaration setupViewTreeInto:self.view];
 
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
+    
+    UIBarButtonItem *newWordButtonItem =
+    [UIBarButtonItem.alloc
+     initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+     target:self
+     action:@selector(addWordAction:)];
+    newWordButtonItem.tintColor = [UIColor greenSeaColor];
+    
+    [self
+     setToolbarItems:@[
+                       [UIBarButtonItem flexibleSpaceItem],
+                       newWordButtonItem,
+                       [UIBarButtonItem flexibleSpaceItem],
+                       ]];
 }
 
 -(void)viewWillLayoutSubviews {
@@ -201,6 +212,10 @@
     [alertView show];
 }
 
+- (IBAction)showAccountViewController:(id)sender {
+    NSLog(@"Show account view controller");
+}
+
 #pragma mark UITableViewDataSource & Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[0];
@@ -238,6 +253,6 @@
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"隐藏";
+    return NSLocalizedString(@"Ignore", @"Ignore");
 }
 @end

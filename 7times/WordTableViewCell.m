@@ -27,7 +27,6 @@
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
-        typeof(self) __weak weakSelf = self;
         self.declaration = [dec(@"root") $:@[
             dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), self.wordLabel = ^{
                 UILabel *label = [[UILabel alloc] init];

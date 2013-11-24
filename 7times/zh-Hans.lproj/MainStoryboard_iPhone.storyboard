@@ -28,39 +28,6 @@
             </objects>
             <point key="canvasLocation" x="-1129" y="-390"/>
         </scene>
-        <!--Posts View Controller - 开始背-->
-        <scene sceneID="O32-a2-6se">
-            <objects>
-                <viewController id="Cjm-Ub-u1Z" customClass="PostsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6FB-VW-n5Q"/>
-                        <viewControllerLayoutGuide type="bottom" id="WOE-ja-Ex8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ooy-dl-1eQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RQQ-DC-15S">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Cjm-Ub-u1Z" id="ImX-xW-EDc"/>
-                                    <outlet property="delegate" destination="Cjm-Ub-u1Z" id="YcA-Jo-X3W"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="开始背" id="Gsp-5Y-lGB"/>
-                    <connections>
-                        <outlet property="itemListTableView" destination="RQQ-DC-15S" id="4Bs-MS-P1U"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jnF-Oh-puM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1129" y="305"/>
-        </scene>
         <!--Phone View Controller - word list-->
         <scene sceneID="5">
             <objects>
@@ -75,9 +42,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
-                        <barButtonItem key="leftBarButtonItem" title="添加" id="cW8-xb-ToZ">
+                        <barButtonItem key="leftBarButtonItem" title="账号" id="cW8-xb-ToZ">
                             <connections>
-                                <action selector="addWordAction:" destination="2" id="8CD-Dx-8c3"/>
+                                <action selector="showAccountViewController:" destination="2" id="Bo7-AA-3Ru"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="单词表" id="dlz-L2-X1j">
