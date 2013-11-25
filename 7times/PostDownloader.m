@@ -100,11 +100,10 @@
 -(void)downloadForWord:(NSString*)word completion:(void(^)())completion{
     dispatch_async(_downloadQueue, ^{
         Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word];
-        if(word1.lastCheckExpired){
-            NSLog(@"Start download posts for word: %@", word);
-            [self.googleNewsSource download:word1];
-            NSLog(@"Finish download for word: %@", word);
-        }
+        NSLog(@"Start download posts for word: %@", word);
+        [self.googleNewsSource download:word1];
+        NSLog(@"Finish download for word: %@", word);
+        
         if(completion){
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion();
