@@ -135,9 +135,6 @@
 }
 
 -(void)share:(id) sender{
-    /*
-
-                   */
 }
 
 #pragma mark TableViewDelegate & DataSource
@@ -174,6 +171,26 @@
     [self.navigationController pushViewController:postDetailViewController animated:YES];
 }
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        Post *post = [self.postsFetchedResultsController objectAtIndexPath:indexPath];
+        post.checked = [NSNumber numberWithBool:YES];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"已读";
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
 #pragma mark NSFetchedResultsDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
@@ -192,7 +209,7 @@
                 [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
             case NSFetchedResultsChangeUpdate:
-                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
                 break;
             case NSFetchedResultsChangeMove:
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

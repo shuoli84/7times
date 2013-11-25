@@ -33,6 +33,8 @@
 
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:@"2038284123"];
+    
+    [SLSharedConfig sharedInstance];
     return YES;
 }
 

@@ -19,6 +19,7 @@
 
 @implementation PostDownloader {
     dispatch_queue_t _downloadQueue;
+    dispatch_queue_t _downloadQueueForSingleWord;
 }
 
 -(id)init{
@@ -27,9 +28,10 @@
     if (self){
         self.googleNewsSource = [[GoogleNewsSource alloc] init];
         _downloadQueue = dispatch_queue_create(NULL, NULL);
+        _downloadQueueForSingleWord = dispatch_queue_create(NULL, NULL);
 
         self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"checkNumber < 7 AND postNumber == 0"] sortedBy:@"added" ascending:YES];
-        self.wordsFetchedResultsController.fetchRequest.fetchLimit = 10;
+        self.wordsFetchedResultsController.fetchRequest.fetchLimit = 50;
     }
 
     return self;
@@ -39,13 +41,7 @@
     typeof(self) __weak weakSelf = self;
     self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
-            if (shouldBeginBlock && !shouldBeginBlock()) {
-                return;
-            }
-
-            if(weakSelf.readyForLoad){
-                [weakSelf downloadWithOneWordFinish:oneWordFinish completion:completion];
-            }
+            [weakSelf downloadWithOneWordFinish:oneWordFinish completion:completion];
         });
     } repeats:YES];
     [self.timer fire];
@@ -53,16 +49,8 @@
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 
--(void)fire{
-    [self.timer fire];
-}
-
 -(void)end{
     [self.timer invalidate];
-}
-
--(BOOL)readyForLoad{
-    return YES;
 }
 
 -(NSArray*)wordListNeedPosts {
@@ -82,7 +70,7 @@
     NSArray *wordArray = self.wordListNeedPosts;
 
     for(Word *word in wordArray){
-        if(word.lastCheckExpired){
+        if(word.postNumber.integerValue == 0){
             [self throttleRequest];
             [self.googleNewsSource download:word];
             if(oneWordFinish){
@@ -98,7 +86,7 @@
 }
 
 -(void)downloadForWord:(NSString*)word completion:(void(^)())completion{
-    dispatch_async(_downloadQueue, ^{
+    dispatch_async(_downloadQueueForSingleWord, ^{
         Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word];
         NSLog(@"Start download posts for word: %@", word);
         [self.googleNewsSource download:word1];

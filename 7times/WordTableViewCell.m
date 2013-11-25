@@ -11,6 +11,7 @@
 #import "WordTableViewCell.h"
 #import "Word.h"
 #import "DotView.h"
+#import "UIGestureRecognizer+BlocksKit.h"
 
 
 @interface WordTableViewCell()
@@ -39,7 +40,7 @@
 
                 return label;
             }()),
-            dec(@"dotView", CGRectMake(FVT(130), FVCenter, 75, 25), self.dotView = ^{
+            dec(@"dotView", CGRectMake(FVT(80), FVCenter, 75, 25), self.dotView = ^{
                 DotView *dotView = [[DotView alloc]init];
                 dotView.backgroundColor = [UIColor clearColor];
                 dotView.leftMargin = 1.f;
@@ -47,21 +48,18 @@
                 dotView.spaceBetween = 3.f;
                 return dotView;
             }()),
-            dec(@"definiationButton", CGRectMake(FVA(5), FVCenter, 50, FVP(1.f)), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-                [button setTitle:@"?" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor concreteColor] forState:UIControlStateNormal];
-                [button addEventHandler:^(id sender) {
-                    if(weakSelf.showDefinitionBlock){
-                        weakSelf.showDefinitionBlock(weakSelf.word.word);
-                    }
-                } forControlEvents:UIControlEventTouchUpInside];
-
-                return button;
-            }())
         ]];
 
         [self.declaration setupViewTreeInto:self];
+
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+            if (state == UIGestureRecognizerStateRecognized){
+                if(weakSelf.showDefinitionBlock){
+                    weakSelf.showDefinitionBlock(weakSelf.word.word);
+                }
+            }
+        }];
+        [self addGestureRecognizer:longPressGestureRecognizer];
     }
 
     return self;

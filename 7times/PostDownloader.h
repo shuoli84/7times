@@ -17,8 +17,6 @@
 
 - (void)end;
 
-- (void)fire;
-
 - (void)downloadWithOneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion;
 
 - (void)downloadForWord:(NSString *)word completion:(void (^)())completion;
