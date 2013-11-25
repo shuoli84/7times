@@ -18,6 +18,8 @@
 #import "SVProgressHUD.h"
 #import "WeiboSDK.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
+#import "Check.h"
+#import "Word+Util.h"
 
 @interface WordDetailViewController() <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *postsFetchedResultsController;
@@ -25,6 +27,8 @@
 
 @property (nonatomic, strong) UITableView *postsTable;
 @property (nonatomic, strong) UIButton *dictionaryButton;
+
+@property (nonatomic, strong) NSDate *startTime;
 @end
 
 @implementation WordDetailViewController {
@@ -79,6 +83,34 @@
                             [UIBarButtonItem flexibleSpaceItem],
                             ]];
     self.navigationController.toolbarHidden = NO;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    self.startTime = [NSDate date];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    NSDate *now = [NSDate date];
+    NSTimeInterval period = now.timeIntervalSince1970 - self.startTime.timeIntervalSince1970;
+    if(period > 5.f){
+        NSLog(@"The word showed longer than 5 seconds, treat this as a valid view");
+
+        if(self.word.lastCheckExpired){
+            NSLog(@"The last check is expired, mark this as a new check");
+            Check *check = [Check MR_createEntity];
+            check.date = now;
+            [self.word addCheckHelper:check];
+
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+        else{
+            NSLog(@"The last check still valid, so this can't be marked as a new check");
+        }
+    }
 }
 
 -(void)viewWillLayoutSubviews {

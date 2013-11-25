@@ -12,6 +12,8 @@
 #import "Post.h"
 #import "TSMiniWebBrowser.h"
 #import "NSURL+QueryString.h"
+#import "Word+Util.h"
+#import "Check.h"
 
 @interface PostDetailViewController()
 
@@ -19,6 +21,8 @@
 
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UITextView *bodyTextView;
+
+@property (nonatomic, strong) NSDate *startTime;
 @end
 
 @implementation PostDetailViewController {
@@ -43,14 +47,13 @@
             return bodyTextView;
         }()),
         [dec(@"buttonContainer", CGRectMake(FVCenter, FVT(100), 250, 50)) $:@[
-            dec(@"markAsRead", CGRectMake(0, 0, FVP(0.4), FVP(1.f)), ^{
+            dec(@"lookUp", CGRectMake(0, 0, FVP(0.4), FVP(1.f)), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.backgroundColor = [UIColor greenSeaColor];
-                [button setTitle:@"已读" forState:UIControlStateNormal];
+                [button setTitle:@"词典" forState:UIControlStateNormal];
                 [button addEventHandler:^(id sender) {
-                    weakSelf.post.checked = [NSNumber numberWithBool:YES];
-                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                    UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
+                    [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
                 } forControlEvents:UIControlEventTouchUpInside];
                 return button;
             }()),
@@ -99,8 +102,34 @@
     self.navigationController.toolbarHidden = YES;
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    self.startTime = [NSDate date];
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.toolbarHidden = NO;
+
+    NSTimeInterval period = [NSDate date].timeIntervalSince1970 - self.startTime.timeIntervalSince1970;
+    if(period > 5.f){
+        NSLog(@"Period is long enough to mark this post as read");
+        self.post.checked = [NSNumber numberWithBool:YES];
+
+        if(self.post.word.lastCheckExpired){
+            NSLog(@"The word's last check expired, mark it as checked this time too");
+            Check *check = [Check MR_createEntity];
+            check.date = [NSDate date];
+            check.post = self.post;
+
+            [self.post.word addCheckHelper:check];
+        }
+        else{
+            NSLog(@"The word's last check still valid, ignore this check");
+        }
+
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    }
 }
 @end
