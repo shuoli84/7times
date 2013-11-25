@@ -104,14 +104,7 @@
 
 -(void)share:(id) sender{
     /*
-                    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
-                    request.redirectURI = kWeiboRedirectURI;
-                    request.scope = @"all";
-                    request.userInfo = @{
-                        @"SSO_From" : @"WordDetailViewController",
-                        @"Word_word" : weakSelf.word.word
-                    };
-                    [WeiboSDK sendRequest:request];
+
                    */
 }
 

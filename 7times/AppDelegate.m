@@ -12,6 +12,7 @@
 #import "iRate.h"
 #import "SevenTimesIAPHelper.h"
 #import "WeiboSDK.h"
+#import "SLSharedConfig.h"
 
 @interface AppDelegate () <WeiboSDKDelegate>
 @end
@@ -75,7 +76,22 @@
 }
 
 -(void)didReceiveWeiboResponse:(WBBaseResponse *)response {
-    NSLog(@"ReceiveWeiboResponse %@", response);
+    if([response isKindOfClass:[WBAuthorizeResponse class]]){
+        NSString *title = @"认证结果";
+        NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",
+                                                       response.statusCode, [(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+
+        WBAuthorizeResponse *authResponse = (WBAuthorizeResponse *)response;
+
+        [SLSharedConfig sharedInstance].weiboUserLoginInfo = authResponse.userInfo;
+
+        [alert show];
+    }
 }
 
 @end

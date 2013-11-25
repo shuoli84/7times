@@ -30,6 +30,7 @@
 #import "WordDetailViewController.h"
 #import "WordTableViewCell.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
+#import "AccountViewController.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -213,7 +214,8 @@
 }
 
 - (IBAction)showAccountViewController:(id)sender {
-    NSLog(@"Show account view controller");
+    AccountViewController *accountViewController = AccountViewController.alloc.init;
+    [self.navigationController pushViewController:accountViewController animated:YES];
 }
 
 #pragma mark UITableViewDataSource & Delegate
