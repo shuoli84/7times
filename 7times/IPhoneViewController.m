@@ -228,6 +228,11 @@
     WordTableViewCell *cell = (WordTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
     Word* word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
     cell.word = word;
+    typeof(self) __weak weakSelf = self;
+    cell.showDefinitionBlock = ^(NSString *w){
+        UIReferenceLibraryViewController *referenceLibraryViewController = [UIReferenceLibraryViewController.alloc initWithTerm:w];
+        [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
+    };
     return cell;
 }
 

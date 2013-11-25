@@ -7,6 +7,7 @@
 #import <SLFlexibleView/FVDeclaration.h>
 #import <SLFlexibleView/FVDeclareHelper.h>
 #import <BlocksKit/UIControl+BlocksKit.h>
+#import <FlatUIKit/UIColor+FlatUI.h>
 #import "WordTableViewCell.h"
 #import "Word.h"
 #import "DotView.h"
@@ -27,6 +28,8 @@
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
+
+        typeof(self) __weak weakSelf = self;
         self.declaration = [dec(@"root") $:@[
             dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), self.wordLabel = ^{
                 UILabel *label = [[UILabel alloc] init];
@@ -36,7 +39,7 @@
 
                 return label;
             }()),
-            dec(@"dotView", CGRectMake(FVT(80), FVCenter, 75, 25), self.dotView = ^{
+            dec(@"dotView", CGRectMake(FVT(130), FVCenter, 75, 25), self.dotView = ^{
                 DotView *dotView = [[DotView alloc]init];
                 dotView.backgroundColor = [UIColor clearColor];
                 dotView.leftMargin = 1.f;
@@ -44,6 +47,18 @@
                 dotView.spaceBetween = 3.f;
                 return dotView;
             }()),
+            dec(@"definiationButton", CGRectMake(FVA(5), FVCenter, 50, FVP(1.f)), ^{
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+                [button setTitle:@"?" forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor concreteColor] forState:UIControlStateNormal];
+                [button addEventHandler:^(id sender) {
+                    if(weakSelf.showDefinitionBlock){
+                        weakSelf.showDefinitionBlock(weakSelf.word.word);
+                    }
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+            }())
         ]];
 
         [self.declaration setupViewTreeInto:self];

@@ -12,4 +12,6 @@
 @interface WordTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Word* word;
+
+@property (nonatomic, copy) void (^showDefinitionBlock)(NSString* word);
 @end
