@@ -7,11 +7,14 @@
 #import <Foundation/Foundation.h>
 
 
-@interface WeiboUserInfo : NSObject
+@interface WeiboUserInfo : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *profileImageUrl;
 
 -(id)initWithRequestUserInfo:(NSDictionary *)userInfo;
+-(id)initWithDictionary:(NSDictionary *)dictionary;
+
+-(NSDictionary*)dictionaryFromInstance;
 @end

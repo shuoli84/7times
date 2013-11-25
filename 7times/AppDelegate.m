@@ -13,6 +13,7 @@
 #import "SevenTimesIAPHelper.h"
 #import "WeiboSDK.h"
 #import "SLSharedConfig.h"
+#import "WeiboUserInfo.h"
 
 @interface AppDelegate () <WeiboSDKDelegate>
 @end
@@ -34,7 +35,19 @@
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:@"2038284123"];
     
-    [SLSharedConfig sharedInstance];
+    /**
+     * Restore from user standard setting
+     */
+    if(SLSharedConfig.sharedInstance.weiboUser == nil){
+        NSDictionary *userDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"weiboUserInfo"];
+        if(userDict){
+            [SLSharedConfig sharedInstance].weiboUser = [WeiboUserInfo.alloc initWithDictionary:userDict];
+        }
+    }
+    if(SLSharedConfig.sharedInstance.weiboUserLoginInfo == nil){
+        [SLSharedConfig sharedInstance].weiboUserLoginInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"weiboLoginInfo"];
+    }
+    
     return YES;
 }
 
@@ -54,6 +67,13 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[NSUserDefaults standardUserDefaults]
+     setObject:[[SLSharedConfig sharedInstance].weiboUser dictionaryFromInstance]
+     forKey:@"weiboUserInfo"];
+    
+    [[NSUserDefaults standardUserDefaults]
+     setObject:[SLSharedConfig sharedInstance].weiboUserLoginInfo forKey:@"weiboLoginInfo"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -79,20 +99,12 @@
 
 -(void)didReceiveWeiboResponse:(WBBaseResponse *)response {
     if([response isKindOfClass:[WBAuthorizeResponse class]]){
-        NSString *title = @"认证结果";
         NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",
                                                        response.statusCode, [(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil];
-
+        
+        NSLog(@"WeiboResponse: %@", message);
         WBAuthorizeResponse *authResponse = (WBAuthorizeResponse *)response;
-
         [SLSharedConfig sharedInstance].weiboUserLoginInfo = authResponse.userInfo;
-
-        [alert show];
     }
 }
 
