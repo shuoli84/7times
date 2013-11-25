@@ -12,7 +12,7 @@
 }
 
 -(id)initWithRequestUserInfo:(NSDictionary *)userInfo {
-    if(self = super.init){
+    if((self = super.init)){
         self.uid = userInfo[@"idstr"];
         self.name = userInfo[@"name"];
         self.profileImageUrl = userInfo[@"profile_image_url"];

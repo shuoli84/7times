@@ -116,6 +116,10 @@
 }
 
 #pragma mark WBHttpRequest
+-(void)request:(WBHttpRequest *)request didReceiveResponse:(NSURLResponse *)response{
+    NSLog(@"Response received: %@", response);
+}
+
 -(void)request:(WBHttpRequest *)request didFinishLoadingWithResult:(NSString *)result {
     NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     WeiboUserInfo *wbUser = [[WeiboUserInfo alloc] initWithRequestUserInfo:userInfo];
