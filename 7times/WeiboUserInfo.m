@@ -47,6 +47,9 @@
 }
 
 -(NSDictionary*)dictionaryFromInstance{
+    if(self.uid == nil || self.name == nil || self.profileImageUrl == nil){
+        return nil;
+    }
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     dictionary[@"uid"] = self.uid;

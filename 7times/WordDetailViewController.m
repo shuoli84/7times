@@ -135,6 +135,10 @@
 }
 
 -(void)share:(id) sender{
+    WBMessageObject *message = [WBMessageObject message];
+    message.text = [NSString stringWithFormat:@"在背单词%@ 来自7times", self.word.word];
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
+    [WeiboSDK sendRequest:request];
 }
 
 #pragma mark TableViewDelegate & DataSource

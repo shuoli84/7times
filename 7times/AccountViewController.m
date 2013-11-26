@@ -6,6 +6,7 @@
 
 #import <SLFlexibleView/FVDeclareHelper.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import <BlocksKit/UIControl+BlocksKit.h>
 #import "AccountViewController.h"
 #import "UIColor+FlatUI.h"
 #import "WeiboSDK.h"
@@ -24,6 +25,8 @@
 @property (nonatomic, strong) UIButton *loginToWeiboButton;
 @property (nonatomic, strong) UIView *userPanelView;
 @property (nonatomic, strong) UIImageView *profileImageView;
+@property (nonatomic, strong) UIButton *shareToWeiboButton;
+@property (nonatomic, strong) UIButton *logoutButton;
 
 @end
 
@@ -46,11 +49,43 @@
 
             return button;
         }()),
-        [dec(@"weiboUser", CGRectMake(FVCenter, FVCenter, FVP(0.6), 150), self.userPanelView = [UIView new]) $:@[
+        [dec(@"weiboUser", CGRectMake(FVCenter, FVCenter, FVP(0.6), 400), self.userPanelView = [UIView new]) $:@[
             dec(@"userProfileImage", CGRectMake(FVCenter, 0, 100, 100), self.profileImageView = ^{
                 UIImageView *imageView = [[UIImageView alloc]init];
                 return imageView;
             }()),
+            dec(@"shareToFriends", CGRectMake(FVCenter, FVA(20), FVP(0.8), 50), self.shareToWeiboButton = ^{
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+            [button setTitle:@"分享到微博" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+            button.backgroundColor = [UIColor greenSeaColor];
+                [button addEventHandler:^(id sender) {
+                    WBMessageObject *message = [WBMessageObject message];
+                    message.text = [NSString stringWithFormat:@"正在用7times背单词，小伙伴们一起来吧。https://itunes.apple.com/us/app/7times/id728175596?ls=1&mt=8"];
+                    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
+                    [WeiboSDK sendRequest:request];
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+        }()),
+            dec(@"logout", CGRectMake(FVCenter, FVA(20), FVP(0.8), 50), self.logoutButton = ^{
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+            [button setTitle:@"取消授权" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+            button.backgroundColor = [UIColor alizarinColor];
+                [button addEventHandler:^(id sender) {
+                    NSLog(@"Logout");
+                    [WeiboSDK logOutWithToken:[SLSharedConfig sharedInstance].weiboUserLoginInfo[@"access_token"] delegate:self];
+                    [SLSharedConfig sharedInstance].weiboUserLoginInfo = nil;
+                    [SLSharedConfig sharedInstance].weiboUser = nil;
+                } forControlEvents:UIControlEventTouchUpInside];
+
+                return button;
+        }()),
         ]],
     ]];
 
@@ -58,33 +93,38 @@
     [self.declaration setupViewTreeInto:self.view];
 
     [self.loginToWeiboButton addTarget:self action:@selector(loginToWeibo:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     typeof(self) __weak weakSelf = self;
     self.weiboLoginBinding = binding([SLSharedConfig sharedInstance], @"weiboUserLoginInfo", ^(NSObject *value){
         if(value == nil){
-            return;
+            weakSelf.loginToWeiboButton.hidden = NO;
+            weakSelf.userPanelView.hidden = YES;
         }
-        NSString *accessToken = [SLSharedConfig sharedInstance].weiboUserLoginInfo[@"access_token"];
-        NSString *uid = [SLSharedConfig sharedInstance].weiboUserLoginInfo[@"uid"];
+        else{
+            NSString *accessToken = [SLSharedConfig sharedInstance].weiboUserLoginInfo[@"access_token"];
+            NSString *uid = [SLSharedConfig sharedInstance].weiboUserLoginInfo[@"uid"];
 
-        weakSelf.loginToWeiboButton.hidden = YES;
-        weakSelf.userPanelView.hidden = NO;
+            weakSelf.loginToWeiboButton.hidden = YES;
+            weakSelf.userPanelView.hidden = NO;
 
-        [WBHttpRequest requestWithAccessToken:accessToken url:@"https://api.weibo.com/2/users/show.json" httpMethod:@"GET" params:@{
-            @"uid":uid
-        } delegate:weakSelf];
+            [WBHttpRequest requestWithAccessToken:accessToken url:@"https://api.weibo.com/2/users/show.json" httpMethod:@"GET" params:@{
+                @"uid":uid
+            } delegate:weakSelf];
+        }
     });
 
     self.weiboUserBinding = binding([SLSharedConfig sharedInstance], @"weiboUser", ^(NSObject *value){
         if(value == nil){
             return;
         }
+        else{
+            WeiboUserInfo *weiboUser = (WeiboUserInfo *)value;
 
-        WeiboUserInfo *weiboUser = (WeiboUserInfo *)value;
-
-        weakSelf.title = weiboUser.name;
-        [weakSelf.profileImageView setImageWithURL:[NSURL URLWithString:weiboUser.profileImageUrl]];
+            weakSelf.title = weiboUser.name;
+            [weakSelf.profileImageView setImageWithURL:[NSURL URLWithString:weiboUser.profileImageUrl]];
+        }
     });
+        
 }
 
 -(void)viewWillLayoutSubviews {
@@ -121,9 +161,15 @@
 }
 
 -(void)request:(WBHttpRequest *)request didFinishLoadingWithResult:(NSString *)result {
-    NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-    WeiboUserInfo *wbUser = [[WeiboUserInfo alloc] initWithRequestUserInfo:userInfo];
-    [SLSharedConfig sharedInstance].weiboUser = wbUser;
+    NSLog(@"Request finished: %@", result);
+    if([request isKindOfClass:[WBHttpRequest class]]){
+        NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        WeiboUserInfo *wbUser = [[WeiboUserInfo alloc] initWithRequestUserInfo:userInfo];
+        [SLSharedConfig sharedInstance].weiboUser = wbUser;
+    }
+    else{
+        NSLog(@"xx");
+    }
 }
 
 -(void)request:(WBHttpRequest *)request didFailWithError:(NSError *)error {
