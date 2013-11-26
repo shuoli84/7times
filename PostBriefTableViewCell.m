@@ -24,13 +24,6 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 -(void)setPost:(Post *)post{
     _post = post;
     self.textLabel.text = post.title;
@@ -43,8 +36,9 @@
         self.accessoryType = UITableViewCellAccessoryNone;
     }
 
-    CGSize titleSize = [self.textLabel sizeThatFits:self.contentView.bounds.size];
-    CGSize detailSize = [self.detailTextLabel sizeThatFits:self.bounds.size];
+    CGSize size = CGSizeMake(274, CGFLOAT_MAX);
+    CGSize titleSize = [self.textLabel sizeThatFits:size];
+    CGSize detailSize = [self.detailTextLabel sizeThatFits:size];
     _cellHeight = titleSize.height + detailSize.height + 20.f;
 }
 

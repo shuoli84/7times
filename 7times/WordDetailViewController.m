@@ -29,6 +29,8 @@
 @property (nonatomic, strong) UIButton *dictionaryButton;
 
 @property (nonatomic, strong) NSDate *startTime;
+
+@property (nonatomic, strong) NSMutableDictionary *postHeightCache;
 @end
 
 @implementation WordDetailViewController {
@@ -37,6 +39,8 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+
+    self.postHeightCache = [NSMutableDictionary dictionaryWithCapacity:30];
 
     self.title = self.word.word;
 
@@ -142,15 +146,17 @@
 }
 
 #pragma mark TableViewDelegate & DataSource
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70.f;
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(self.postHeightCache[indexPath]){
+        return [self.postHeightCache[indexPath] integerValue];
+    }
+
     Post* post = [self.postsFetchedResultsController objectAtIndexPath:indexPath];
     PostBriefTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.post = post;
+
+    self.postHeightCache[indexPath] = @(cell.cellHeight);
+
     return cell.cellHeight;
 }
 

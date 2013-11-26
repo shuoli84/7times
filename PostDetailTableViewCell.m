@@ -21,7 +21,6 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UITextView *bodyTextView;
 
-@property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
 @property (nonatomic, strong) FVDeclaration* declaration;
 
 @end
