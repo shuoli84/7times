@@ -14,6 +14,8 @@
 #import "NSURL+QueryString.h"
 #import "Word+Util.h"
 #import "Check.h"
+#import "UIBarButtonItem+BlocksKit.h"
+#import "UIBarButtonItem+flexibleSpaceItem.h"
 
 @interface PostDetailViewController()
 
@@ -46,37 +48,6 @@
             bodyTextView.editable = NO;
             return bodyTextView;
         }()),
-        [dec(@"buttonContainer", CGRectMake(FVCenter, FVT(100), 250, 50)) $:@[
-            dec(@"lookUp", CGRectMake(0, 0, FVP(0.4), FVP(1.f)), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.backgroundColor = [UIColor greenSeaColor];
-                [button setTitle:@"词典" forState:UIControlStateNormal];
-                [button addEventHandler:^(id sender) {
-                    UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
-                    [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
-                } forControlEvents:UIControlEventTouchUpInside];
-                return button;
-            }()),
-            dec(@"openFromBrowser", CGRectMake(FVAutoTail, 0, FVP(0.4), FVP(1.f)), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.backgroundColor = [UIColor peterRiverColor];
-                [button setTitle:@"原文" forState:UIControlStateNormal];
-                [button addEventHandler:^(id sender) {
-                    NSURL *url = [NSURL URLWithString:weakSelf.post.url];
-                    if (url.dictionaryForQueryString[@"url"]) {
-                        url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
-                        NSLog(@"Get real url:%@", url.absoluteString);
-                    }
-
-                    url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", url.absoluteString]];
-
-                    TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:url];
-                    browser.mode = TSMiniWebBrowserModeNavigation;
-                    [weakSelf.navigationController pushViewController:browser animated:YES];
-                } forControlEvents:UIControlEventTouchUpInside];
-                return button;
-            }() ),
-        ]],
     ]];
 
     [self.declaration setupViewTreeInto:self.view];
@@ -87,6 +58,37 @@
     [self.declaration declarationByName:@"titleLabel"].unExpandedFrame = frame;
     [self.declaration updateViewFrame];
     self.bodyTextView.text = self.post.summary;
+
+    UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
+        UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
+        [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
+    }];
+    lookupButtonItem.tintColor = [UIColor greenSeaColor];
+
+    UIBarButtonItem *openLinkButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay handler:^(id sender) {
+        NSURL *url = [NSURL URLWithString:weakSelf.post.url];
+        if (url.dictionaryForQueryString[@"url"]) {
+            url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
+            NSLog(@"Get real url:%@", url.absoluteString);
+        }
+
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.readability.com/m?url=%@", url.absoluteString]];
+
+        TSMiniWebBrowser *browser = [[TSMiniWebBrowser alloc] initWithUrl:url];
+        browser.mode = TSMiniWebBrowserModeNavigation;
+        [weakSelf.navigationController pushViewController:browser animated:YES];
+        // hide the bar, cause the browser vc has its own bar
+        weakSelf.navigationController.toolbarHidden = YES;
+    }];
+    openLinkButtonItem.tintColor = [UIColor greenSeaColor];
+
+    [self setToolbarItems:@[
+        [UIBarButtonItem flexibleSpaceItem],
+        lookupButtonItem,
+        [UIBarButtonItem flexibleSpaceItem],
+        openLinkButtonItem,
+        [UIBarButtonItem flexibleSpaceItem],
+    ]];
 }
 
 -(void)viewWillLayoutSubviews {
@@ -97,9 +99,10 @@
     [self.declaration updateViewFrame];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.toolbarHidden = YES;
+
+    self.navigationController.toolbarHidden = NO; // Force to show the bar cause we need it
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -110,7 +113,6 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.toolbarHidden = NO;
 
     NSTimeInterval period = [NSDate date].timeIntervalSince1970 - self.startTime.timeIntervalSince1970;
     if(period > 5.f){
