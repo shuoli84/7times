@@ -38,13 +38,13 @@
     self.declaration = [dec(@"root") $:@[
         dec(@"titleLabel", CGRectMake(0, 0, FVP(1.f), 200), self.textView = ^{
             UITextView *titleTextView = [[UITextView alloc]init];
-            titleTextView.font = [UIFont boldSystemFontOfSize:22];
+            titleTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
             titleTextView.editable = NO;
             return titleTextView;
         }()),
         dec(@"bodyLabel", CGRectMake(0, FVAfter, FVP(1.f), FVTillEnd), self.bodyTextView = ^{
             UITextView *bodyTextView = [[UITextView alloc]init];
-            bodyTextView.font = [UIFont systemFontOfSize:20];
+            bodyTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
             bodyTextView.editable = NO;
             return bodyTextView;
         }()),

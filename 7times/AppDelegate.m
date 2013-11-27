@@ -47,6 +47,8 @@
     if(SLSharedConfig.sharedInstance.weiboUserLoginInfo == nil){
         [SLSharedConfig sharedInstance].weiboUserLoginInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"weiboLoginInfo"];
     }
+
+    self.window.tintColor = [UIColor greenSeaColor];
     
     return YES;
 }

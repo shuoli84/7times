@@ -62,6 +62,7 @@
         <!--Word List View Controller-->
         <scene sceneID="HIB-Vs-jTn">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="6UC-j4-CfS" customClass="WordListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fRY-DY-xYb"/>
@@ -80,7 +81,6 @@
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-244" y="-390"/>
         </scene>

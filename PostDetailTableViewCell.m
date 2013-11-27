@@ -36,7 +36,7 @@
                 dec(@"source", CGRectMake(5, FVCenter, FVFill, 20), self.topTitle = ^{
                     UILabel *label = [[UILabel alloc] init];
                     label.textColor = [UIColor colorWithRed:1.f green:128 / 255.f blue:0.f alpha:1.f];
-                    label.font = [UIFont boldSystemFontOfSize:15];
+                    label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
                     label.backgroundColor = [UIColor clearColor];
                     return label;
                 }()),

@@ -95,8 +95,8 @@
     UITableView *__weak weakTableView = tableView;
 
     dec(@"doneButton", CGRectMake(0, FVSameAsPrev, FVT(156), 50), ^{
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:22];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button addEventHandler:^(id sender) {
             NSIndexPath *idx = [weakTableView indexPathForCell:weakCell];

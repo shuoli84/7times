@@ -108,19 +108,16 @@
             dec(@"title", CGRectMake(10, FVCenter, FVT(55), 30), ^{
                 UILabel *label = [[UILabel alloc] init];
                 label.tag = 101;
-                label.font = [UIFont boldSystemFontOfSize:19.f];
+                label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
                 label.textColor = [UIColor blackColor];
                 label.backgroundColor = [UIColor whiteColor];
                 return label;
             }()),
             dec(@"button", CGRectMake(FVT(90), FVCenter, 80, 30), ^{
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
 
-                button.titleLabel.font = [UIFont systemFontOfSize:15];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+                button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
                 button.backgroundColor = [UIColor colorWithRed:231.f / 255.f green:76 / 255.f blue:60 / 255.f alpha:1.f];
-                button.layer.cornerRadius = 5.f;
                 button.tag = 102;
 
                 [button addEventHandler:^(UIButton *sender) {

@@ -61,22 +61,21 @@
     ]];
 
     [self.declare setupViewTreeInto:self.view];
+
+    self.navigationController.toolbar.tintColor = [UIColor greenSeaColor];
     UIBarButtonItem *dictionaryItem = [UIBarButtonItem.alloc
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                        target:self
                                        action:@selector(lookupWord:)];
-    dictionaryItem.tintColor = [UIColor greenSeaColor];
-    
+
     UIBarButtonItem *loadNewsItem = [UIBarButtonItem.alloc
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                     target:self action:@selector(loadNews:)];
-    loadNewsItem.tintColor = [UIColor greenSeaColor];
-    
+
     UIBarButtonItem *shareItem = [UIBarButtonItem.alloc
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                     target:self action:@selector(share:)];
-    shareItem.tintColor = [UIColor greenSeaColor];
-    
+
     [self setToolbarItems:@[
                             [UIBarButtonItem flexibleSpaceItem],
                             dictionaryItem,

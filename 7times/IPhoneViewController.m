@@ -48,13 +48,8 @@
     [super viewDidLoad];
 
     self.navigationController.toolbarHidden = NO;
-    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[ver objectAtIndex:0] intValue] >= 7) {
-        self.navigationController.navigationBar.barTintColor = [UIColor greenSeaColor];
-        self.navigationController.navigationBar.translucent = NO;
-    } else {
-        self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor greenSeaColor];
+    self.navigationController.navigationBar.translucent = NO;
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
