@@ -22,3 +22,4 @@
 "Ok" = "Ok";
 "Words" = "Words";
 "Ignore" = "Ignore";
+"TheArticleGoodForWord" = "The article: %@ %@\ngood for remembering %@ from 7times";

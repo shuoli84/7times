@@ -10,7 +10,6 @@
 #import "SLSharedConfig.h"
 #import "PostDownloader.h"
 #import "PostManager.h"
-#import "WeiboUserInfo.h"
 
 
 @implementation SLSharedConfig {

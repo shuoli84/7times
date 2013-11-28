@@ -16,7 +16,6 @@
 #import "SLSharedConfig.h"
 #import "PostDownloader.h"
 #import "SVProgressHUD.h"
-#import "WeiboSDK.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
 #import "Check.h"
 #import "Word+Util.h"
@@ -138,10 +137,13 @@
 }
 
 -(void)share:(id) sender{
-    WBMessageObject *message = [WBMessageObject message];
-    message.text = [NSString stringWithFormat:@"在背单词%@ 来自7times", self.word.word];
-    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
-    [WeiboSDK sendRequest:request];
+    NSString *message = [NSString stringWithFormat:@"在背单词%@ 来自7times", self.word.word];
+
+    NSMutableArray *sharingItems = [NSMutableArray array];
+    [sharingItems addObject:message];
+
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 #pragma mark TableViewDelegate & DataSource

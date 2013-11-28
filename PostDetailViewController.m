@@ -63,7 +63,6 @@
         UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
         [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
     }];
-    lookupButtonItem.tintColor = [UIColor greenSeaColor];
 
     UIBarButtonItem *openLinkButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay handler:^(id sender) {
         NSURL *url = [NSURL URLWithString:weakSelf.post.url];
@@ -80,13 +79,27 @@
         // hide the bar, cause the browser vc has its own bar
         weakSelf.navigationController.toolbarHidden = YES;
     }];
-    openLinkButtonItem.tintColor = [UIColor greenSeaColor];
+
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
+        NSURL *url = [NSURL URLWithString:weakSelf.post.url];
+        if (url.dictionaryForQueryString[@"url"]){
+            url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
+        }
+
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"TheArticleGoodForWord", @"这篇文章%@ %@\n有助于背单词%@"), weakSelf.post.title, url.absoluteString, weakSelf.post.word.word];
+        UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
+            initWithActivityItems:@[message]
+            applicationActivities:nil];
+        [self presentViewController:activityViewController animated:YES completion:nil];
+    }];
 
     [self setToolbarItems:@[
         [UIBarButtonItem flexibleSpaceItem],
         lookupButtonItem,
         [UIBarButtonItem flexibleSpaceItem],
         openLinkButtonItem,
+        [UIBarButtonItem flexibleSpaceItem],
+        shareButtonItem,
         [UIBarButtonItem flexibleSpaceItem],
     ]];
 }

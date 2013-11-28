@@ -8,29 +8,18 @@
 
 #import <SLFlexibleView/FVDeclaration.h>
 #import <SLFlexibleView/FVDeclareHelper.h>
-#import <BlocksKit/A2DynamicDelegate.h>
-#import <BlocksKit/NSObject+AssociatedObjects.h>
-#import <BlocksKit/UIControl+BlocksKit.h>
-#import <FormatterKit/TTTTimeIntervalFormatter.h>
 #import <FlatUIKit/UIColor+FlatUI.h>
 #import "IPhoneViewController.h"
 #import "Word.h"
-#import "DotView.h"
 #import "PostManager.h"
-#import "Post.h"
 #import "SLSharedConfig.h"
 #import "UIView+FindFirstResponder.h"
-#import "Word+Util.h"
 #import "Flurry.h"
-#import "TSMiniWebBrowser.h"
-#import "NSURL+QueryString.h"
 #import "PostDownloader.h"
-#import "WordListViewController.h"
 #import "UIAlertView+BlocksKit.h"
 #import "WordDetailViewController.h"
 #import "WordTableViewCell.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
-#import "AccountViewController.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -209,8 +198,6 @@
 }
 
 - (IBAction)showAccountViewController:(id)sender {
-    AccountViewController *accountViewController = AccountViewController.alloc.init;
-    [self.navigationController pushViewController:accountViewController animated:YES];
 }
 
 #pragma mark UITableViewDataSource & Delegate

@@ -11,12 +11,7 @@
 #import "Flurry.h"
 #import "iRate.h"
 #import "SevenTimesIAPHelper.h"
-#import "WeiboSDK.h"
 #import "SLSharedConfig.h"
-#import "WeiboUserInfo.h"
-
-@interface AppDelegate () <WeiboSDKDelegate>
-@end
 
 @implementation AppDelegate
 
@@ -32,33 +27,9 @@
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor greenSeaColor]];
 
-    [WeiboSDK enableDebugMode:YES];
-    [WeiboSDK registerApp:@"2038284123"];
-    
-    /**
-     * Restore from user standard setting
-     */
-    if(SLSharedConfig.sharedInstance.weiboUser == nil){
-        NSDictionary *userDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"weiboUserInfo"];
-        if(userDict){
-            [SLSharedConfig sharedInstance].weiboUser = [WeiboUserInfo.alloc initWithDictionary:userDict];
-        }
-    }
-    if(SLSharedConfig.sharedInstance.weiboUserLoginInfo == nil){
-        [SLSharedConfig sharedInstance].weiboUserLoginInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"weiboLoginInfo"];
-    }
-
     self.window.tintColor = [UIColor greenSeaColor];
     
     return YES;
-}
-
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [WeiboSDK handleOpenURL:url delegate:self];
-}
-
--(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [WeiboSDK handleOpenURL:url delegate:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -69,13 +40,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
-    [[NSUserDefaults standardUserDefaults]
-     setObject:[[SLSharedConfig sharedInstance].weiboUser dictionaryFromInstance]
-     forKey:@"weiboUserInfo"];
-    
-    [[NSUserDefaults standardUserDefaults]
-     setObject:[SLSharedConfig sharedInstance].weiboUserLoginInfo forKey:@"weiboLoginInfo"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -93,21 +57,6 @@
 + (void)initialize {
     [iRate sharedInstance].daysUntilPrompt = 3;
     [iRate sharedInstance].usesUntilPrompt = 15;
-}
-
--(void)didReceiveWeiboRequest:(WBBaseRequest *)request {
-    NSLog(@"ReceiveWeiboRequest %@", request);
-}
-
--(void)didReceiveWeiboResponse:(WBBaseResponse *)response {
-    if([response isKindOfClass:[WBAuthorizeResponse class]]){
-        NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",
-                                                       response.statusCode, [(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
-        
-        NSLog(@"WeiboResponse: %@", message);
-        WBAuthorizeResponse *authResponse = (WBAuthorizeResponse *)response;
-        [SLSharedConfig sharedInstance].weiboUserLoginInfo = authResponse.userInfo;
-    }
 }
 
 @end
