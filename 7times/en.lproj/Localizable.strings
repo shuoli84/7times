@@ -23,3 +23,4 @@
 "Words" = "Words";
 "Ignore" = "Ignore";
 "TheArticleGoodForWord" = "The article: %@ %@\ngood for remembering %@ from 7times";
+"RememberingWord" = "Working on word %@ from 7times";

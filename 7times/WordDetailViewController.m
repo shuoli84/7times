@@ -137,7 +137,7 @@
 }
 
 -(void)share:(id) sender{
-    NSString *message = [NSString stringWithFormat:@"在背单词%@ 来自7times", self.word.word];
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"RememberingWord", @"在背单词%@ 来自7times"), self.word.word];
 
     NSMutableArray *sharingItems = [NSMutableArray array];
     [sharingItems addObject:message];
