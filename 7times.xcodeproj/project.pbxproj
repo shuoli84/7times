@@ -26,8 +26,8 @@
 		9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */; };
 		9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC465183E0C2100C2EB68 /* PostsViewController.m */; };
 		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
-		9C3FC47118405E2D00C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC47018405E2D00C2EB68 /* Word.m */; };
 		9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */; };
+		9C3FC4811846F5C700C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4801846F5C700C2EB68 /* Word.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
@@ -111,10 +111,11 @@
 		9C3FC464183E0C2100C2EB68 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
 		9C3FC465183E0C2100C2EB68 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 2.xcdatamodel"; sourceTree = "<group>"; };
-		9C3FC46F18405E2D00C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
-		9C3FC47018405E2D00C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C3FC4721841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+flexibleSpaceItem.h"; sourceTree = "<group>"; };
 		9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+flexibleSpaceItem.m"; sourceTree = "<group>"; };
+		9C3FC47E1846F4F600C2EB68 /* Model.1. 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Model.1. 3.xcdatamodel"; sourceTree = "<group>"; };
+		9C3FC47F1846F5C700C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		9C3FC4801846F5C700C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -235,9 +236,9 @@
 				9C1C9C3217DF081900BCC341 /* 7timesTests */,
 				9C1C9C0417DF081900BCC341 /* Frameworks */,
 				9C1C9C0317DF081900BCC341 /* Products */,
+				9C3FC47F1846F5C700C2EB68 /* Word.h */,
+				9C3FC4801846F5C700C2EB68 /* Word.m */,
 				9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */,
-				9C3FC46F18405E2D00C2EB68 /* Word.h */,
-				9C3FC47018405E2D00C2EB68 /* Word.m */,
 				9CF0CA171810C61100658EBA /* Check.h */,
 				9CF0CA181810C61100658EBA /* Check.m */,
 				9CF0CA1A1810C61100658EBA /* Post.h */,
@@ -584,6 +585,7 @@
 				9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */,
 				9CF0CA1C1810C61100658EBA /* Post.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
+				9C3FC4811846F5C700C2EB68 /* Word.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */,
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
@@ -597,7 +599,6 @@
 				BE48E1977E655489A78ED8EA /* WordList.m in Sources */,
 				BE48E5417F3290834DAD84DB /* WordListManager.m in Sources */,
 				BE48ECD8F70E647D2C23BDF2 /* IAPHelper.m in Sources */,
-				9C3FC47118405E2D00C2EB68 /* Word.m in Sources */,
 				BE48EDA98BEA6CFFB55BF858 /* SevenTimesIAPHelper.m in Sources */,
 				BE48EA24F149743D88B3CAC5 /* WordDetailViewController.m in Sources */,
 				BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */,
@@ -843,11 +844,12 @@
 		9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9C3FC47E1846F4F600C2EB68 /* Model.1. 3.xcdatamodel */,
 				9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */,
 				9CF0C9DE180E9B0900658EBA /* Model.1.1.xcdatamodel */,
 				9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */;
+			currentVersion = 9C3FC47E1846F4F600C2EB68 /* Model.1. 3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

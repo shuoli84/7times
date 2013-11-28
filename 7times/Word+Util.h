@@ -19,5 +19,6 @@
 +(NSComparator)comparator;
 
 - (void)addCheckHelper:(Check *)check;
+-(void)checkItNow;
 
 @end

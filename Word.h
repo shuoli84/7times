@@ -2,7 +2,7 @@
 //  Word.h
 //  7times
 //
-//  Created by Li Shuo on 13-11-23.
+//  Created by Li Shuo on 13-11-28.
 //  Copyright (c) 2013年 Li Shuo. All rights reserved.
 //
 
@@ -15,14 +15,15 @@
 
 @property (nonatomic, retain) NSDate * added;
 @property (nonatomic, retain) NSNumber * checkNumber;
+@property (nonatomic, retain) NSNumber * ignore;
 @property (nonatomic, retain) NSDate * lastCheckTime;
 @property (nonatomic, retain) NSDate * nextCheckTime;
 @property (nonatomic, retain) NSNumber * postNumber;
 @property (nonatomic, retain) NSNumber * sortOrder;
 @property (nonatomic, retain) NSString * source;
-@property (nonatomic, retain) NSString * word;
 @property (nonatomic, retain) NSNumber * star;
-@property (nonatomic, retain) NSNumber * ignore;
+@property (nonatomic, retain) NSString * word;
+@property (nonatomic, retain) NSNumber * needsCheck;
 @property (nonatomic, retain) NSSet *check;
 @property (nonatomic, retain) NSOrderedSet *post;
 @end

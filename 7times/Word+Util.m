@@ -35,6 +35,18 @@
     return c;
 }
 
+-(void)checkItNow {
+    if(self.lastCheckExpired){
+        NSLog(@"The last check is expired, mark this as a new check");
+        Check *check = [Check MR_createEntity];
+        check.date = [NSDate date];
+        [self addCheckHelper:check];
+    }
+    else{
+        NSLog(@"The last check still valid, so this can't be marked as a new check");
+    }
+}
+
 + (NSComparator)comparator {
     return ^NSComparisonResult(Word *word1, Word *word2) {
         if (word2.checkNumber.integerValue == 0) {

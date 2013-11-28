@@ -9,6 +9,7 @@
 #import <SLFlexibleView/FVDeclaration.h>
 #import <SLFlexibleView/FVDeclareHelper.h>
 #import <FlatUIKit/UIColor+FlatUI.h>
+#import <BlocksKit/UIControl+BlocksKit.h>
 #import "IPhoneViewController.h"
 #import "Word.h"
 #import "UIView+FindFirstResponder.h"
@@ -17,6 +18,7 @@
 #import "WordDetailViewController.h"
 #import "WordTableViewCell.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
+#import "Word+Util.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -24,6 +26,8 @@
 @property (nonatomic, strong) UITableView *wordListTableView;
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
+
+@property (nonatomic, strong) NSString* model; //all or auto
 @end
 
 @implementation IPhoneViewController {
@@ -33,34 +37,15 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
+    self.model = @"all";
+
+    self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     self.navigationController.toolbarHidden = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor greenSeaColor];
     self.navigationController.navigationBar.translucent = NO;
 
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-
-    self.navigationController.toolbar.tintColor = [UIColor greenSeaColor];
-
-    self.wordFetchedResultsController = [Word
-                                         MR_fetchAllSortedBy:@"lastCheckTime"
-                                         ascending:NO
-                                         withPredicate:
-                                         [NSPredicate predicateWithFormat:@"ignore == NULL OR ignore = %@", [NSNumber numberWithBool:NO]]
-                                         groupBy:nil
-                                         delegate:self];
-    [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-        [NSSortDescriptor sortDescriptorWithKey:@"lastCheckTime" ascending:NO],
-        [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
-    ]];
-
-    [self.wordFetchedResultsController performFetch:nil];
-
     self.declaration = [dec(@"root") $:@[
-        dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVT(self.navigationController.toolbar.bounds.size.height)), ^{
+        dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVT(self.navigationController.toolbar.bounds.size.height)), self.wordListTableView = ^{
             UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-            self.wordListTableView = tableView;
 
             tableView.backgroundColor = [UIColor whiteColor];
             tableView.rowHeight = 48;
@@ -76,6 +61,8 @@
 
     [self.declaration setupViewTreeInto:self.view];
 
+    [self switchToWordList:NO];
+
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
     UIMenuController *menuCont = [UIMenuController sharedMenuController];
     menuCont.menuItems = @[menuItem];
@@ -85,6 +72,27 @@
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
      target:self
      action:@selector(addWordAction:)];
+
+    typeof(self) __weak weakSelf = self;
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[
+        NSLocalizedString(@"All", @"全部"),
+        NSLocalizedString(@"Todo", @"待背")
+    ]];
+    [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
+        if(sender.selectedSegmentIndex == 1){
+            weakSelf.model = @"auto";
+            [weakSelf switchToWordList:YES];
+        }
+        else{
+            weakSelf.model = @"all";
+            [weakSelf switchToWordList:NO];
+        }
+    } forControlEvents:UIControlEventValueChanged];
+
+    segmentedControl.selectedSegmentIndex = 0;
+
+    UIBarButtonItem *filterSwitch = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
+    self.navigationItem.leftBarButtonItem = filterSwitch;
 
     [self
      setToolbarItems:@[
@@ -117,6 +125,46 @@
             @"word":word
         }];
     }
+}
+
+-(void)switchToWordList:(BOOL)autoList{
+
+    NSPredicate *predicate;
+    if(autoList){
+        predicate = [NSPredicate predicateWithFormat:@"(ignore == NULL OR ignore = %@) AND nextCheckTime <= %@ AND checkNumber > 0", [NSNumber numberWithBool:NO], [NSDate date]];
+    }
+    else{
+        predicate = [NSPredicate predicateWithFormat:@"ignore == NULL OR ignore = %@", [NSNumber numberWithBool:NO]];
+    }
+
+    self.wordFetchedResultsController = [Word
+        MR_fetchAllSortedBy:@"lastCheckTime"
+                  ascending:NO
+              withPredicate:predicate
+                    groupBy:nil
+                   delegate:self];
+
+    if(autoList){
+        [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
+            [NSSortDescriptor sortDescriptorWithKey:@"lastCheckTime" ascending:NO],
+            [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
+            [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
+            [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
+        ]];
+    }
+    else{
+        [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
+            [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
+            [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
+            [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
+        ]];
+    }
+
+    [self.wordFetchedResultsController performFetch:nil];
+
+    [self.wordListTableView reloadData];
+    
+    [self updateTitle];
 }
 
 -(void)addWord:(NSString*)word{
@@ -174,8 +222,18 @@
                 break;
         }
     }
+    
+    [self updateTitle];
 }
 
+-(void)updateTitle{
+    if([self.model isEqualToString:@"all"]){
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
+    }
+    else{
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"todo (%d)", @"todo (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
+    }
+}
 
 - (IBAction)addWordAction:(id)sender {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NewWord_Title", @"New Word") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"Add", @"Add"), nil];
@@ -219,12 +277,25 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Word *word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
-        word.ignore = @(YES);
+        if([self.model isEqualToString:@"all"]){
+            word.ignore = @(YES);
+        }
+        else{
+            [word checkItNow];
+        }
+
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NSLocalizedString(@"Ignore", @"Ignore");
+    if([self.model isEqualToString:@"all"]){
+        return NSLocalizedString(@"Ignore", @"Ignore");
+    }
+    else if([self.model isEqualToString:@"auto"]) {
+        return @"记住了";
+    }
+
+    return nil;
 }
 @end
