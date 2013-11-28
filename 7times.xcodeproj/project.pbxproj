@@ -727,8 +727,8 @@
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shuo Li (FENCCELT7Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shuo Li (FENCCELT7Z)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
@@ -739,7 +739,7 @@
 					/Users/lishuo/Developer/7times/7times/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A5729F0A-BDEC-4E81-A306-001E0394CCD4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
@@ -750,8 +750,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shuo Li";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shuo Li";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
@@ -762,7 +762,7 @@
 					/Users/lishuo/Developer/7times/7times/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "22FB5705-3AF0-4A79-92BE-767448E17152";
+				PROVISIONING_PROFILE = "87BF351B-164A-4E8B-9100-A2863AF3A8FC";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;

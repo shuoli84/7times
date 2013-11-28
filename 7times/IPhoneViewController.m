@@ -11,11 +11,8 @@
 #import <FlatUIKit/UIColor+FlatUI.h>
 #import "IPhoneViewController.h"
 #import "Word.h"
-#import "PostManager.h"
-#import "SLSharedConfig.h"
 #import "UIView+FindFirstResponder.h"
 #import "Flurry.h"
-#import "PostDownloader.h"
 #import "UIAlertView+BlocksKit.h"
 #import "WordDetailViewController.h"
 #import "WordTableViewCell.h"
@@ -41,6 +38,8 @@
     self.navigationController.navigationBar.translucent = NO;
 
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+
+    self.navigationController.toolbar.tintColor = [UIColor greenSeaColor];
 
     self.wordFetchedResultsController = [Word
                                          MR_fetchAllSortedBy:@"lastCheckTime"
@@ -86,14 +85,13 @@
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
      target:self
      action:@selector(addWordAction:)];
-    newWordButtonItem.tintColor = [UIColor greenSeaColor];
-    
+
     [self
      setToolbarItems:@[
-                       [UIBarButtonItem flexibleSpaceItem],
-                       newWordButtonItem,
-                       [UIBarButtonItem flexibleSpaceItem],
-                       ]];
+         [UIBarButtonItem flexibleSpaceItem],
+         newWordButtonItem,
+         [UIBarButtonItem flexibleSpaceItem],
+     ]];
 }
 
 -(void)viewWillLayoutSubviews {
@@ -129,24 +127,12 @@
         return;
     }
 
-    Word *wordRecord = [Word MR_findFirstByAttribute:@"word" withValue:word];
-    if(wordRecord){
-        NSLog(@"Word already there, no need to create a new one");
-        return;
-    }
-
-    wordRecord = [Word MR_createEntity];
+    Word *wordRecord = [Word MR_createEntity];
 
     wordRecord.word = word;
     wordRecord.added = [NSDate date];
-    wordRecord.source = @"0";
-    [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
-
-    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:word completion:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[SLSharedConfig sharedInstance].postManager loadPostForWord:wordRecord];
-        });
-    }];
+    wordRecord.source = @"0"; //Manual added one with 0 source to get better sort order
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
 -(void)addWordMenuAction:(id)sender{
@@ -195,9 +181,6 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NewWord_Title", @"New Word") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") otherButtonTitles:NSLocalizedString(@"Add", @"Add"), nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView show];
-}
-
-- (IBAction)showAccountViewController:(id)sender {
 }
 
 #pragma mark UITableViewDataSource & Delegate

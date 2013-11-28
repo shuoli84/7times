@@ -25,7 +25,6 @@
 @property (nonatomic, strong) FVDeclaration *declare;
 
 @property (nonatomic, strong) UITableView *postsTable;
-@property (nonatomic, strong) UIButton *dictionaryButton;
 
 @property (nonatomic, strong) NSDate *startTime;
 
@@ -45,7 +44,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
 
-    self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
+    self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
     
     self.declare = [dec(@"root", CGRectZero) $:@[
         dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVTillEnd), self.postsTable = ^{
@@ -148,15 +147,16 @@
 
 #pragma mark TableViewDelegate & DataSource
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.postHeightCache[indexPath]){
-        return [self.postHeightCache[indexPath] integerValue];
+    Post* post = [self.postsFetchedResultsController objectAtIndexPath:indexPath];
+
+    if(self.postHeightCache[post.objectID]){
+        return [self.postHeightCache[post.objectID] integerValue];
     }
 
-    Post* post = [self.postsFetchedResultsController objectAtIndexPath:indexPath];
     PostBriefTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.post = post;
 
-    self.postHeightCache[indexPath] = @(cell.cellHeight);
+    self.postHeightCache[post.objectID] = @(cell.cellHeight);
 
     return cell.cellHeight;
 }

@@ -42,11 +42,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
-                        <barButtonItem key="leftBarButtonItem" title="账号" id="cW8-xb-ToZ">
-                            <connections>
-                                <action selector="showAccountViewController:" destination="2" id="Bo7-AA-3Ru"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="单词表" id="dlz-L2-X1j">
                             <connections>
                                 <action selector="loadWordList:" destination="2" id="7hl-Pc-HcD"/>
