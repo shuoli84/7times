@@ -9,6 +9,7 @@
 #import "Word.h"
 #import "Check.h"
 #import "Post.h"
+#import "Wordlist.h"
 
 
 @implementation Word
@@ -17,14 +18,15 @@
 @dynamic checkNumber;
 @dynamic ignore;
 @dynamic lastCheckTime;
+@dynamic needsCheck;
 @dynamic nextCheckTime;
 @dynamic postNumber;
 @dynamic sortOrder;
 @dynamic source;
 @dynamic star;
 @dynamic word;
-@dynamic needsCheck;
 @dynamic check;
 @dynamic post;
+@dynamic lists;
 
 @end

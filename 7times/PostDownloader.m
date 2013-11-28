@@ -6,6 +6,7 @@
 //
 
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "PostDownloader.h"
 #import "GoogleNewsSource.h"
 #import "NSTimer+BlocksKit.h"
@@ -72,9 +73,14 @@
     for(Word *word in wordArray){
         if(word.postNumber.integerValue == 0){
             [self throttleRequest];
-            [self.googleNewsSource download:word];
-            if(oneWordFinish){
-                oneWordFinish(word.word);
+            if([self.googleNewsSource download:word]){
+                if(oneWordFinish){
+                    oneWordFinish(word.word);
+                }
+            }
+            else{
+                NSLog(@"Failed to download, break the download loop and try next time");
+                break;
             }
         }
     }

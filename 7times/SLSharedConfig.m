@@ -10,7 +10,9 @@
 #import "SLSharedConfig.h"
 #import "PostDownloader.h"
 #import "PostManager.h"
-
+#import "LocalWordList.h"
+#import "MagicalRecord/MagicalRecord.h"
+#import "Wordlist.h"
 
 @implementation SLSharedConfig {
 }
@@ -43,6 +45,16 @@
         self.postManager = [[PostManager alloc] init];
 
         self.timeFormmater = [[TTTTimeIntervalFormatter alloc] init];
+
+        Wordlist *wordList = [Wordlist MR_findFirstByAttribute:@"name" withValue:@"todo"];
+        if(wordList == nil){
+            wordList = [Wordlist MR_createEntity];
+            wordList.name = @"todo";
+
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+
+        self.todoList = wordList;
     }
 
     return self;

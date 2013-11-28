@@ -247,10 +247,10 @@ SPEC_BEGIN(WordListSpec)
 
     describe(@"parse from string", ^{
         it(@"able to parse string", ^{
-            WordList *wordList = [[WordList alloc] initWithString:@"word1\nword2 \n \n word3"];
+            LocalWordList *wordList = [[LocalWordList alloc] initWithString:@"word1\nword2 \n \n word3"];
             [[theValue(wordList.words.count) shouldNot] equal:theValue(0)];
 
-            wordList = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"tofle" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
+            wordList = [[LocalWordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"tofle" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
             [[theValue(wordList.words.count) shouldNot] equal:theValue(0)];
         });
 

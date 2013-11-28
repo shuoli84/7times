@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Check, Post;
+@class Check, Post, Wordlist;
 
 @interface Word : NSManagedObject
 
@@ -17,15 +17,16 @@
 @property (nonatomic, retain) NSNumber * checkNumber;
 @property (nonatomic, retain) NSNumber * ignore;
 @property (nonatomic, retain) NSDate * lastCheckTime;
+@property (nonatomic, retain) NSNumber * needsCheck;
 @property (nonatomic, retain) NSDate * nextCheckTime;
 @property (nonatomic, retain) NSNumber * postNumber;
 @property (nonatomic, retain) NSNumber * sortOrder;
 @property (nonatomic, retain) NSString * source;
 @property (nonatomic, retain) NSNumber * star;
 @property (nonatomic, retain) NSString * word;
-@property (nonatomic, retain) NSNumber * needsCheck;
 @property (nonatomic, retain) NSSet *check;
 @property (nonatomic, retain) NSOrderedSet *post;
+@property (nonatomic, retain) NSSet *lists;
 @end
 
 @interface Word (CoreDataGeneratedAccessors)
@@ -45,4 +46,9 @@
 - (void)removePostObject:(Post *)value;
 - (void)addPost:(NSOrderedSet *)values;
 - (void)removePost:(NSOrderedSet *)values;
+- (void)addListsObject:(Wordlist *)value;
+- (void)removeListsObject:(Wordlist *)value;
+- (void)addLists:(NSSet *)values;
+- (void)removeLists:(NSSet *)values;
+
 @end

@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface WordList : NSObject
+@interface LocalWordList : NSObject
 
 @property (nonatomic, strong) NSString *name;
 

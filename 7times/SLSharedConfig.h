@@ -11,7 +11,7 @@
 @class PostDownloader;
 @class PostManager;
 @class TTTTimeIntervalFormatter;
-@class WeiboUserInfo;
+@class Wordlist;
 
 @interface SLSharedConfig : NSObject
 
@@ -20,6 +20,7 @@
 @property (nonatomic, strong) PostDownloader *postDownloader;
 @property(nonatomic, strong) PostManager *postManager;
 @property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
+@property (nonatomic, strong) Wordlist *todoList; //the todo list
 
 -(UIColor*)colorForCount:(int)count;
 

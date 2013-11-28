@@ -4,17 +4,17 @@
 //
 
 
-#import "WordList.h"
+#import "LocalWordList.h"
 #import "NSArray+BlocksKit.h"
 
 
-@interface WordList ()
+@interface LocalWordList ()
 
 @property (nonatomic, strong) NSArray* wordList;
 
 @end
 
-@implementation WordList {
+@implementation LocalWordList {
 
 }
 

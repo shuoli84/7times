@@ -11,7 +11,7 @@
 #import "WordListViewController.h"
 #import "UIControl+BlocksKit.h"
 #import "WordListManager.h"
-#import "WordList.h"
+#import "LocalWordList.h"
 #import "NSObject+AssociatedObjects.h"
 #import "Word.h"
 #import "SVProgressHUD.h"
@@ -136,7 +136,7 @@
                     }
 
                     NSLog(@"The product already bought, load it");
-                    WordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
+                    LocalWordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
 
                     NSLog(@"Start loading wordlist: %@", wordList.name);
 
@@ -164,16 +164,14 @@
                                     [SVProgressHUD showProgress:(float) i / (float) count status:NSLocalizedString(@"LoadingMessage", @"loading") maskType:SVProgressHUDMaskTypeGradient];
                                 });
                             }
-
-                            if (i >= count) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [SVProgressHUD dismiss];
-                                });
-                            }
                         }
 
-                        [[NSManagedObjectContext MR_contextForCurrentThread] save:nil];
-                        
+                        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [SVProgressHUD dismiss];
+                        });
+
                         if (self.finishLoadWordlist) {
                             self.finishLoadWordlist();
                         }

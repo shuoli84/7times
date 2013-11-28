@@ -5,7 +5,7 @@
 
 
 #import "WordListManager.h"
-#import "WordList.h"
+#import "LocalWordList.h"
 
 
 @implementation WordListManager {
@@ -31,7 +31,7 @@ NSArray *wordlistArray = @[
         for(NSArray *l in wordlistArray){
             NSString* name = l[0];
             NSString* filename = l[1];
-            WordList *tofle = [[WordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
+            LocalWordList *tofle = [[LocalWordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
             tofle.name = name;
 
 [dictionary setObject:tofle forKey:name];

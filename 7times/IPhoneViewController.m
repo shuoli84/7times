@@ -19,6 +19,10 @@
 #import "WordTableViewCell.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
 #import "Word+Util.h"
+#import "Binding.h"
+#import "UIBarButtonItem+BlocksKit.h"
+#import "SLSharedConfig.h"
+#import "Wordlist.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -28,6 +32,9 @@
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
 @property (nonatomic, strong) NSString* model; //all or auto
+
+@property (nonatomic, strong) Binding* modelChangeBind;
+
 @end
 
 @implementation IPhoneViewController {
@@ -81,16 +88,13 @@
     [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
         if(sender.selectedSegmentIndex == 1){
             weakSelf.model = @"auto";
-            [weakSelf switchToWordList:YES];
         }
         else{
             weakSelf.model = @"all";
-            [weakSelf switchToWordList:NO];
         }
     } forControlEvents:UIControlEventValueChanged];
 
     segmentedControl.selectedSegmentIndex = 0;
-
     UIBarButtonItem *filterSwitch = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
     self.navigationItem.leftBarButtonItem = filterSwitch;
 
@@ -100,6 +104,81 @@
          newWordButtonItem,
          [UIBarButtonItem flexibleSpaceItem],
      ]];
+
+    self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
+        NSString* model = (NSString*)value;
+        if([model isEqualToString:@"auto"]){
+            [weakSelf switchToWordList:YES];
+
+            UIBarButtonItem *postStreamButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks handler:^(id sender) {
+                NSLog(@"heheh");
+            }];
+
+            UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
+                //Put 25 words into todolist
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNum = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)",
+                 [SLSharedConfig sharedInstance].todoList
+                 ];
+               
+                NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+                
+                [fetchRequest setFetchLimit:25];
+                
+                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:nil];
+                
+                if(all){
+                    NSMutableSet *mutableSet = [NSMutableSet setWithArray:all];
+                    [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+
+                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                }
+            }];
+            
+            UIBarButtonItem *randomPickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"随机" style:UIBarButtonItemStylePlain handler:^(id sender) {
+                //Put 25 words into todolist
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNum = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)",
+                                          [SLSharedConfig sharedInstance].todoList
+                                          ];
+                
+                NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+                
+                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:nil];
+                
+                if(all){
+                    NSMutableSet *mutableSet = [NSMutableSet set];
+                    int count = all.count;
+                    
+                    for(int i = 0; i < 25; i++){
+                        int index = arc4random() % count;
+                        [mutableSet addObject:all[index]];
+                    }
+                    [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+                    
+                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                }
+            }];
+
+            [weakSelf setToolbarItems:@[
+                [UIBarButtonItem flexibleSpaceItem],
+                postStreamButtonItem,
+                [UIBarButtonItem flexibleSpaceItem],
+                pickWordsButtonItem,
+                [UIBarButtonItem flexibleSpaceItem],
+                randomPickWordsButtonItem,
+                [UIBarButtonItem flexibleSpaceItem],
+            ] animated:YES];
+
+        }
+        else if([model isEqualToString:@"all"]){
+            [weakSelf switchToWordList:NO];
+
+            [weakSelf setToolbarItems:@[
+                [UIBarButtonItem flexibleSpaceItem],
+                newWordButtonItem,
+                [UIBarButtonItem flexibleSpaceItem],
+            ] animated:YES];
+        }
+    });
 }
 
 -(void)viewWillLayoutSubviews {
@@ -128,13 +207,12 @@
 }
 
 -(void)switchToWordList:(BOOL)autoList{
-
     NSPredicate *predicate;
     if(autoList){
-        predicate = [NSPredicate predicateWithFormat:@"(ignore == NULL OR ignore = %@) AND nextCheckTime <= %@ AND checkNumber > 0", [NSNumber numberWithBool:NO], [NSDate date]];
+        predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", [SLSharedConfig sharedInstance].todoList];
     }
     else{
-        predicate = [NSPredicate predicateWithFormat:@"ignore == NULL OR ignore = %@", [NSNumber numberWithBool:NO]];
+        predicate = [NSPredicate predicateWithFormat:@"ignore = NULL OR ignore = NO"];
     }
 
     self.wordFetchedResultsController = [Word
@@ -282,6 +360,7 @@
         }
         else{
             [word checkItNow];
+            [[SLSharedConfig sharedInstance].todoList removeWordsObject:word];
         }
 
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];

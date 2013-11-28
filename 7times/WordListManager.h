@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class WordList;
+@class LocalWordList;
 
 
 @interface WordListManager : NSObject
