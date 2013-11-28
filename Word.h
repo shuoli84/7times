@@ -25,8 +25,8 @@
 @property (nonatomic, retain) NSNumber * star;
 @property (nonatomic, retain) NSString * word;
 @property (nonatomic, retain) NSSet *check;
-@property (nonatomic, retain) NSOrderedSet *post;
 @property (nonatomic, retain) NSSet *lists;
+@property (nonatomic, retain) NSOrderedSet *post;
 @end
 
 @interface Word (CoreDataGeneratedAccessors)
@@ -35,6 +35,11 @@
 - (void)removeCheckObject:(Check *)value;
 - (void)addCheck:(NSSet *)values;
 - (void)removeCheck:(NSSet *)values;
+
+- (void)addListsObject:(Wordlist *)value;
+- (void)removeListsObject:(Wordlist *)value;
+- (void)addLists:(NSSet *)values;
+- (void)removeLists:(NSSet *)values;
 
 - (void)insertObject:(Post *)value inPostAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromPostAtIndex:(NSUInteger)idx;
@@ -46,9 +51,4 @@
 - (void)removePostObject:(Post *)value;
 - (void)addPost:(NSOrderedSet *)values;
 - (void)removePost:(NSOrderedSet *)values;
-- (void)addListsObject:(Wordlist *)value;
-- (void)removeListsObject:(Wordlist *)value;
-- (void)addLists:(NSSet *)values;
-- (void)removeLists:(NSSet *)values;
-
 @end

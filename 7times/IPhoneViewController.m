@@ -115,34 +115,35 @@
             }];
 
             UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
-                //Put 25 words into todolist
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNum = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)",
-                 [SLSharedConfig sharedInstance].todoList
-                 ];
-               
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
+                
                 NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
                 
-                [fetchRequest setFetchLimit:25];
+                fetchRequest.fetchLimit = 25;
                 
                 NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:nil];
                 
-                if(all){
-                    NSMutableSet *mutableSet = [NSMutableSet setWithArray:all];
-                    [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+                    if(all){
+                        NSMutableSet *mutableSet = [NSMutableSet setWithArray:all];
+                        
+                        [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
 
-                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-                }
+                        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                    } 
             }];
             
             UIBarButtonItem *randomPickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"随机" style:UIBarButtonItemStylePlain handler:^(id sender) {
                 //Put 25 words into todolist
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNum = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)",
-                                          [SLSharedConfig sharedInstance].todoList
-                                          ];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
                 
                 NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
                 
-                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:nil];
+                NSError *err;
+                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:&err];
+                
+                if(all == nil){
+                    NSLog(@"Error: %@", err.localizedDescription);
+                }
                 
                 if(all){
                     NSMutableSet *mutableSet = [NSMutableSet set];

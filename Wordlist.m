@@ -12,11 +12,11 @@
 
 @implementation Wordlist
 
-@dynamic name;
-@dynamic sourceId;
 @dynamic desp;
-@dynamic sortOrder;
 @dynamic finished;
+@dynamic name;
+@dynamic sortOrder;
+@dynamic sourceId;
 @dynamic total;
 @dynamic words;
 

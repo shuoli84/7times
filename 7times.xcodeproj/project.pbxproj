@@ -28,10 +28,10 @@
 		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */; };
 		9C3FC491184720CD00C2EB68 /* LocalWordList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC490184720CD00C2EB68 /* LocalWordList.m */; };
-		9C3FC494184721AC00C2EB68 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC493184721AC00C2EB68 /* Check.m */; };
-		9C3FC497184721AD00C2EB68 /* Wordlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC496184721AD00C2EB68 /* Wordlist.m */; };
-		9C3FC49A184721AD00C2EB68 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC499184721AD00C2EB68 /* Post.m */; };
-		9C3FC49D184721AD00C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC49C184721AD00C2EB68 /* Word.m */; };
+		9C3FC4A1184793F200C2EB68 /* Wordlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4A0184793F200C2EB68 /* Wordlist.m */; };
+		9C3FC4A4184793F300C2EB68 /* Check.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4A3184793F300C2EB68 /* Check.m */; };
+		9C3FC4A7184793F300C2EB68 /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4A6184793F300C2EB68 /* Word.m */; };
+		9C3FC4AA184793F400C2EB68 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4A9184793F400C2EB68 /* Post.m */; };
 		9C56C1621830B0DA00A8CD95 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C56C1641830B0DA00A8CD95 /* Localizable.strings */; };
 		9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
@@ -118,15 +118,15 @@
 		9C3FC4821847154700C2EB68 /* Model.1. 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 4.xcdatamodel"; sourceTree = "<group>"; };
 		9C3FC48F184720CD00C2EB68 /* LocalWordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalWordList.h; path = 7times/LocalWordList.h; sourceTree = "<group>"; };
 		9C3FC490184720CD00C2EB68 /* LocalWordList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalWordList.m; path = 7times/LocalWordList.m; sourceTree = "<group>"; };
-		9C3FC492184721AC00C2EB68 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
-		9C3FC493184721AC00C2EB68 /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
-		9C3FC495184721AD00C2EB68 /* Wordlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wordlist.h; sourceTree = "<group>"; };
-		9C3FC496184721AD00C2EB68 /* Wordlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wordlist.m; sourceTree = "<group>"; };
-		9C3FC498184721AD00C2EB68 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		9C3FC499184721AD00C2EB68 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		9C3FC49B184721AD00C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
-		9C3FC49C184721AD00C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		9C3FC49E1847245200C2EB68 /* Model.1. 4. 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Model.1. 4. 1.xcdatamodel"; sourceTree = "<group>"; };
+		9C3FC49F184793F200C2EB68 /* Wordlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wordlist.h; sourceTree = "<group>"; };
+		9C3FC4A0184793F200C2EB68 /* Wordlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wordlist.m; sourceTree = "<group>"; };
+		9C3FC4A2184793F300C2EB68 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
+		9C3FC4A3184793F300C2EB68 /* Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Check.m; sourceTree = "<group>"; };
+		9C3FC4A5184793F300C2EB68 /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		9C3FC4A6184793F300C2EB68 /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
+		9C3FC4A8184793F400C2EB68 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		9C3FC4A9184793F400C2EB68 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		9C56C1601830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9C56C1631830B0DA00A8CD95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -230,14 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				9C3FC48F184720CD00C2EB68 /* LocalWordList.h */,
-				9C3FC49B184721AD00C2EB68 /* Word.h */,
-				9C3FC49C184721AD00C2EB68 /* Word.m */,
-				9C3FC498184721AD00C2EB68 /* Post.h */,
-				9C3FC499184721AD00C2EB68 /* Post.m */,
-				9C3FC495184721AD00C2EB68 /* Wordlist.h */,
-				9C3FC496184721AD00C2EB68 /* Wordlist.m */,
-				9C3FC492184721AC00C2EB68 /* Check.h */,
-				9C3FC493184721AC00C2EB68 /* Check.m */,
 				9C3FC490184720CD00C2EB68 /* LocalWordList.m */,
 				9CBEC8A61826A6BE002FE3FB /* 7times logo@29.png */,
 				9CBEC8A51826A693002FE3FB /* 7times logo@114.png */,
@@ -252,6 +244,14 @@
 				9C1C9C0417DF081900BCC341 /* Frameworks */,
 				9C1C9C0317DF081900BCC341 /* Products */,
 				9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */,
+				9C3FC49F184793F200C2EB68 /* Wordlist.h */,
+				9C3FC4A0184793F200C2EB68 /* Wordlist.m */,
+				9C3FC4A2184793F300C2EB68 /* Check.h */,
+				9C3FC4A3184793F300C2EB68 /* Check.m */,
+				9C3FC4A5184793F300C2EB68 /* Word.h */,
+				9C3FC4A6184793F300C2EB68 /* Word.m */,
+				9C3FC4A8184793F400C2EB68 /* Post.h */,
+				9C3FC4A9184793F400C2EB68 /* Post.m */,
 				6841FC7D7A04498584CCBE78 /* Pods.xcconfig */,
 				04544EC315E9449C8A0EC3F9 /* Pods-7timesTests.xcconfig */,
 			);
@@ -596,11 +596,11 @@
 				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
 				9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */,
-				9C3FC497184721AD00C2EB68 /* Wordlist.m in Sources */,
-				9C3FC49D184721AD00C2EB68 /* Word.m in Sources */,
+				9C3FC4A1184793F200C2EB68 /* Wordlist.m in Sources */,
+				9C3FC4A7184793F300C2EB68 /* Word.m in Sources */,
 				BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */,
-				9C3FC494184721AC00C2EB68 /* Check.m in Sources */,
 				BE48E10A06C0824D271151B6 /* NSURL+QueryString.m in Sources */,
+				9C3FC4A4184793F300C2EB68 /* Check.m in Sources */,
 				BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */,
 				BE48E93D591D8E1B176496DC /* GoogleNewsSource.m in Sources */,
 				BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */,
@@ -611,7 +611,7 @@
 				BE48E51A19B784719F357E35 /* PostDetailTableViewCell.m in Sources */,
 				BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */,
 				BE48E5685199819C43FFFF3A /* WordTableViewCell.m in Sources */,
-				9C3FC49A184721AD00C2EB68 /* Post.m in Sources */,
+				9C3FC4AA184793F400C2EB68 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +735,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -759,6 +760,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

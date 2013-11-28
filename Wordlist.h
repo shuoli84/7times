@@ -13,11 +13,11 @@
 
 @interface Wordlist : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * sourceId;
 @property (nonatomic, retain) NSString * desp;
-@property (nonatomic, retain) NSNumber * sortOrder;
 @property (nonatomic, retain) NSNumber * finished;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * sortOrder;
+@property (nonatomic, retain) NSString * sourceId;
 @property (nonatomic, retain) NSNumber * total;
 @property (nonatomic, retain) NSSet *words;
 @end

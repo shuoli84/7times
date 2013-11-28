@@ -26,7 +26,7 @@
 @dynamic star;
 @dynamic word;
 @dynamic check;
-@dynamic post;
 @dynamic lists;
+@dynamic post;
 
 @end
