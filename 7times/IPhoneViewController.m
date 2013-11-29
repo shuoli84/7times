@@ -177,23 +177,13 @@
         predicate = [NSPredicate predicateWithFormat:@"ignore = NULL OR ignore = NO"];
     }
 
-    self.wordFetchedResultsController = [Word
-        MR_fetchAllSortedBy:@"source"
-                  ascending:YES
-              withPredicate:predicate
-                    groupBy:nil
-                   delegate:self];
-
-    [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-        [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
-    ]];
-
+    NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+    [fetchRequest setFetchBatchSize:20];
+    self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:nil];
     [self.wordFetchedResultsController performFetch:nil];
 
     [self.wordListTableView reloadData];
-    
+    self.wordFetchedResultsController.delegate = self;
     [self updateTitle];
 }
 
