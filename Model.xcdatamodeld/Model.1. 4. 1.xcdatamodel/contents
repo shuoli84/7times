@@ -42,9 +42,9 @@
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="lists" inverseEntity="Word" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Check" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Post" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Word" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Wordlist" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Check" positionX="-11" positionY="117" width="128" height="90"/>
+        <element name="Post" positionX="-27" positionY="-99" width="128" height="180"/>
+        <element name="Word" positionX="-189" positionY="-99" width="128" height="255"/>
+        <element name="Wordlist" positionX="-353" positionY="-63" width="128" height="150"/>
     </elements>
 </model>
