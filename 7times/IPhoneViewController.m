@@ -24,7 +24,7 @@
 #import "SLSharedConfig.h"
 #import "Wordlist.h"
 
-@interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
 
 @property (nonatomic, strong) UITableView *wordListTableView;
@@ -115,48 +115,10 @@
             }];
 
             UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
-                
-                NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
-                
-                fetchRequest.fetchLimit = 25;
-                
-                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:nil];
-                
-                    if(all){
-                        NSMutableSet *mutableSet = [NSMutableSet setWithArray:all];
-                        
-                        [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+                UIActionSheet *actionSheet = [UIActionSheet.alloc initWithTitle:@"从词库添加单词" delegate:weakSelf cancelButtonTitle:@"放弃" destructiveButtonTitle:nil otherButtonTitles:@"顺序", @"随机", nil];
+                [actionSheet showFromToolbar:weakSelf.navigationController.toolbar];
 
-                        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-                    } 
-            }];
-            
-            UIBarButtonItem *randomPickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"随机" style:UIBarButtonItemStylePlain handler:^(id sender) {
-                //Put 25 words into todolist
-                NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
-                
-                NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
-                
-                NSError *err;
-                NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:&err];
-                
-                if(all == nil){
-                    NSLog(@"Error: %@", err.localizedDescription);
-                }
-                
-                if(all){
-                    NSMutableSet *mutableSet = [NSMutableSet set];
-                    int count = all.count;
-                    
-                    for(int i = 0; i < 25; i++){
-                        int index = arc4random() % count;
-                        [mutableSet addObject:all[index]];
-                    }
-                    [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
-                    
-                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-                }
+                return;
             }];
 
             [weakSelf setToolbarItems:@[
@@ -164,8 +126,6 @@
                 postStreamButtonItem,
                 [UIBarButtonItem flexibleSpaceItem],
                 pickWordsButtonItem,
-                [UIBarButtonItem flexibleSpaceItem],
-                randomPickWordsButtonItem,
                 [UIBarButtonItem flexibleSpaceItem],
             ] animated:YES];
 
@@ -217,26 +177,17 @@
     }
 
     self.wordFetchedResultsController = [Word
-        MR_fetchAllSortedBy:@"lastCheckTime"
-                  ascending:NO
+        MR_fetchAllSortedBy:@"source"
+                  ascending:YES
               withPredicate:predicate
                     groupBy:nil
                    delegate:self];
 
-    if(autoList){
-        [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-            [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
-            [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
-            [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
-        ]];
-    }
-    else{
-        [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-            [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
-            [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
-            [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
-        ]];
-    }
+    [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
+        [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
+    ]];
 
     [self.wordFetchedResultsController performFetch:nil];
 
@@ -376,5 +327,52 @@
     }
 
     return nil;
+}
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    BOOL random = NO;
+    switch (buttonIndex){
+        case 0:
+            break;
+        case 1:
+            random = YES;
+            break;
+        case 2:
+            return;
+    }
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
+
+    NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+
+    if(random){
+        [fetchRequest setFetchLimit:25];
+    }
+
+    NSError *err;
+    NSArray *all = [[NSManagedObjectContext MR_contextForCurrentThread] executeFetchRequest:fetchRequest error:&err];
+
+    if(all == nil){
+        NSLog(@"Error: %@", err.localizedDescription);
+    }
+
+    if(all){
+        NSMutableSet *mutableSet = [NSMutableSet set];
+        if(!random){
+            [mutableSet addObjectsFromArray:all];
+        }
+        else{
+            int count = all.count;
+
+            for(int i = 0; i < 25; i++){
+                uint index = arc4random() % count;
+                [mutableSet addObject:all[index]];
+            }
+        }
+
+        [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    }
 }
 @end
