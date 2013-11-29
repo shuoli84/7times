@@ -120,7 +120,7 @@
 		9C3FC4821847154700C2EB68 /* Model.1. 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 4.xcdatamodel"; sourceTree = "<group>"; };
 		9C3FC48F184720CD00C2EB68 /* LocalWordList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalWordList.h; path = 7times/LocalWordList.h; sourceTree = "<group>"; };
 		9C3FC490184720CD00C2EB68 /* LocalWordList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalWordList.m; path = 7times/LocalWordList.m; sourceTree = "<group>"; };
-		9C3FC49E1847245200C2EB68 /* Model.1. 4. 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Model.1. 4. 1.xcdatamodel"; sourceTree = "<group>"; };
+		9C3FC49E1847245200C2EB68 /* Model.1. 4. 1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 4. 1.xcdatamodel"; sourceTree = "<group>"; };
 		9C3FC49F184793F200C2EB68 /* Wordlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wordlist.h; sourceTree = "<group>"; };
 		9C3FC4A0184793F200C2EB68 /* Wordlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wordlist.m; sourceTree = "<group>"; };
 		9C3FC4A2184793F300C2EB68 /* Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Check.h; sourceTree = "<group>"; };
