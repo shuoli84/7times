@@ -28,3 +28,12 @@
 "Todo" = "Todo";
 "all (%d)" = "Words (%d)";
 "todo (%d)" = "Todo (%d)";
+"Remebered" = "Got it";
+"addWordFromList" = "Add words from list";
+"giveup" = "Cancel";
+"next" = "Ordered";
+"random" = "Random";
+"No more new words" = "No more new words";
+"There is no more new words, add some from word list" = "There is no more new words, add some from word list";
+"Got It" = "Got It";
+"Word List" = "Word List";

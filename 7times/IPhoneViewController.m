@@ -23,6 +23,7 @@
 #import "UIBarButtonItem+BlocksKit.h"
 #import "SLSharedConfig.h"
 #import "Wordlist.h"
+#import "WordListViewController.h"
 
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -110,20 +111,14 @@
         if([model isEqualToString:@"auto"]){
             [weakSelf switchToWordList:YES];
 
-            UIBarButtonItem *postStreamButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks handler:^(id sender) {
-                NSLog(@"heheh");
-            }];
-
             UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
-                UIActionSheet *actionSheet = [UIActionSheet.alloc initWithTitle:@"从词库添加单词" delegate:weakSelf cancelButtonTitle:@"放弃" destructiveButtonTitle:nil otherButtonTitles:@"顺序", @"随机", nil];
+                UIActionSheet *actionSheet = [UIActionSheet.alloc initWithTitle:NSLocalizedString(@"addWordFromList", @"从词库添加单词") delegate:weakSelf cancelButtonTitle:NSLocalizedString(@"giveup", @"放弃") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"next", @"顺序"), NSLocalizedString(@"random", @"随机"), nil];
                 [actionSheet showFromToolbar:weakSelf.navigationController.toolbar];
 
                 return;
             }];
 
             [weakSelf setToolbarItems:@[
-                [UIBarButtonItem flexibleSpaceItem],
-                postStreamButtonItem,
                 [UIBarButtonItem flexibleSpaceItem],
                 pickWordsButtonItem,
                 [UIBarButtonItem flexibleSpaceItem],
@@ -323,7 +318,7 @@
         return NSLocalizedString(@"Ignore", @"Ignore");
     }
     else if([self.model isEqualToString:@"auto"]) {
-        return @"记住了";
+        return NSLocalizedString(@"Remebered", @"记住了");
     }
 
     return nil;
@@ -357,6 +352,16 @@
         NSLog(@"Error: %@", err.localizedDescription);
     }
 
+    if(all.count == 0){
+        typeof(self) __weak weakSelf =  self;
+        [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"No more new words", @"No more new words") message:NSLocalizedString(@"There is no more new words, add some from word list", @"There is no more new words, add some from word list") cancelButtonTitle:NSLocalizedString(@"Got It", @"Got It") otherButtonTitles:@[NSLocalizedString(@"Word List", @"Word List")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if(buttonIndex == 1){
+                WordListViewController *wordListViewController = [[WordListViewController alloc] init];
+                [weakSelf.navigationController pushViewController:wordListViewController animated:YES];
+            }
+        }];
+    }
+
     if(all){
         NSMutableSet *mutableSet = [NSMutableSet set];
         if(!random){
@@ -365,7 +370,7 @@
         else{
             int count = all.count;
 
-            for(int i = 0; i < 25; i++){
+            for(int i = 0; i < MIN(25, count); i++){
                 uint index = arc4random() % count;
                 [mutableSet addObject:all[index]];
             }

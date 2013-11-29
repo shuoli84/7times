@@ -3,7 +3,7 @@
 
 
 "recover" = "恢复";
-"ListTitle" = "单库";
+"ListTitle" = "词库";
 "RECOVER_MESSAGE" = "正在恢复曾经购买过的内容";
 "BackButton" = "返回";
 "LoadingMessage" = "导入中";
@@ -28,3 +28,12 @@
 "Todo" = "进行中";
 "all (%d)" = "词表 (%d)";
 "todo (%d)" = "进行中 (%d)";
+"Remebered" = "记住了";
+"addWordFromList" = "从词库添加单词";
+"giveup" = "放弃";
+"next" = "顺序";
+"random" = "随机";
+"No more new words" = "没有单词了";
+"There is no more new words, add some from word list" = "没有单词了，加载一个单词表吧";
+"Got It" = "知道了";
+"Word List" = "单词表";
