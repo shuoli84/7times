@@ -12,6 +12,7 @@
 #import "iRate.h"
 #import "SevenTimesIAPHelper.h"
 #import "SLSharedConfig.h"
+#import "IPhoneViewController.h"
 
 @implementation AppDelegate
 
@@ -23,12 +24,18 @@
     [Flurry setEventLoggingEnabled:YES];
 
     [MagicalRecord setupAutoMigratingCoreDataStack];
-    
-    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setBarTintColor:[UIColor greenSeaColor]];
+
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] ;
 
     self.window.tintColor = [UIColor greenSeaColor];
-    
+
+    IPhoneViewController *iphoneViewController = [[IPhoneViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:iphoneViewController];
+
+
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 

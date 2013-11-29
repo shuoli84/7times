@@ -49,10 +49,15 @@
 
     self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     self.navigationController.toolbarHidden = NO;
-    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.translucent = YES;
+
+    self.navigationController.toolbar.barTintColor = nil;
+    self.navigationController.toolbar.translucent = YES;
+
+    self.navigationController.automaticallyAdjustsScrollViewInsets = YES;
 
     self.declaration = [dec(@"root") $:@[
-        dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVT(self.navigationController.toolbar.bounds.size.height)), self.wordListTableView = ^{
+        dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVTillEnd), self.wordListTableView = ^{
             UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 
             tableView.backgroundColor = [UIColor whiteColor];
@@ -71,17 +76,18 @@
 
     [self switchToWordList:NO];
 
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Add" action:@selector(addWordMenuAction:)];
-    UIMenuController *menuCont = [UIMenuController sharedMenuController];
-    menuCont.menuItems = @[menuItem];
-    
-    UIBarButtonItem *newWordButtonItem =
-    [UIBarButtonItem.alloc
+    typeof(self) __weak weakSelf = self;
+    UIBarButtonItem *wordListBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Word List", @"Word List") style:UIBarButtonItemStylePlain handler:^(id sender) {
+        WordListViewController *wordListViewController = [[WordListViewController alloc] init];
+        [weakSelf.navigationController pushViewController:wordListViewController animated:YES];
+    }];
+    self.navigationItem.rightBarButtonItem = wordListBarItem;
+
+    UIBarButtonItem *newWordButtonItem = [UIBarButtonItem.alloc
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
      target:self
      action:@selector(addWordAction:)];
 
-    typeof(self) __weak weakSelf = self;
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[
         NSLocalizedString(@"All", @"全部"),
         NSLocalizedString(@"Todo", @"待背")

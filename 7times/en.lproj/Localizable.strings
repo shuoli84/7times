@@ -2,8 +2,8 @@
 /* Localization file */
 
 
-"recover" = "recover";
-"ListTitle" = "list";
+"recover" = "Recover";
+"ListTitle" = "Word Lists";
 "RECOVER_MESSAGE" = "Recovering from previous purchases";
 "BackButton" = "back";
 "LoadingMessage" = "loading";
@@ -28,12 +28,14 @@
 "Todo" = "Todo";
 "all (%d)" = "Words (%d)";
 "todo (%d)" = "Todo (%d)";
-"Remebered" = "Got it";
+"Remebered" = "Rememebered";
 "addWordFromList" = "Add words from list";
 "giveup" = "Cancel";
 "next" = "Ordered";
 "random" = "Random";
-"No more new words" = "No more new words";
-"There is no more new words, add some from word list" = "There is no more new words, how about load a word list?";
-"Got It" = "Got It";
-"Word List" = "Word List";
+"No more new words" = "No new words available";
+"There is no more new words, add some from word list" = "How about load a word list?";
+"Got It" = "No";
+"Word List" = "List";
+"Downloading" = "Downloading";
+"Remembered" = "Remembered";

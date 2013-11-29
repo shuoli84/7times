@@ -111,7 +111,7 @@
 
 -(void)loadNews:(id) sender{
     Word *w = self.word;
-    [SVProgressHUD showWithStatus:@"下载中" maskType:SVProgressHUDMaskTypeGradient];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Downloading", @"Downloading") maskType:SVProgressHUDMaskTypeGradient];
     [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
         [SVProgressHUD dismiss];
     }];

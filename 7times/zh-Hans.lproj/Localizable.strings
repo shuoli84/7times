@@ -35,5 +35,7 @@
 "random" = "随机";
 "No more new words" = "没有单词了";
 "There is no more new words, add some from word list" = "没有单词了，加载一个词库吗？";
-"Got It" = "知道了";
+"Got It" = "不了";
 "Word List" = "词库";
+"Downloading" = "下载中";
+"Remembered" = "过";

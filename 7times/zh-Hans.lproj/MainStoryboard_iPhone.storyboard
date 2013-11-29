@@ -1,85 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="JLy-bd-Nz6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
-    <scenes>
-        <!--Navigation Controller - 单词-->
-        <scene sceneID="voj-F3-yjJ">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="JLy-bd-Nz6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="单词" id="CKJ-1s-DFy"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="74W-Lc-36p">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="yBp-7H-omS">
-                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="2" kind="relationship" relationship="rootViewController" id="Ble-cf-wCv"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Skg-4B-NFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1129" y="-390"/>
-        </scene>
-        <!--Phone View Controller - word list-->
-        <scene sceneID="5">
-            <objects>
-                <viewController title="word list" id="2" customClass="IPhoneViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PpM-Uh-0cK"/>
-                        <viewControllerLayoutGuide type="bottom" id="Bx4-zJ-EON"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
-                        <barButtonItem key="rightBarButtonItem" title="词库" id="dlz-L2-X1j">
-                            <connections>
-                                <action selector="loadWordList:" destination="2" id="7hl-Pc-HcD"/>
-                                <segue destination="6UC-j4-CfS" kind="push" id="RK2-Fr-sJ3"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-704" y="-390"/>
-        </scene>
-        <!--Word List View Controller-->
-        <scene sceneID="HIB-Vs-jTn">
-            <objects>
-                <viewController id="6UC-j4-CfS" customClass="WordListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fRY-DY-xYb"/>
-                        <viewControllerLayoutGuide type="bottom" id="0dp-qE-0EB"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AQV-Fk-4rP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="gIO-5S-iwc">
-                        <barButtonItem key="rightBarButtonItem" title="恢复购买" id="8FG-Rd-N0j">
-                            <connections>
-                                <action selector="recover:" destination="6UC-j4-CfS" id="FCJ-Ji-90a"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-244" y="-390"/>
-        </scene>
-    </scenes>
+    <scenes/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
