@@ -34,6 +34,6 @@
 "next" = "顺序";
 "random" = "随机";
 "No more new words" = "没有单词了";
-"There is no more new words, add some from word list" = "没有单词了，加载一个单词表吧";
+"There is no more new words, add some from word list" = "没有单词了，加载一个词库吗？";
 "Got It" = "知道了";
-"Word List" = "单词表";
+"Word List" = "词库";

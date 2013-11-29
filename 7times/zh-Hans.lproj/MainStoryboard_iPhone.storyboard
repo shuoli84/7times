@@ -42,7 +42,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="单词" id="IZe-fd-8jb">
-                        <barButtonItem key="rightBarButtonItem" title="单词表" id="dlz-L2-X1j">
+                        <barButtonItem key="rightBarButtonItem" title="词库" id="dlz-L2-X1j">
                             <connections>
                                 <action selector="loadWordList:" destination="2" id="7hl-Pc-HcD"/>
                                 <segue destination="6UC-j4-CfS" kind="push" id="RK2-Fr-sJ3"/>
@@ -57,7 +57,6 @@
         <!--Word List View Controller-->
         <scene sceneID="HIB-Vs-jTn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="6UC-j4-CfS" customClass="WordListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fRY-DY-xYb"/>
@@ -76,6 +75,7 @@
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="twU-7Y-Itu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-244" y="-390"/>
         </scene>
