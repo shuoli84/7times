@@ -13,15 +13,6 @@
 
 @implementation Word (Util)
 
-- (BOOL)lastCheckExpired {
-    if (self.checkNumber.integerValue >= 7) {
-        return NO;
-    }
-
-    NSDate *nextCheckDate = self.nextCheckTime;
-    return [nextCheckDate compare:[NSDate date]] == NSOrderedAscending;
-}
-
 - (Check *)lastCheck {
     Check *c;
     NSDate *lastCheckDate = [NSDate dateWithTimeIntervalSince1970:0];
@@ -36,36 +27,9 @@
 }
 
 -(void)checkItNow {
-    if(self.lastCheckExpired){
-        NSLog(@"The last check is expired, mark this as a new check");
-        Check *check = [Check MR_createEntity];
-        check.date = [NSDate date];
-        [self addCheckHelper:check];
-    }
-    else{
-        NSLog(@"The last check still valid, so this can't be marked as a new check");
-    }
-}
-
-+ (NSComparator)comparator {
-    return ^NSComparisonResult(Word *word1, Word *word2) {
-        if (word2.checkNumber.integerValue == 0) {
-            return NSOrderedAscending;
-        }
-
-        if (word1.checkNumber.integerValue == 0) {
-            return NSOrderedDescending;
-        }
-
-        NSArray *timeIntervals = [SLSharedConfig sharedInstance].timeIntervals;
-        int interval1 = [timeIntervals[(uint) word1.checkNumber.integerValue] integerValue];
-        int interval2 = [timeIntervals[(uint) word2.checkNumber.integerValue] integerValue];
-
-        NSDate *time1 = [word1.lastCheckTime dateByAddingTimeInterval:interval1 * 60 * 60];
-        NSDate *time2 = [word2.lastCheckTime dateByAddingTimeInterval:interval2 * 60 * 60];
-
-        return [time1 compare:time2];
-    };
+    Check *check = [Check MR_createEntity];
+    check.date = [NSDate date];
+    [self addCheckHelper:check];
 }
 
 - (void)addCheckHelper:(Check *)check {

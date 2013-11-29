@@ -13,10 +13,7 @@
 
 @interface Word (Util)
 
--(BOOL)lastCheckExpired;
 -(Check *)lastCheck;
-
-+(NSComparator)comparator;
 
 - (void)addCheckHelper:(Check *)check;
 -(void)checkItNow;
