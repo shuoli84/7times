@@ -170,16 +170,19 @@
 
 -(void)switchToWordList:(BOOL)autoList{
     NSPredicate *predicate;
+    NSString *cacheName;
     if(autoList){
         predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", [SLSharedConfig sharedInstance].todoList];
+        cacheName = @"cache_todolist";
     }
     else{
         predicate = [NSPredicate predicateWithFormat:@"ignore = NULL OR ignore = NO"];
+        cacheName = @"cache_all";
     }
 
     NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
     [fetchRequest setFetchBatchSize:20];
-    self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:nil];
+    self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:cacheName];
     [self.wordFetchedResultsController performFetch:nil];
 
     [self.wordListTableView reloadData];
