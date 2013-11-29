@@ -6,7 +6,7 @@
 #import "GoogleNewsSource.h"
 #import "PostDownloader.h"
 #import "PostManager.h"
-#import "WordList.h"
+#import "Wordlist.h"
 #import "WordListManager.h"
 #import "SLSharedConfig.h"
 

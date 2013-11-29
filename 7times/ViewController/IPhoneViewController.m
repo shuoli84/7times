@@ -24,6 +24,11 @@
 #import "Wordlist.h"
 #import "WordListViewController.h"
 
+typedef NS_ENUM(NSInteger, RunningModel){
+    RunningModelAll,
+    RunningModelTodo,
+};
+
 @interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
 
@@ -32,7 +37,7 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
-@property (nonatomic, strong) NSString* model; //all or auto
+@property (nonatomic, assign) RunningModel model; //all or auto
 
 @property (nonatomic, strong) Binding* modelChangeBind;
 
@@ -45,7 +50,7 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
-    self.model = @"all";
+    self.model = RunningModelAll;
 
     self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     self.navigationController.toolbarHidden = NO;
@@ -92,10 +97,10 @@
 
     [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
         if(sender.selectedSegmentIndex == 1){
-            weakSelf.model = @"auto";
+            weakSelf.model = RunningModelTodo;
         }
         else{
-            weakSelf.model = @"all";
+            weakSelf.model = RunningModelAll;
         }
     } forControlEvents:UIControlEventValueChanged];
 
@@ -111,8 +116,8 @@
 
     self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
         NSLog(@"Binding called");
-        NSString* model = (NSString*)value;
-        if([model isEqualToString:@"auto"]){
+        RunningModel model = (RunningModel)[(NSNumber *)value integerValue];
+        if(model == RunningModelTodo){
             [weakSelf switchToWordList:YES];
 
             UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
@@ -129,7 +134,7 @@
             ] animated:YES];
 
         }
-        else if([model isEqualToString:@"all"]){
+        else if(model == RunningModelAll){
             [weakSelf switchToWordList:NO];
 
             UIBarButtonItem *wordListButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks handler:^(id sender) {
@@ -248,7 +253,7 @@
 
     [self.listSegmentedControl setTitle:todoTitle forSegmentAtIndex:1];
 
-    if([self.model isEqualToString:@"all"]){
+    if(self.model == RunningModelAll){
         NSString* title = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
         self.title = title;
         [self.listSegmentedControl setTitle:title forSegmentAtIndex:0];
@@ -300,7 +305,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Word *word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
-        if([self.model isEqualToString:@"all"]){
+        if(self.model == RunningModelAll){
             word.ignore = @(YES);
         }
         else{
@@ -313,11 +318,11 @@
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if([self.model isEqualToString:@"all"]){
+    if(self.model == RunningModelAll){
         return NSLocalizedString(@"Ignore", @"Ignore");
     }
-    else if([self.model isEqualToString:@"auto"]) {
-        return NSLocalizedString(@"Remebered", @"记住了");
+    else if(self.model == RunningModelTodo) {
+        return NSLocalizedString(@"Remembered", @"Remembered");
     }
 
     return nil;
