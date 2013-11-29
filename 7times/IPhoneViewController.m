@@ -77,11 +77,6 @@
     [self switchToWordList:NO];
 
     typeof(self) __weak weakSelf = self;
-    UIBarButtonItem *wordListBarItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Word List", @"Word List") style:UIBarButtonItemStylePlain handler:^(id sender) {
-        WordListViewController *wordListViewController = [[WordListViewController alloc] init];
-        [weakSelf.navigationController pushViewController:wordListViewController animated:YES];
-    }];
-    self.navigationItem.rightBarButtonItem = wordListBarItem;
 
     UIBarButtonItem *newWordButtonItem = [UIBarButtonItem.alloc
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -137,9 +132,15 @@
         else if([model isEqualToString:@"all"]){
             [weakSelf switchToWordList:NO];
 
+            UIBarButtonItem *wordListButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks handler:^(id sender) {
+                WordListViewController *wordListViewController = [[WordListViewController alloc] init];
+                [weakSelf.navigationController pushViewController:wordListViewController animated:YES];
+            }];
             [weakSelf setToolbarItems:@[
                 [UIBarButtonItem flexibleSpaceItem],
                 newWordButtonItem,
+                [UIBarButtonItem flexibleSpaceItem],
+                wordListButtonItem,
                 [UIBarButtonItem flexibleSpaceItem],
             ] animated:YES];
         }
