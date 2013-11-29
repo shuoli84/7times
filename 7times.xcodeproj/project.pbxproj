@@ -24,7 +24,6 @@
 		9C1C9C3717DF081900BCC341 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3517DF081900BCC341 /* InfoPlist.strings */; };
 		9C1C9C3A17DF081900BCC341 /* _timesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3917DF081900BCC341 /* _timesTests.m */; };
 		9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C4317E1C9FA00BCC341 /* Model.xcdatamodeld */; };
-		9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC465183E0C2100C2EB68 /* PostsViewController.m */; };
 		9C3FC46D183F5A5E00C2EB68 /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE48E00EE44FBAB6FDDBE232 /* libFlurry_4.2.4.a */; };
 		9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */; };
 		9C3FC491184720CD00C2EB68 /* LocalWordList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3FC490184720CD00C2EB68 /* LocalWordList.m */; };
@@ -63,7 +62,6 @@
 		BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EA0106C59259FE320B37 /* SLSharedConfig.m */; };
 		BE48EC5D94F6C8E21777C5D9 /* Word+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE43F2591308B9B53D2A /* Word+Util.m */; };
 		BE48ECD8F70E647D2C23BDF2 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E32881AE19D976820BC6 /* IAPHelper.m */; };
-		BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E77AD3CF8872FFDD8E2E /* PostManager.m */; };
 		BE48ED3A7E371872367F572D /* WordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E29FC619F4D67CAD7289 /* WordListViewController.m */; };
 		BE48ED3C0C608E8DC14251BC /* PostDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E8A2AC414440211607D4 /* PostDownloader.m */; };
 		BE48ED8D8427EE8EE50B31F5 /* ielts1200.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EAA18C9FF9818A7215AB /* ielts1200.txt */; };
@@ -111,8 +109,6 @@
 		9C1C9C3917DF081900BCC341 /* _timesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _timesTests.m; sourceTree = "<group>"; };
 		9C1C9C4417E1C9FA00BCC341 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9C3FC463183E0A7B00C2EB68 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard_iPhone.storyboard"; sourceTree = "<group>"; };
-		9C3FC464183E0C2100C2EB68 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
-		9C3FC465183E0C2100C2EB68 /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		9C3FC46E18405A3400C2EB68 /* Model.1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 2.xcdatamodel"; sourceTree = "<group>"; };
 		9C3FC4721841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+flexibleSpaceItem.h"; sourceTree = "<group>"; };
 		9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+flexibleSpaceItem.m"; sourceTree = "<group>"; };
@@ -173,7 +169,6 @@
 		BE48E67296806E138409D68F /* WordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordDetailViewController.h; sourceTree = "<group>"; };
 		BE48E7636964012D8D12683E /* UIFont+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Util.m"; sourceTree = SOURCE_ROOT; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
-		BE48E77AD3CF8872FFDD8E2E /* PostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostManager.m; sourceTree = "<group>"; };
 		BE48E7CC2B7021E380FDFC5C /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
 		BE48E8465A26A14C601E81B0 /* UIFont+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Util.h"; sourceTree = SOURCE_ROOT; };
 		BE48E848407A024A8C813BA8 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
@@ -182,7 +177,6 @@
 		BE48E9A1047F8B0D3BFE4C49 /* cet4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet4.txt; sourceTree = SOURCE_ROOT; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
-		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
 		BE48EA6014C0B12815033119 /* GoogleNewsScrubber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleNewsScrubber.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
 		BE48EA746404EF689745BBCD /* cet6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet6.txt; sourceTree = SOURCE_ROOT; };
@@ -301,8 +295,6 @@
 				9C56C1B3183DF65800A8CD95 /* PostBriefTableViewCell.m */,
 				BE48E67296806E138409D68F /* WordDetailViewController.h */,
 				BE48E06E31969545ABEBB1C0 /* WordDetailViewController.m */,
-				9C3FC464183E0C2100C2EB68 /* PostsViewController.h */,
-				9C3FC465183E0C2100C2EB68 /* PostsViewController.m */,
 				BE48E29FC619F4D67CAD7289 /* WordListViewController.m */,
 				BE48E1EBCA1B38425D9197FB /* WordListViewController.h */,
 				9C1C9C0C17DF081900BCC341 /* Supporting Files */,
@@ -314,8 +306,6 @@
 				9C3FC4721841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.h */,
 				9C3FC4731841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m */,
 				BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */,
-				BE48E77AD3CF8872FFDD8E2E /* PostManager.m */,
-				BE48EA2F8A83E5038FAEF779 /* PostManager.h */,
 				BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */,
 				BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */,
 				BE48EE43F2591308B9B53D2A /* Word+Util.m */,
@@ -598,12 +588,10 @@
 				9C1C9C1617DF081900BCC341 /* AppDelegate.m in Sources */,
 				BE48EBF02F6F5860D4E7FE2D /* SLSharedConfig.m in Sources */,
 				9C1C9C4517E1C9FA00BCC341 /* Model.xcdatamodeld in Sources */,
-				9C3FC466183E0C2100C2EB68 /* PostsViewController.m in Sources */,
 				9C3FC491184720CD00C2EB68 /* LocalWordList.m in Sources */,
 				BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */,
 				BE48E928959936F76B265F0A /* IPhoneViewController.m in Sources */,
 				9C3FC4741841E92F00C2EB68 /* UIBarButtonItem+flexibleSpaceItem.m in Sources */,
-				BE48ED36873C62B8ACB299D9 /* PostManager.m in Sources */,
 				BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */,
 				9C56C1B4183DF65800A8CD95 /* PostBriefTableViewCell.m in Sources */,
 				9C3FC4A1184793F200C2EB68 /* Wordlist.m in Sources */,
