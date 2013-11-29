@@ -116,6 +116,7 @@
             dec(@"button", CGRectMake(FVT(90), FVCenter, 80, 30), ^{
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
 
+            button.tintColor = [UIColor whiteColor];
                 button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
                 button.backgroundColor = [UIColor colorWithRed:231.f / 255.f green:76 / 255.f blue:60 / 255.f alpha:1.f];
                 button.tag = 102;

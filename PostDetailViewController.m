@@ -40,12 +40,14 @@
             UITextView *titleTextView = [[UITextView alloc]init];
             titleTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
             titleTextView.editable = NO;
+            titleTextView.scrollEnabled = NO;
             return titleTextView;
         }()),
         dec(@"bodyLabel", CGRectMake(0, FVAfter, FVP(1.f), FVTillEnd), self.bodyTextView = ^{
             UITextView *bodyTextView = [[UITextView alloc]init];
             bodyTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
             bodyTextView.editable = NO;
+            bodyTextView.scrollEnabled = YES;
             return bodyTextView;
         }()),
     ]];
@@ -60,8 +62,13 @@
     self.bodyTextView.text = self.post.summary;
 
     UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
-        UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
-        [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
+        if(weakSelf.wordReferenceViewController){
+            [weakSelf presentViewController:weakSelf.wordReferenceViewController animated:YES completion:nil];
+        }
+        else{
+            UIReferenceLibraryViewController *referenceLibraryViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.post.word.word];
+            [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
+        }
     }];
 
     UIBarButtonItem *openLinkButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay handler:^(id sender) {
@@ -131,18 +138,6 @@
     if(period > 5.f){
         NSLog(@"Period is long enough to mark this post as read");
         self.post.checked = [NSNumber numberWithBool:YES];
-
-        if(self.post.word.lastCheckExpired){
-            NSLog(@"The word's last check expired, mark it as checked this time too");
-            Check *check = [Check MR_createEntity];
-            check.date = [NSDate date];
-            check.post = self.post;
-
-            [self.post.word addCheckHelper:check];
-        }
-        else{
-            NSLog(@"The word's last check still valid, ignore this check");
-        }
 
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }

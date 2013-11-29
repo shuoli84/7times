@@ -26,9 +26,9 @@
 
 @property (nonatomic, strong) UITableView *postsTable;
 
-@property (nonatomic, strong) NSDate *startTime;
-
 @property (nonatomic, strong) NSMutableDictionary *postHeightCache;
+
+@property (nonatomic, strong) UIReferenceLibraryViewController *wordReferenceViewController;
 @end
 
 @implementation WordDetailViewController {
@@ -84,34 +84,11 @@
                             [UIBarButtonItem flexibleSpaceItem],
                             ]];
     self.navigationController.toolbarHidden = NO;
-}
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    self.startTime = [NSDate date];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    NSDate *now = [NSDate date];
-    NSTimeInterval period = now.timeIntervalSince1970 - self.startTime.timeIntervalSince1970;
-    if(period > 5.f){
-        NSLog(@"The word showed longer than 5 seconds, treat this as a valid view");
-
-        if(self.word.lastCheckExpired){
-            NSLog(@"The last check is expired, mark this as a new check");
-            Check *check = [Check MR_createEntity];
-            check.date = now;
-            [self.word addCheckHelper:check];
-
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-        }
-        else{
-            NSLog(@"The last check still valid, so this can't be marked as a new check");
-        }
-    }
+    typeof(self) __weak weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        weakSelf.wordReferenceViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:weakSelf.word.word];
+    });
 }
 
 -(void)viewWillLayoutSubviews {
@@ -123,8 +100,13 @@
 }
 
 -(void)lookupWord:(id) sender{
-    UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.word.word];
-    [self presentViewController:dictionViewController animated:YES completion:nil];
+    if(self.wordReferenceViewController != nil){
+        [self presentViewController:self.wordReferenceViewController animated:YES completion:nil];
+    }
+    else{
+        UIReferenceLibraryViewController *dictionViewController = [[UIReferenceLibraryViewController alloc] initWithTerm:self.word.word];
+        [self presentViewController:dictionViewController animated:YES completion:nil];
+    }
 }
 
 -(void)loadNews:(id) sender{
@@ -179,6 +161,7 @@
     Post *post = [self.postsFetchedResultsController objectAtIndexPath:indexPath];
     PostDetailViewController *postDetailViewController = [[PostDetailViewController alloc] init];
     postDetailViewController.post = post;
+    postDetailViewController.wordReferenceViewController = self.wordReferenceViewController;
     [self.navigationController pushViewController:postDetailViewController animated:YES];
 }
 

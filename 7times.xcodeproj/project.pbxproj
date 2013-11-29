@@ -761,8 +761,8 @@
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shuo Li";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shuo Li";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
@@ -773,7 +773,7 @@
 					/Users/lishuo/Developer/7times/7times/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "87BF351B-164A-4E8B-9100-A2863AF3A8FC";
+				PROVISIONING_PROFILE = "EE3E8DE9-CFD1-44F2-9E36-E66E7293F82B";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;

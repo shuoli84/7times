@@ -12,4 +12,6 @@
 @interface PostDetailViewController : UIViewController
 
 @property (nonatomic, strong) Post *post;
+
+@property (nonatomic, weak) UIReferenceLibraryViewController *wordReferenceViewController;
 @end

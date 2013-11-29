@@ -225,7 +225,6 @@
 
     if(autoList){
         [self.wordFetchedResultsController.fetchRequest setSortDescriptors:@[
-            [NSSortDescriptor sortDescriptorWithKey:@"lastCheckTime" ascending:NO],
             [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
             [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
             [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
