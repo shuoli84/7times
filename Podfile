@@ -15,6 +15,7 @@ pod 'UITableView-NXEmptyView'
 pod 'ODRefreshControl'
 pod 'FlatUIKit', :podspec => "https://raw.github.com/Grouper/FlatUIKit/master/FlatUIKit.podspec"
 pod 'Glue', :podspec => "https://raw.github.com/shuoli84/Glue/master/Glue.podspec"
+pod 'Reachability'
 
 target :'7timesTests', :exclusive => true do
   pod 'Kiwi'

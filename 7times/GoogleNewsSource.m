@@ -8,7 +8,6 @@
 
 #import <BlocksKit/A2DynamicDelegate.h>
 #import "GoogleNewsSource.h"
-#import "RXMLElement.h"
 #import "Word.h"
 #import "MWFeedParser.h"
 #import "Post.h"
@@ -18,25 +17,8 @@
 
 }
 
-BOOL pureTextFont(RXMLElement* element){
-    if([element children:@"font"].count > 0){
-        return NO;
-    }
-    if([element.tag isEqualToString:@"font"]){
-        BOOL __block notPureText = NO;
-        [element iterate:@"*" usingBlock:^(RXMLElement *elm) {
-            if(!pureTextFont(elm)){ notPureText = YES; }
-        }];
-
-        if(notPureText){return NO;}
-    }
-
-    return YES;
-}
-
 -(NSString*)buildURL:(NSString*)searchWord{
     NSString *str = [NSString stringWithFormat:@"https://news.google.com/news?pz=1&num=30&cf=all&ned=us&output=rss&q=%@", searchWord];
-   // NSString *str = [NSString stringWithFormat:@"http://api.feedzilla.com/v1/articles/search.rss?q=%@", searchWord];
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return str;
 }

@@ -11,11 +11,13 @@
 #import "GoogleNewsSource.h"
 #import "NSTimer+BlocksKit.h"
 #import "Word+Util.h"
+#import "Reachability.h"
 
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
 @property (nonatomic, strong) NSTimer *timer;
 @property(nonatomic, strong) NSFetchedResultsController *wordsFetchedResultsController;
+@property (nonatomic, strong) Reachability *reachability;
 @end
 
 @implementation PostDownloader {
@@ -33,6 +35,11 @@
 
         self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"checkNumber < 7 AND postNumber == 0"] sortedBy:@"added" ascending:YES];
         self.wordsFetchedResultsController.fetchRequest.fetchLimit = 50;
+
+        self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+        self.reachability.reachableOnWWAN = NO;
+
+        [self.reachability startNotifier];
     }
 
     return self;
@@ -67,28 +74,40 @@
 }
 
 -(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{
-    NSLog(@"Start download posts for words");
-    NSArray *wordArray = self.wordListNeedPosts;
+    if(self.reachability.isReachableViaWiFi){
+        NSLog(@"Start download posts for words");
+        NSArray *wordArray = self.wordListNeedPosts;
 
-    for(Word *word in wordArray){
-        if(word.postNumber.integerValue == 0){
-            [self throttleRequest];
-            if([self.googleNewsSource download:word]){
-                if(oneWordFinish){
-                    oneWordFinish(word.word);
+        for(Word *word in wordArray){
+            if(word.postNumber.integerValue == 0){
+                [self throttleRequest];
+
+                // Also protect from each download
+                // When the first check is valid, then user disable wifi, it may hit this
+                if(self.reachability.isReachableViaWiFi){
+                    if([self.googleNewsSource download:word]){
+                        if(oneWordFinish){
+                            oneWordFinish(word.word);
+                        }
+                    }
+                    else{
+                        NSLog(@"Failed to download, break the download loop and try next time");
+                        break;
+                    }
                 }
             }
-            else{
-                NSLog(@"Failed to download, break the download loop and try next time");
-                break;
-            }
+        }
+        if(completion){
+            completion();
+        }
+
+        NSLog(@"Posts download finished");
+    }
+    else{
+        if(completion){
+            completion();
         }
     }
-    if(completion){
-        completion();
-    }
-
-    NSLog(@"Posts download finished");
 }
 
 -(void)downloadForWord:(NSString*)word completion:(void(^)())completion{
