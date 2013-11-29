@@ -32,7 +32,7 @@
 
         typeof(self) __weak weakSelf = self;
         self.declaration = [dec(@"root") $:@[
-            dec(@"word", CGRectMake(10, FVCenter, FVT(80), 30), self.wordLabel = ^{
+            dec(@"word", CGRectMake(15, FVCenter, FVT(80), 30), self.wordLabel = ^{
                 UILabel *label = [[UILabel alloc] init];
                 label.font = [UIFont boldSystemFontOfSize:18];
                 label.textColor = [UIColor blackColor];

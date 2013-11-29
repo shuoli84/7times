@@ -25,6 +25,6 @@
 "TheArticleGoodForWord" = "这篇文章%@ %@\n有助于背单词%@ 来自7times";
 "RememberingWord" = "在背单词%@ 来自7times";
 "All" = "全部";
-"Todo" = "待背";
+"Todo" = "进行中";
 "all (%d)" = "词表 (%d)";
-"todo (%d)" = "待背 (%d)";
+"todo (%d)" = "进行中 (%d)";
