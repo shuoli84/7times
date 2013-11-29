@@ -12,7 +12,6 @@
 #import <BlocksKit/UIControl+BlocksKit.h>
 #import "IPhoneViewController.h"
 #import "Word.h"
-#import "UIView+FindFirstResponder.h"
 #import "Flurry.h"
 #import "UIAlertView+BlocksKit.h"
 #import "WordDetailViewController.h"
@@ -208,16 +207,6 @@
     wordRecord.added = [NSDate date];
     wordRecord.source = @"0"; //Manual added one with 0 source to get better sort order
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-}
-
--(void)addWordMenuAction:(id)sender{
-    UIView *firstResponder = [self.view firstResponder];
-    [firstResponder copy:firstResponder];
-
-    NSString *highlightedText = [UIPasteboard generalPasteboard].string;
-    highlightedText = [highlightedText lowercaseString];
-    NSLog(@"%@", highlightedText);
-    [self addWord:highlightedText];
 }
 
 #pragma mark NSFetchedResultsControllerDelegate
