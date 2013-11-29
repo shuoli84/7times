@@ -63,7 +63,7 @@
 
 -(void)throttleRequest{
     // Naive implement, just sleep 1 second for each request
-    [NSThread sleepForTimeInterval:1];
+    [NSThread sleepForTimeInterval:2];
 }
 
 -(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{

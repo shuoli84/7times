@@ -12,6 +12,7 @@
 @class PostManager;
 @class TTTTimeIntervalFormatter;
 @class Wordlist;
+@class GoogleNewsScrubber;
 
 @interface SLSharedConfig : NSObject
 
@@ -22,7 +23,10 @@
 @property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
 @property (nonatomic, strong) Wordlist *todoList; //the todo list
 
+@property (nonatomic, strong) GoogleNewsScrubber *googleNewsScrubber;
+
 -(UIColor*)colorForCount:(int)count;
 
 +(SLSharedConfig *)sharedInstance;
+
 @end

@@ -346,7 +346,7 @@
 
     NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
 
-    if(random){
+    if(!random){
         [fetchRequest setFetchLimit:25];
     }
 

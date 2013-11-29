@@ -71,6 +71,8 @@
 		BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E083A0A8E017D460B4DF /* PostDetailViewController.m */; };
 		BE48EE5B6F6B70EABAE65D73 /* UIView+FindFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EC1E47DD10F7D21010FD /* UIView+FindFirstResponder.m */; };
 		BE48EE5BB2AA800B1C973C13 /* DotView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7CC2B7021E380FDFC5C /* DotView.m */; };
+		BE48EEE4DFF36F6232947D83 /* UIFont+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E7636964012D8D12683E /* UIFont+Util.m */; };
+		BE48EF49820A6912B60FFFD0 /* GoogleNewsScrubber.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E4955CC54A06CE1B0D08 /* GoogleNewsScrubber.m */; };
 		BE48EF68D8C668B8E923D14A /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E2F53444BB8067BED03C /* gmat.txt */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +162,7 @@
 		BE48E32881AE19D976820BC6 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		BE48E45177D0DFE08B2052C7 /* UIView+FindFirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FindFirstResponder.h"; sourceTree = "<group>"; };
+		BE48E4955CC54A06CE1B0D08 /* GoogleNewsScrubber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleNewsScrubber.m; sourceTree = "<group>"; };
 		BE48E4C71A8D463466C56BC4 /* gre.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gre.txt; sourceTree = SOURCE_ROOT; };
 		BE48E50A0F0BFC0D59E731EB /* sat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sat.txt; sourceTree = SOURCE_ROOT; };
 		BE48E5426FA50E7B12BA3C9F /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
@@ -168,9 +171,11 @@
 		BE48E604695DD82D51AB3D07 /* PostDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		BE48E663F77584937365BCA3 /* NSURL+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QueryString.h"; sourceTree = "<group>"; };
 		BE48E67296806E138409D68F /* WordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordDetailViewController.h; sourceTree = "<group>"; };
+		BE48E7636964012D8D12683E /* UIFont+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Util.m"; sourceTree = SOURCE_ROOT; };
 		BE48E76B1C1024C383CEBB24 /* IPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPhoneViewController.h; sourceTree = "<group>"; };
 		BE48E77AD3CF8872FFDD8E2E /* PostManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostManager.m; sourceTree = "<group>"; };
 		BE48E7CC2B7021E380FDFC5C /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
+		BE48E8465A26A14C601E81B0 /* UIFont+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Util.h"; sourceTree = SOURCE_ROOT; };
 		BE48E848407A024A8C813BA8 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		BE48E8A2AC414440211607D4 /* PostDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDownloader.m; sourceTree = "<group>"; };
 		BE48E8B97A0F96995FA5CD69 /* Word+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Word+Util.h"; sourceTree = "<group>"; };
@@ -178,6 +183,7 @@
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA2354CA3EBD5481DFC9 /* DotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotView.h; sourceTree = "<group>"; };
 		BE48EA2F8A83E5038FAEF779 /* PostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostManager.h; sourceTree = "<group>"; };
+		BE48EA6014C0B12815033119 /* GoogleNewsScrubber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleNewsScrubber.h; sourceTree = "<group>"; };
 		BE48EA6F11A9E90B4789DB96 /* PostDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDownloader.h; sourceTree = "<group>"; };
 		BE48EA746404EF689745BBCD /* cet6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cet6.txt; sourceTree = SOURCE_ROOT; };
 		BE48EA8EEDF81A011E329563 /* PostDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailTableViewCell.m; sourceTree = SOURCE_ROOT; };
@@ -332,6 +338,10 @@
 				BE48E3AEB31E061C42E41E23 /* PostDetailViewController.h */,
 				BE48E321CCB9FD143FEF1CAE /* WordTableViewCell.m */,
 				BE48E2C61332CF9330901D5A /* WordTableViewCell.h */,
+				BE48E7636964012D8D12683E /* UIFont+Util.m */,
+				BE48E8465A26A14C601E81B0 /* UIFont+Util.h */,
+				BE48E4955CC54A06CE1B0D08 /* GoogleNewsScrubber.m */,
+				BE48EA6014C0B12815033119 /* GoogleNewsScrubber.h */,
 			);
 			path = 7times;
 			sourceTree = "<group>";
@@ -612,6 +622,8 @@
 				BE48EDF4742FDFF8AC7D1B98 /* PostDetailViewController.m in Sources */,
 				BE48E5685199819C43FFFF3A /* WordTableViewCell.m in Sources */,
 				9C3FC4AA184793F400C2EB68 /* Post.m in Sources */,
+				BE48EEE4DFF36F6232947D83 /* UIFont+Util.m in Sources */,
+				BE48EF49820A6912B60FFFD0 /* GoogleNewsScrubber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

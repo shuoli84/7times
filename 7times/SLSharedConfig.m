@@ -13,6 +13,7 @@
 #import "LocalWordList.h"
 #import "MagicalRecord/MagicalRecord.h"
 #import "Wordlist.h"
+#import "GoogleNewsScrubber.h"
 
 @implementation SLSharedConfig {
 }
@@ -55,6 +56,8 @@
         }
 
         self.todoList = wordList;
+
+        self.googleNewsScrubber = [[GoogleNewsScrubber alloc]init];
     }
 
     return self;

@@ -36,6 +36,7 @@ BOOL pureTextFont(RXMLElement* element){
 
 -(NSString*)buildURL:(NSString*)searchWord{
     NSString *str = [NSString stringWithFormat:@"https://news.google.com/news?pz=1&num=30&cf=all&ned=us&output=rss&q=%@", searchWord];
+   // NSString *str = [NSString stringWithFormat:@"http://api.feedzilla.com/v1/articles/search.rss?q=%@", searchWord];
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return str;
 }
@@ -73,34 +74,15 @@ BOOL pureTextFont(RXMLElement* element){
 
     if(returnValue){
         for(MWFeedItem* item in rssItems){
-            RXMLElement *doc = [[RXMLElement alloc] initFromXMLData:[item.summary dataUsingEncoding:NSUTF8StringEncoding]];
             NSString *title = item.title;
-            NSString *__block source;
-            NSString *__block summary = @"";
-
-            NSMutableArray *textArray = [NSMutableArray array];
-
-            [doc iterateWithRootXPath:@"//font" usingBlock:^(RXMLElement *element) {
-                if(pureTextFont(element)){
-                    NSString *value = element.text;
-                    value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                    if(value.length > 0){
-                        [textArray addObject:value];
-                        if(summary.length < value.length){
-                            source = summary;
-                            summary = value;
-                        }
-                    }
-                }
-            }];
 
             Post *post = [Post MR_findFirstByAttribute:@"id" withValue:item.identifier];
             if(post == nil){
                 post = [Post MR_createEntity];
                 post.id = item.identifier;
                 post.title = title;
-                post.source = source;
-                post.summary = summary;
+                post.source = @"Google News";
+                post.summary = item.summary;
                 post.date = item.date;
                 post.url = item.link;
             }
@@ -114,5 +96,7 @@ BOOL pureTextFont(RXMLElement* element){
 
     return returnValue;
 }
+
+
 
 @end

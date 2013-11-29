@@ -16,13 +16,15 @@
 #import "Check.h"
 #import "UIBarButtonItem+BlocksKit.h"
 #import "UIBarButtonItem+flexibleSpaceItem.h"
+#import "UIFont+Util.h"
+#import "SLSharedConfig.h"
+#import "GoogleNewsScrubber.h"
 
 @interface PostDetailViewController()
 
 @property (nonatomic, strong) FVDeclaration *declaration;
 
-@property (nonatomic, strong) UITextView *textView;
-@property (nonatomic, strong) UITextView *bodyTextView;
+@property (nonatomic, strong) UIWebView *bodyWebView;
 
 @property (nonatomic, strong) NSDate *startTime;
 @end
@@ -31,35 +33,47 @@
 
 }
 
+-(BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 -(void)viewDidLoad {
     [super viewDidLoad];
 
+    self.automaticallyAdjustsScrollViewInsets = YES;
+
     typeof(self) __weak weakSelf = self;
     self.declaration = [dec(@"root") $:@[
-        dec(@"titleLabel", CGRectMake(0, 0, FVP(1.f), 200), self.textView = ^{
-            UITextView *titleTextView = [[UITextView alloc]init];
-            titleTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-            titleTextView.editable = NO;
-            titleTextView.scrollEnabled = NO;
-            return titleTextView;
-        }()),
-        dec(@"bodyLabel", CGRectMake(0, FVAfter, FVP(1.f), FVTillEnd), self.bodyTextView = ^{
-            UITextView *bodyTextView = [[UITextView alloc]init];
-            bodyTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-            bodyTextView.editable = NO;
-            bodyTextView.scrollEnabled = YES;
-            return bodyTextView;
+        dec(@"bodyView", CGRectMake(0, 0, FVP(1.f), FVTillEnd), self.bodyWebView = ^{
+            return [[UIWebView alloc]init];
         }()),
     ]];
 
     [self.declaration setupViewTreeInto:self.view];
-
-    self.textView.text = self.post.title;
-    CGSize size = [self.textView sizeThatFits:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height)];
-    CGRect frame = CGRectMake(0, 0, FVP(1.f), size.height);
-    [self.declaration declarationByName:@"titleLabel"].unExpandedFrame = frame;
     [self.declaration updateViewFrame];
-    self.bodyTextView.text = self.post.summary;
+    //Remove the first Td element
+
+    NSString *content = self.post.summary;
+    NSString *title = self.post.title;
+
+    NSLog(@"Original content: %@", content);
+
+    if([self.post.source isEqualToString:@"Google News"]){
+        title = [[SLSharedConfig sharedInstance].googleNewsScrubber scrubTitle:title];
+        content = [[SLSharedConfig sharedInstance].googleNewsScrubber scrubContent:content];
+    }
+
+    NSString *html = [NSString stringWithFormat:
+        @"<html>"
+            "<head>"
+            "<style type=\"text/css\">"
+            "font{font-size:%f;font-family:arial,sans-serif;}"
+            "</style>"
+            "</head>"
+        "<body><font>%@</font>%@</body>"
+        "</html>", [UIFont preferredFontSize], title, content];
+    NSLog(@"%@", html);
+    [self.bodyWebView loadHTMLString:html baseURL:[NSURL URLWithString:self.post.url]];
 
     UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
         if(weakSelf.wordReferenceViewController){

@@ -14,4 +14,5 @@
 @interface GoogleNewsSource : NSObject
 
 -(BOOL)download:(Word*)word;
+
 @end
