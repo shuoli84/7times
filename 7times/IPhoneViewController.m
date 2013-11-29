@@ -29,6 +29,7 @@
 @property (nonatomic, strong) FVDeclaration *declaration;
 
 @property (nonatomic, strong) UITableView *wordListTableView;
+@property (nonatomic, strong) UISegmentedControl *listSegmentedControl;
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
@@ -92,6 +93,9 @@
         NSLocalizedString(@"All", @"全部"),
         NSLocalizedString(@"Todo", @"待背")
     ]];
+
+    self.listSegmentedControl = segmentedControl;
+
     [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
         if(sender.selectedSegmentIndex == 1){
             weakSelf.model = @"auto";
@@ -102,8 +106,7 @@
     } forControlEvents:UIControlEventValueChanged];
 
     segmentedControl.selectedSegmentIndex = 0;
-    UIBarButtonItem *filterSwitch = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-    self.navigationItem.leftBarButtonItem = filterSwitch;
+    self.navigationItem.titleView = segmentedControl;
 
     [self
      setToolbarItems:@[
@@ -113,6 +116,7 @@
      ]];
 
     self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
+        NSLog(@"Binding called");
         NSString* model = (NSString*)value;
         if([model isEqualToString:@"auto"]){
             [weakSelf switchToWordList:YES];
@@ -250,11 +254,17 @@
 }
 
 -(void)updateTitle{
+    NSString *todoTitle = [NSString stringWithFormat:NSLocalizedString(@"todo (%d)", @"todo (%d)"), [SLSharedConfig sharedInstance].todoList.words.count];
+
+    [self.listSegmentedControl setTitle:todoTitle forSegmentAtIndex:1];
+
     if([self.model isEqualToString:@"all"]){
-        self.title = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
+        NSString* title = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
+        self.title = title;
+        [self.listSegmentedControl setTitle:title forSegmentAtIndex:0];
     }
     else{
-        self.title = [NSString stringWithFormat:NSLocalizedString(@"todo (%d)", @"todo (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
+        self.title = todoTitle;
     }
 }
 
