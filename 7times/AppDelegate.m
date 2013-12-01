@@ -32,7 +32,6 @@
     IPhoneViewController *iphoneViewController = [[IPhoneViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:iphoneViewController];
 
-
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
 

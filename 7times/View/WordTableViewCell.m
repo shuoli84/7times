@@ -50,7 +50,7 @@
             }()),
         ]];
 
-        [self.declaration setupViewTreeInto:self];
+        [self.declaration setupViewTreeInto:self.contentView];
 
         UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             if (state == UIGestureRecognizerStateRecognized){

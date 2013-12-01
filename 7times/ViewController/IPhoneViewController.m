@@ -276,7 +276,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WordTableViewCell *cell = (WordTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    WordTableViewCell *cell = (WordTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     Word* word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
     cell.word = word;
     typeof(self) __weak weakSelf = self;
