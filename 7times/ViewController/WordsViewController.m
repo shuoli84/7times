@@ -11,6 +11,7 @@
 #import <FlatUIKit/UIColor+FlatUI.h>
 #import "Wordlist.h"
 #import <BlocksKit/UIControl+BlocksKit.h>
+#import <MMDrawerController/UIViewController+MMDrawerController.h>
 #import "WordsViewController.h"
 #import "Word.h"
 #import "Flurry.h"
@@ -66,6 +67,12 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     self.navigationController.automaticallyAdjustsScrollViewInsets = YES;
 
+    typeof(self) __weak weakSelf = self;
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"259-list.png"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [weakSelf.navigationController.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    }];
+    self.navigationItem.leftBarButtonItem = menuBarButtonItem;
+
     self.declaration = [dec(@"root") $:@[
         dec(@"wordList", CGRectMake(0, 0, FVP(1.f), FVTillEnd), self.wordListTableView = ^{
             UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -85,8 +92,6 @@ typedef NS_ENUM(NSInteger, RunningModel){
     [self.declaration setupViewTreeInto:self.view];
 
     [self switchToWordList:YES];
-
-    typeof(self) __weak weakSelf = self;
 
     UIBarButtonItem *newWordButtonItem = [UIBarButtonItem.alloc
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd

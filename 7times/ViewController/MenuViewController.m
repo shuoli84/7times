@@ -5,11 +5,15 @@
 
 
 #import <FlatUIKit/UIColor+FlatUI.h>
+#import <MessageUI/MessageUI.h>
+#import <iRate/iRate.h>
 #import "MenuViewController.h"
 #import "Wordlist.h"
 #import "WordListViewController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "WordsViewController.h"
+#import "MFMessageComposeViewController+BlocksKit.h"
+#import "ConfigViewController.h"
 
 
 @interface MenuViewController() <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
@@ -26,7 +30,7 @@
     [super viewDidLoad];
 
     self.menuItems = @[
-        NSLocalizedString(@"Setting", @"Setting"),
+       // NSLocalizedString(@"Setting", @"Setting"),
         NSLocalizedString(@"Comment", @"Comment"),
         NSLocalizedString(@"Review", @"Review")
     ];
@@ -85,6 +89,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    typeof(self) __weak weakSelf = self;
     if(indexPath.section == 0){
         if(indexPath.row >= self.wordListFetchedResultsController.fetchedObjects.count){
             NSLog(@"Load from word list view controller");
@@ -104,13 +109,23 @@
     }
     else{
         if(indexPath.row == 0){
-            NSLog(@"Setting");
+            MFMessageComposeViewController *messageComposeViewController = [[MFMessageComposeViewController alloc] init];
+            if([MFMessageComposeViewController canSendText]){
+                messageComposeViewController.recipients = @[@"menic84@msn.com"];
+                [messageComposeViewController setCompletionBlock:^(MFMessageComposeViewController *controller, MessageComposeResult result) {
+                    [controller dismissViewControllerAnimated:YES completion:nil];
+                }];
+                [self presentViewController:messageComposeViewController animated:YES completion:^{
+                    [weakSelf.mm_drawerController closeDrawerAnimated:NO completion:nil];
+                }];
+            }
+            else{
+                NSLog(@"Not able to send imessage");
+            }
         }
         else if(indexPath.row == 1){
-            NSLog(@"Comment");
-        }
-        else if(indexPath.row == 2){
-            NSLog(@"Review");
+            [[iRate sharedInstance] openRatingsPageInAppStore];
+            [weakSelf.mm_drawerController closeDrawerAnimated:YES completion:nil];
         }
     }
 }

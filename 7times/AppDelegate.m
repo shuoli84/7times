@@ -69,7 +69,7 @@
 }
 
 + (void)initialize {
-    [iRate sharedInstance].daysUntilPrompt = 3;
+    [iRate sharedInstance].daysUntilPrompt = 30;
     [iRate sharedInstance].usesUntilPrompt = 15;
 }
 
