@@ -16,7 +16,7 @@ pod 'ODRefreshControl'
 pod 'FlatUIKit', :podspec => "https://raw.github.com/Grouper/FlatUIKit/master/FlatUIKit.podspec"
 pod 'Glue', :podspec => "https://raw.github.com/shuoli84/Glue/master/Glue.podspec"
 pod 'Reachability'
-pod 'RMSwipeTableViewCell'
+pod 'MMDrawerController', :podspec => "https://raw.github.com/mutualmobile/MMDrawerController/master/MMDrawerController.podspec"
 
 target :'7timesTests', :exclusive => true do
   pod 'Kiwi'

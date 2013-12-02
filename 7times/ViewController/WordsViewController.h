@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class Wordlist;
 
-@interface IPhoneViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UIBarButtonItem* addButton;
+@interface WordsViewController : UIViewController
+
+@property (nonatomic, strong) Wordlist *wordList;
 @end

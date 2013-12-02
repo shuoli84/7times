@@ -19,22 +19,23 @@
 NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 
 NSArray *wordlistArray = @[
-    @[@"com.menic.7times.cet4", @"cet4"],
-    @[@"com.menic.7times.cet6", @"cet6"],
-    @[@"com.menic.7times.tofle", @"tofle"],
-    @[@"com.menic.7times.sat", @"sat"],
-    @[@"com.menic.7times.gmat", @"gmat"],
-    @[@"com.menic.7times.gre", @"gre"],
-    @[@"com.menic.7times.ielts1200", @"ielts1200"]
+    @[@"com.menic.7times.cet4", @"cet4", @"CET4"],
+    @[@"com.menic.7times.cet6", @"cet6", @"CET6"],
+    @[@"com.menic.7times.tofle", @"tofle", @"TOFLE"],
+    @[@"com.menic.7times.sat", @"sat", @"SAT"],
+    @[@"com.menic.7times.gmat", @"gmat", @"GMAT"],
+    @[@"com.menic.7times.gre", @"gre", @"GRE"],
+    @[@"com.menic.7times.ielts1200", @"ielts1200", @"IELTS"]
 ];
 
         for(NSArray *l in wordlistArray){
-            NSString* name = l[0];
-            NSString* filename = l[1];
-            LocalWordList *tofle = [[LocalWordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
-            tofle.name = name;
+            NSString *productId = l[0];
+            NSString *filename = l[1];
 
-[dictionary setObject:tofle forKey:name];
+            LocalWordList *wordlist = [[LocalWordList alloc] initWithString:[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil]];
+            wordlist.name = l[2];
+
+            [dictionary setObject:wordlist forKey:productId];
 }
 
 self.allWordLists = dictionary;

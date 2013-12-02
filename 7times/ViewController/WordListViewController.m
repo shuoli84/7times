@@ -8,6 +8,7 @@
 
 #import <SLFlexibleView/FVDeclaration.h>
 #import <SLFlexibleView/FVDeclareHelper.h>
+#import <BlocksKit/UIBarButtonItem+BlocksKit.h>
 #import "WordListViewController.h"
 #import "UIControl+BlocksKit.h"
 #import "WordListManager.h"
@@ -19,6 +20,7 @@
 #import "StoreKit/StoreKit.h"
 #import "SevenTimesIAPHelper.h"
 #import "ODRefreshControl.h"
+#import "Wordlist.h"
 
 @interface WordListViewController () <UITableViewDataSource>
 @property(nonatomic, strong) FVDeclaration *viewDeclare;
@@ -42,6 +44,18 @@
         [SVProgressHUD dismiss];
     };
 
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+
+    typeof(self) __weak weakSelf = self;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
+    }];
+
+    [toolbar setItems:@[
+        item,
+    ]];
+
+
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.dataSource = self;
 
@@ -55,7 +69,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     self.viewDeclare = [dec(@"root") $:@[
-        dec(@"tableView", CGRectMake(0, 0, FVP(1.f), FVTillEnd), self.tableView),
+        dec(@"toolbar", CGRectMake(0, 0, FVP(1.f), 44), toolbar),
+        dec(@"tableView", CGRectMake(0, FVA(0), FVP(1.f), FVTillEnd), self.tableView),
     ]];
 
     [self.viewDeclare setupViewTreeInto:self.view];
@@ -139,10 +154,16 @@
                     NSLog(@"The product already bought, load it");
                     LocalWordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
 
+
                     NSLog(@"Start loading wordlist: %@", wordList.name);
 
                     NSArray *words = wordList.words;
                     NSString *source = wordList.name;
+
+                    if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:source] != nil){
+                        NSLog(@"The word list already loaded");
+                        return;
+                    }
 
                     [Flurry logEvent:@"load_wordlist" withParameters:@{
                         @"name" : wordList.name, @"count" : @(words.count)
@@ -152,6 +173,11 @@
                     int count = words.count;
 
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        Wordlist *wordlist = [Wordlist MR_createEntity];
+                        wordlist.sourceId = wordList.name;
+                        wordlist.name = source;
+                        wordlist.total = [NSNumber numberWithInteger:count];
+
                         for (NSString *word in words) {
                             i++;
                             Word *wordEntity = [Word MR_createEntity];
@@ -159,6 +185,8 @@
                             wordEntity.added = [NSDate date];
                             wordEntity.source = source;
                             wordEntity.sortOrder = @(i);
+
+                            [wordlist addWordsObject:wordEntity];
 
                             if (i % 30 == 0) {
                                 dispatch_async(dispatch_get_main_queue(), ^{

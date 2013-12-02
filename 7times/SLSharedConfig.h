@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSArray* timeIntervals;
 @property (nonatomic, strong) PostDownloader *postDownloader;
 @property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
-@property (nonatomic, strong) Wordlist *todoList; //the todo list
+@property (nonatomic, strong) Wordlist *manualList;
 
 @property (nonatomic, strong) GoogleNewsScrubber *googleNewsScrubber;
 

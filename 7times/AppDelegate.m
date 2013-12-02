@@ -12,7 +12,9 @@
 #import "iRate.h"
 #import "SevenTimesIAPHelper.h"
 #import "SLSharedConfig.h"
-#import "IPhoneViewController.h"
+#import "WordsViewController.h"
+#import "MenuViewController.h"
+#import "MMDrawerController.h"
 
 @implementation AppDelegate
 
@@ -29,10 +31,16 @@
 
     self.window.tintColor = [UIColor greenSeaColor];
 
-    IPhoneViewController *iphoneViewController = [[IPhoneViewController alloc]init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:iphoneViewController];
+    [SLSharedConfig sharedInstance];
 
-    self.window.rootViewController = navigationController;
+    MenuViewController *menuViewController = [[MenuViewController alloc] init];
+    WordsViewController *iphoneViewController = [[WordsViewController alloc]init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:iphoneViewController];
+    MMDrawerController *drawerController = [[MMDrawerController alloc] initWithCenterViewController:navigationController leftDrawerViewController:menuViewController];
+    drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeBezelPanningCenterView;
+    drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeBezelPanningCenterView;
+
+    self.window.rootViewController = drawerController;
     [self.window makeKeyAndVisible];
 
     return YES;

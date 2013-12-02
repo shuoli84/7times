@@ -45,15 +45,19 @@
 
         self.timeFormmater = [[TTTTimeIntervalFormatter alloc] init];
 
-        Wordlist *wordList = [Wordlist MR_findFirstByAttribute:@"name" withValue:@"todo"];
-        if(wordList == nil){
-            wordList = [Wordlist MR_createEntity];
-            wordList.name = @"todo";
+        Wordlist *manualWordList = [Wordlist MR_findFirstByAttribute:@"name" withValue:@"Manual"];
+        if(manualWordList == nil){
+            manualWordList = [Wordlist MR_createEntity];
+            manualWordList.name = @"Manual";
 
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
+        else{
+            manualWordList.sortOrder = @(100);
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
 
-        self.todoList = wordList;
+        self.manualList = manualWordList;
 
         self.googleNewsScrubber = [[GoogleNewsScrubber alloc]init];
     }

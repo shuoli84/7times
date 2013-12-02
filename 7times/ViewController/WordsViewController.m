@@ -9,8 +9,9 @@
 #import <SLFlexibleView/FVDeclaration.h>
 #import <SLFlexibleView/FVDeclareHelper.h>
 #import <FlatUIKit/UIColor+FlatUI.h>
+#import "Wordlist.h"
 #import <BlocksKit/UIControl+BlocksKit.h>
-#import "IPhoneViewController.h"
+#import "WordsViewController.h"
 #import "Word.h"
 #import "Flurry.h"
 #import "UIAlertView+BlocksKit.h"
@@ -21,15 +22,15 @@
 #import "Binding.h"
 #import "UIBarButtonItem+BlocksKit.h"
 #import "SLSharedConfig.h"
-#import "Wordlist.h"
 #import "WordListViewController.h"
+#import "Wordlist+TodoList.h"
 
 typedef NS_ENUM(NSInteger, RunningModel){
     RunningModelAll,
     RunningModelTodo,
 };
 
-@interface IPhoneViewController() <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface WordsViewController () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
 
 @property (nonatomic, strong) UITableView *wordListTableView;
@@ -43,14 +44,18 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
 @end
 
-@implementation IPhoneViewController {
+@implementation WordsViewController {
 
 }
 
 -(void)viewDidLoad {
     [super viewDidLoad];
 
-    self.model = RunningModelAll;
+    if(self.wordList == nil){
+        self.wordList = [Wordlist MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"name <> %@", @"todo"] sortedBy:@"sortOrder" ascending:YES];
+    }
+
+    self.model = RunningModelTodo;
 
     self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     self.navigationController.toolbarHidden = NO;
@@ -79,7 +84,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     [self.declaration setupViewTreeInto:self.view];
 
-    [self switchToWordList:NO];
+    [self switchToWordList:YES];
 
     typeof(self) __weak weakSelf = self;
 
@@ -89,14 +94,14 @@ typedef NS_ENUM(NSInteger, RunningModel){
      action:@selector(addWordAction:)];
 
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[
+        NSLocalizedString(@"Todo", @"待背"),
         NSLocalizedString(@"All", @"全部"),
-        NSLocalizedString(@"Todo", @"待背")
     ]];
 
     self.listSegmentedControl = segmentedControl;
 
     [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
-        if(sender.selectedSegmentIndex == 1){
+        if(sender.selectedSegmentIndex == 0){
             weakSelf.model = RunningModelTodo;
         }
         else{
@@ -106,13 +111,6 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     segmentedControl.selectedSegmentIndex = 0;
     self.navigationItem.titleView = segmentedControl;
-
-    [self
-     setToolbarItems:@[
-         [UIBarButtonItem flexibleSpaceItem],
-         newWordButtonItem,
-         [UIBarButtonItem flexibleSpaceItem],
-     ]];
 
     self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
         NSLog(@"Binding called");
@@ -137,17 +135,19 @@ typedef NS_ENUM(NSInteger, RunningModel){
         else if(model == RunningModelAll){
             [weakSelf switchToWordList:NO];
 
-            UIBarButtonItem *wordListButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks handler:^(id sender) {
-                WordListViewController *wordListViewController = [[WordListViewController alloc] init];
-                [weakSelf.navigationController pushViewController:wordListViewController animated:YES];
-            }];
-            [weakSelf setToolbarItems:@[
-                [UIBarButtonItem flexibleSpaceItem],
-                newWordButtonItem,
-                [UIBarButtonItem flexibleSpaceItem],
-                wordListButtonItem,
-                [UIBarButtonItem flexibleSpaceItem],
-            ] animated:YES];
+
+            BOOL needAddWord = [self.wordList.objectID isEqual:[SLSharedConfig sharedInstance].manualList.objectID];
+
+            if(needAddWord){
+                [weakSelf setToolbarItems:@[
+                    [UIBarButtonItem flexibleSpaceItem],
+                    newWordButtonItem,
+                    [UIBarButtonItem flexibleSpaceItem],
+                ] animated:YES];
+            }
+            else{
+                [weakSelf setToolbarItems:@[]];
+            }
         }
     });
 }
@@ -181,21 +181,21 @@ typedef NS_ENUM(NSInteger, RunningModel){
     NSPredicate *predicate;
     NSString *cacheName;
     if(autoList){
-        predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", [SLSharedConfig sharedInstance].todoList];
-        cacheName = @"cache_todolist";
+        predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", self.wordList.todoList];
+        cacheName = [NSString stringWithFormat:@"cache_%@", self.wordList.todoList.name];
     }
     else{
-        predicate = [NSPredicate predicateWithFormat:@"ignore = NULL OR ignore = NO"];
-        cacheName = @"cache_all";
+        predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", self.wordList];
+        cacheName = [NSString stringWithFormat:@"cache_all_%@", self.wordList.name];
     }
 
     NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
-    [fetchRequest setFetchBatchSize:20];
+    [fetchRequest setFetchBatchSize:40];
     self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:cacheName];
+    self.wordFetchedResultsController.delegate = self;
     [self.wordFetchedResultsController performFetch:nil];
 
     [self.wordListTableView reloadData];
-    self.wordFetchedResultsController.delegate = self;
     [self updateTitle];
 }
 
@@ -211,7 +211,9 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     wordRecord.word = word;
     wordRecord.added = [NSDate date];
-    wordRecord.source = @"0"; //Manual added one with 0 source to get better sort order
+    wordRecord.source = @"Manual";
+    [[SLSharedConfig sharedInstance].manualList addWordsObject:wordRecord];
+
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 }
 
@@ -249,14 +251,15 @@ typedef NS_ENUM(NSInteger, RunningModel){
 }
 
 -(void)updateTitle{
-    NSString *todoTitle = [NSString stringWithFormat:NSLocalizedString(@"todo (%d)", @"todo (%d)"), [SLSharedConfig sharedInstance].todoList.words.count];
+    NSString *todoTitle = [NSString stringWithFormat:NSLocalizedString(@"todo (%d)", @"todo (%d)"), self.wordList.todoList.words.count];
 
-    [self.listSegmentedControl setTitle:todoTitle forSegmentAtIndex:1];
+    [self.listSegmentedControl setTitle:todoTitle forSegmentAtIndex:0];
+
+    NSString* allTitle = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordList.words.count];
+    [self.listSegmentedControl setTitle:allTitle forSegmentAtIndex:1];
 
     if(self.model == RunningModelAll){
-        NSString* title = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordFetchedResultsController.fetchedObjects.count];
-        self.title = title;
-        [self.listSegmentedControl setTitle:title forSegmentAtIndex:0];
+        self.title = allTitle;
     }
     else{
         self.title = todoTitle;
@@ -310,7 +313,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
         }
         else{
             [word checkItNow];
-            [[SLSharedConfig sharedInstance].todoList removeWordsObject:word];
+            [self.wordList.todoList removeWordsObject:word];
         }
 
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
@@ -380,7 +383,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
             }
         }
 
-        [[SLSharedConfig sharedInstance].todoList addWords:mutableSet];
+        [self.wordList.todoList addWords:mutableSet];
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }
 }
