@@ -342,9 +342,11 @@ typedef NS_ENUM(NSInteger, RunningModel){
             break;
         case 2:
             return;
+        default:
+            return;
     }
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (NONE lists.name = 'todo' OR lists.@count = 0)"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (lists CONTAINS %@)", self.wordList];
 
     NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
 

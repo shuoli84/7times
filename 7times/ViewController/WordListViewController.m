@@ -57,6 +57,7 @@
 
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.allowsSelection = NO;
     self.tableView.dataSource = self;
 
     self.wordListManager = [[WordListManager alloc] init];
@@ -220,15 +221,22 @@
     UILabel *title = (UILabel *) [cell viewWithTag:101];
     title.text = product.localizedTitle;
 
-
     [_priceFormatter setLocale:product.priceLocale];
     NSString *priceTag = [_priceFormatter stringFromNumber:product.price];
 
     UIButton *button = (UIButton *) [cell viewWithTag:102];
-    if ([[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-        [button setTitle:NSLocalizedString(@"LoadButton", @"load") forState:UIControlStateNormal];
-    } else {
-        [button setTitle:priceTag forState:UIControlStateNormal];
+
+    LocalWordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
+    if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:wordList.name] != nil){
+        [button setTitle:@"loaded" forState:UIControlStateNormal];
+        [button setEnabled:NO];
+    }
+    else{
+        if ([[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            [button setTitle:NSLocalizedString(@"LoadButton", @"load") forState:UIControlStateNormal];
+        } else {
+            [button setTitle:priceTag forState:UIControlStateNormal];
+        }
     }
 
     FVDeclaration *declaration = [cell associatedValueForKey:&declarationKey];

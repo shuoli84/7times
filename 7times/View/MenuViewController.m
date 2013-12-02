@@ -26,9 +26,9 @@
     [super viewDidLoad];
 
     self.menuItems = @[
-        @"Setting",
-        @"Comment",
-        @"Review"
+        NSLocalizedString(@"Setting", @"Setting"),
+        NSLocalizedString(@"Comment", @"Comment"),
+        NSLocalizedString(@"Review", @"Review")
     ];
 
     self.wordListFetchedResultsController = [Wordlist MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"NOT (name BEGINSWITH %@)", @"todo"] sortedBy:@"sortOrder" ascending:YES delegate:self];
@@ -61,7 +61,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     if(indexPath.section == 0){
         if(indexPath.row >= self.wordListFetchedResultsController.fetchedObjects.count){
-            cell.textLabel.text = @"Load";
+            cell.textLabel.text = NSLocalizedString(@"Load", @"Load");
         }
         else{
             Wordlist *wordlist = self.wordListFetchedResultsController.fetchedObjects[indexPath.row];
@@ -77,10 +77,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if(section == 0){
-        return @"Word list";
+        return NSLocalizedString(@"Word list", @"Word list");
     }
     else{
-        return @"Tools";
+        return NSLocalizedString(@"Tools", @"Tools");
     }
 }
 

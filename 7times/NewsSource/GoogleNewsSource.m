@@ -18,7 +18,7 @@
 }
 
 -(NSString*)buildURL:(NSString*)searchWord{
-    NSString *str = [NSString stringWithFormat:@"https://news.google.com/news?pz=1&num=30&cf=all&ned=us&output=rss&q=%@", searchWord];
+    NSString *str = [NSString stringWithFormat:@"https://news.google.com/news?pz=1&num=30&cf=all&ned=us&output=rss&q=\"%@\"", searchWord];
     str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return str;
 }
