@@ -69,7 +69,7 @@
         }
         else{
             Wordlist *wordlist = self.wordListFetchedResultsController.fetchedObjects[indexPath.row];
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)", wordlist.name, [wordlist.words count]];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)", NSLocalizedString(wordlist.name, @"wordlist name"), [wordlist.words count]];
         }
     }
     else{

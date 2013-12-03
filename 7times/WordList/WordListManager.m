@@ -27,7 +27,7 @@
             @[@"com.menic.7times.gmat", @"gmat", @"GMAT"],
             @[@"com.menic.7times.gre", @"gre", @"GRE"],
             @[@"com.menic.7times.ielts1200", @"ielts1200", @"IELTS"],
-            @[@"com.menic.7times.the_big_bang_01", @"the-big-bang-01.words.json", NSLocalizedString(@"The Big Bang 01", @"The Big Bang 01")]
+            @[@"com.menic.7times.the_big_bang_01", @"the-big-bang-01.words.json", @"The Big Bang 01"]
         ];
 
         for(NSArray *l in wordlistArray){
