@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
     [super viewDidLoad];
 
     if(self.wordList == nil){
-        self.wordList = [Wordlist MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"name <> %@", @"todo"] sortedBy:@"sortOrder" ascending:YES];
+        self.wordList = [Wordlist MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"not name beginswith %@", @"todo"] sortedBy:@"sortOrder" ascending:YES];
     }
 
     self.model = RunningModelTodo;

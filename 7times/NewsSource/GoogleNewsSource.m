@@ -11,6 +11,7 @@
 #import "Word.h"
 #import "MWFeedParser.h"
 #import "Post.h"
+#import "Wordlist.h"
 
 
 @implementation GoogleNewsSource {
@@ -69,7 +70,9 @@
                 post.url = item.link;
             }
 
-            Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word.word];
+            //Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word.word];
+            Word *word1 = (Word*)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:word.objectID];
+
             post.word = word1;
             word1.postNumber = @(word1.postNumber.integerValue + 1);
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
