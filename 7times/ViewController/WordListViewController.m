@@ -48,7 +48,7 @@
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
 
     typeof(self) __weak weakSelf = self;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain handler:^(id sender) {
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BackButton", @"Back button") style:UIBarButtonItemStylePlain handler:^(id sender) {
         [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
 

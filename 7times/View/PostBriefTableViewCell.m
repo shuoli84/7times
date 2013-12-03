@@ -10,6 +10,7 @@
 #import "PostBriefTableViewCell.h"
 #import "Post.h"
 #import "SLSharedConfig.h"
+#import "UIFont+Util.h"
 
 @implementation PostBriefTableViewCell
 
@@ -26,7 +27,36 @@
 
 -(void)setPost:(Post *)post{
     _post = post;
-    self.textLabel.text = post.title;
+
+    if([post.title rangeOfString:@"<b>"].location != NSNotFound){
+        NSRange range = [post.title rangeOfString:@"<b>"];
+        NSRange range1 = [post.title rangeOfString:@"</b>"];
+        NSRange rangeWholeTag = NSMakeRange(range.location, range1.location - range.location + range1.length);
+        NSRange rangeContent = NSMakeRange(range.location + range.length, range1.location - range.location - range.length);
+        NSString *content = [post.title substringWithRange:rangeContent];
+        NSString *title = [post.title stringByReplacingCharactersInRange:rangeWholeTag withString:content];
+
+        NSRange newRange = NSMakeRange(range.location, range1.location - range.location - range.length);
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:UIFont.preferredFontSize];
+        UIFont *regularFont = [UIFont systemFontOfSize:UIFont.preferredFontSize];
+
+        // Create the attributes
+        NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+            boldFont, NSFontAttributeName,
+            nil];
+        NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+            regularFont, NSFontAttributeName, nil];
+
+        NSMutableAttributedString *attributedText =
+            [[NSMutableAttributedString alloc] initWithString:title
+                                                   attributes:subAttrs];
+        [attributedText setAttributes:attrs range:newRange];
+
+        [self.textLabel setAttributedText:attributedText];
+    }
+    else{
+        self.textLabel.text = post.title;
+    }
     self.detailTextLabel.text = [SLSharedConfig.sharedInstance.timeFormmater stringForTimeInterval:post.date.timeIntervalSinceNow];
 
     if(post.checked.boolValue){
