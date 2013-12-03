@@ -21,6 +21,7 @@
 #import "SevenTimesIAPHelper.h"
 #import "ODRefreshControl.h"
 #import "Wordlist.h"
+#import "WordListFromSrt.h"
 
 @interface WordListViewController () <UITableViewDataSource>
 @property(nonatomic, strong) FVDeclaration *viewDeclare;
@@ -153,60 +154,66 @@
                     }
 
                     NSLog(@"The product already bought, load it");
-                    LocalWordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
+                    id wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
 
+                    NSLog(@"Start loading wordlist: %@", [wordList name]);
 
-                    NSLog(@"Start loading wordlist: %@", wordList.name);
+                    if([wordList isKindOfClass:[LocalWordList class]]){
+                        LocalWordList *textWordList = (LocalWordList *)wordList;
+                        NSArray *words = textWordList.words;
+                        NSString *source = textWordList.name;
 
-                    NSArray *words = wordList.words;
-                    NSString *source = wordList.name;
+                        if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:source] != nil){
+                            NSLog(@"The word list already loaded");
+                            return;
+                        }
 
-                    if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:source] != nil){
-                        NSLog(@"The word list already loaded");
-                        return;
-                    }
+                        [Flurry logEvent:@"load_wordlist" withParameters:@{
+                            @"name" : textWordList.name, @"count" : @(words.count)
+                        }];
 
-                    [Flurry logEvent:@"load_wordlist" withParameters:@{
-                        @"name" : wordList.name, @"count" : @(words.count)
-                    }];
+                        int __block i = 0;
+                        int count = words.count;
 
-                    int __block i = 0;
-                    int count = words.count;
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            Wordlist *wordlist = [Wordlist MR_createEntity];
+                            wordlist.sourceId = textWordList.name;
+                            wordlist.name = source;
+                            wordlist.total = [NSNumber numberWithInteger:count];
 
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        Wordlist *wordlist = [Wordlist MR_createEntity];
-                        wordlist.sourceId = wordList.name;
-                        wordlist.name = source;
-                        wordlist.total = [NSNumber numberWithInteger:count];
+                            for (NSString *word in words) {
+                                i++;
+                                Word *wordEntity = [Word MR_createEntity];
+                                wordEntity.word = word;
+                                wordEntity.added = [NSDate date];
+                                wordEntity.source = source;
+                                wordEntity.sortOrder = @(i);
 
-                        for (NSString *word in words) {
-                            i++;
-                            Word *wordEntity = [Word MR_createEntity];
-                            wordEntity.word = word;
-                            wordEntity.added = [NSDate date];
-                            wordEntity.source = source;
-                            wordEntity.sortOrder = @(i);
+                                [wordlist addWordsObject:wordEntity];
 
-                            [wordlist addWordsObject:wordEntity];
-
-                            if (i % 30 == 0) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [SVProgressHUD showProgress:(float) i / (float) count status:NSLocalizedString(@"LoadingMessage", @"loading") maskType:SVProgressHUDMaskTypeGradient];
-                                });
+                                if (i % 30 == 0) {
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [SVProgressHUD showProgress:(float) i / (float) count status:NSLocalizedString(@"LoadingMessage", @"loading") maskType:SVProgressHUDMaskTypeGradient];
+                                    });
+                                }
                             }
-                        }
 
-                        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+                            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [SVProgressHUD dismiss];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [SVProgressHUD dismiss];
+                            });
+
+                            if (self.finishLoadWordlist) {
+                                self.finishLoadWordlist();
+                            }
                         });
-
-                        if (self.finishLoadWordlist) {
-                            self.finishLoadWordlist();
-                        }
-                    });
-
+                    }
+                    else if([wordList isKindOfClass:[WordListFromSrt class]]) {
+                        NSLog(@"Srt word list");
+                        WordListFromSrt *srtWordList = wordList;
+                        [srtWordList load];
+                    }
                 }      forControlEvents:UIControlEventTouchUpInside];
                 return button;
             }()),
