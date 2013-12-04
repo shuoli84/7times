@@ -110,9 +110,8 @@
 }
 
 -(void)loadNews:(id) sender{
-    Word *w = self.word;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Downloading", @"Downloading") maskType:SVProgressHUDMaskTypeGradient];
-    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:w.word completion:^{
+    [SLSharedConfig.sharedInstance.postDownloader downloadForWord:self.word completion:^{
         [SVProgressHUD dismiss];
     }];
 }

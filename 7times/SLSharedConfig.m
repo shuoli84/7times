@@ -40,8 +40,6 @@
         ];
 
         _timeIntervals = @[@0, @8, @18, @40, @(3 * 24 - 8), @(5 * 24 - 8), @(7 * 24 - 8), @(10 * 24 - 8), @(1024 * 24)];
-        self.postDownloader = [[PostDownloader alloc] init];
-        [self.postDownloader start];
 
         self.timeFormmater = [[TTTTimeIntervalFormatter alloc] init];
 
@@ -56,8 +54,24 @@
             manualWordList.sortOrder = @(100);
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
-
         self.manualList = manualWordList;
+
+        Wordlist *needsPostList = [Wordlist MR_findFirstByAttribute:@"name" withValue:@"NeedsPost"];
+        if(needsPostList == nil){
+            needsPostList = [Wordlist MR_createEntity];
+            needsPostList.name = @"NeedsPost";
+            needsPostList.sortOrder = @(101);
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+        else{
+            needsPostList.sortOrder = @(101);
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+
+        self.needsPostList = needsPostList;
+
+        self.postDownloader = [[PostDownloader alloc] initWithWordList:self.needsPostList];
+        [self.postDownloader start];
 
         self.googleNewsScrubber = [[GoogleNewsScrubber alloc]init];
     }

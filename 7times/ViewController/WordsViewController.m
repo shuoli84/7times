@@ -25,11 +25,8 @@
 #import "SLSharedConfig.h"
 #import "WordListViewController.h"
 #import "Wordlist+TodoList.h"
+#import "PostDownloader.h"
 
-typedef NS_ENUM(NSInteger, RunningModel){
-    RunningModelAll,
-    RunningModelTodo,
-};
 
 @interface WordsViewController () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -54,9 +51,15 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     if(self.wordList == nil){
         self.wordList = [Wordlist MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"not name beginswith %@", @"todo"] sortedBy:@"sortOrder" ascending:YES];
+        self.enableTodoMode = YES;
     }
 
-    self.model = RunningModelTodo;
+    if(self.enableTodoMode){
+        self.model = RunningModelTodo;
+    }
+    else{
+        self.model = RunningModelAll;
+    }
 
     self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
     self.navigationController.toolbarHidden = NO;
@@ -91,31 +94,38 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
     [self.declaration setupViewTreeInto:self.view];
 
-    [self switchToWordList:YES];
+    if(self.enableTodoMode){
+        [self switchToWordList:YES];
+    }
+    else{
+        [self switchToWordList:NO];
+    }
 
     UIBarButtonItem *newWordButtonItem = [UIBarButtonItem.alloc
      initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
      target:self
      action:@selector(addWordAction:)];
 
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[
-        NSLocalizedString(@"Todo", @"待背"),
-        NSLocalizedString(@"All", @"全部"),
-    ]];
+    if(self.enableTodoMode){
+        UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[
+            NSLocalizedString(@"Todo", @"待背"),
+            NSLocalizedString(@"All", @"全部"),
+        ]];
 
-    self.listSegmentedControl = segmentedControl;
+        self.listSegmentedControl = segmentedControl;
 
-    [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
-        if(sender.selectedSegmentIndex == 0){
-            weakSelf.model = RunningModelTodo;
-        }
-        else{
-            weakSelf.model = RunningModelAll;
-        }
-    } forControlEvents:UIControlEventValueChanged];
+        [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
+            if(sender.selectedSegmentIndex == 0){
+                weakSelf.model = RunningModelTodo;
+            }
+            else{
+                weakSelf.model = RunningModelAll;
+            }
+        } forControlEvents:UIControlEventValueChanged];
 
-    segmentedControl.selectedSegmentIndex = 0;
-    self.navigationItem.titleView = segmentedControl;
+        segmentedControl.selectedSegmentIndex = 0;
+        self.navigationItem.titleView = segmentedControl;
+    }
 
     self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
         NSLog(@"Binding called");
@@ -183,6 +193,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
 }
 
 -(void)switchToWordList:(BOOL)autoList{
+    self.wordFetchedResultsController = nil;
     NSPredicate *predicate;
     NSString *cacheName;
     if(autoList){
@@ -279,8 +290,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
 
 #pragma mark UITableViewDataSource & Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[0];
-    return sectionInfo.numberOfObjects;
+    return self.wordFetchedResultsController.fetchedObjects.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -391,6 +401,8 @@ typedef NS_ENUM(NSInteger, RunningModel){
         }
 
         [self.wordList.todoList addWords:mutableSet];
+        [[SLSharedConfig sharedInstance].needsPostList addWords:mutableSet];
+        [[SLSharedConfig sharedInstance].postDownloader fire];
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     }
 }

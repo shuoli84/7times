@@ -12,6 +12,7 @@
 #import "NSTimer+BlocksKit.h"
 #import "Word+Util.h"
 #import "Reachability.h"
+#import "SLSharedConfig.h"
 
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
@@ -25,16 +26,13 @@
     dispatch_queue_t _downloadQueueForSingleWord;
 }
 
--(id)init{
-    self = [super init];
+- (instancetype)initWithWordList:(Wordlist*)wordlist{
+    if (self = [super init]){
+        self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"lists CONTAINS %@", wordlist] sortedBy:@"added" ascending:YES];
 
-    if (self){
         self.googleNewsSource = [[GoogleNewsSource alloc] init];
         _downloadQueue = dispatch_queue_create(NULL, NULL);
         _downloadQueueForSingleWord = dispatch_queue_create(NULL, NULL);
-
-        self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"checkNumber < 7 AND postNumber == 0"] sortedBy:@"added" ascending:YES];
-        self.wordsFetchedResultsController.fetchRequest.fetchLimit = 50;
 
         self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
         self.reachability.reachableOnWWAN = NO;
@@ -47,6 +45,7 @@
 
 - (void)start {
     typeof(self) __weak weakSelf = self;
+
     self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
             [weakSelf downloadForWordList];
@@ -59,6 +58,10 @@
 
 -(void)end{
     [self.timer invalidate];
+}
+
+-(void)fire{
+    [self.timer fire];
 }
 
 -(NSArray*)wordListNeedPosts {
@@ -79,19 +82,20 @@
         NSArray *wordArray = self.wordListNeedPosts;
 
         for(Word *word in wordArray){
-            if(word.postNumber.integerValue == 0){
-                [self throttleRequest];
+            [self throttleRequest];
 
-                // Also protect from each download
-                // When the first check is valid, then user disable wifi, it may hit this
-                if(self.reachability.isReachableViaWiFi){
-                    if([self.googleNewsSource download:word]){
-                        NSLog(@"Succeeded");
-                    }
-                    else{
-                        NSLog(@"Failed to download, break the download loop and try next time");
-                        break;
-                    }
+            // Also protect from each download
+            // When the first check is valid, then user disable wifi, it may hit this
+            if(self.reachability.isReachableViaWiFi){
+                if([self.googleNewsSource download:word]){
+                    NSLog(@"Succeeded");
+                    [word removeListsObject:[SLSharedConfig sharedInstance].needsPostList];
+
+                    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
+                }
+                else{
+                    NSLog(@"Failed to download, break the download loop and try next time");
+                    break;
                 }
             }
         }
@@ -100,12 +104,12 @@
     }
 }
 
--(void)downloadForWord:(NSString*)word completion:(void(^)())completion{
+-(void)downloadForWord:(Word*)word completion:(void(^)())completion{
     dispatch_async(_downloadQueueForSingleWord, ^{
-        Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word];
-        NSLog(@"Start download posts for word: %@", word);
-        [self.googleNewsSource download:word1];
-        NSLog(@"Finish download for word: %@", word);
+        Word *localWord = [word MR_inThreadContext];
+        NSLog(@"Start download posts for word: %@", localWord.word);
+        [self.googleNewsSource download:localWord];
+        NSLog(@"Finish download for word: %@", localWord.word);
         
         if(completion){
             dispatch_async(dispatch_get_main_queue(), ^{

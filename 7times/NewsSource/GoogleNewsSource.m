@@ -81,7 +81,6 @@
                 localWord.postNumber = @(localWord.postNumber.integerValue + 1);
             }
         }
-        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
     }
 
     return returnValue;

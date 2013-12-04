@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @class Word;
-
+@class Wordlist;
 
 @interface PostDownloader : NSObject
 
+- (instancetype)initWithWordList:(Wordlist*)wordlist;
 - (void)start;
-
 - (void)end;
 
-- (void)downloadWithOneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion;
+- (void)fire;
 
-- (void)downloadForWord:(NSString *)word completion:(void (^)())completion;
+- (void)downloadForWord:(Word *)word completion:(void (^)())completion;
 
 - (NSArray *)wordListNeedPosts;
 @end

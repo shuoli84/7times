@@ -14,6 +14,7 @@
 #import "WordsViewController.h"
 #import "MFMessageComposeViewController+BlocksKit.h"
 #import "ConfigViewController.h"
+#import "SLSharedConfig.h"
 
 
 @interface MenuViewController() <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
@@ -97,11 +98,18 @@
             [self presentViewController:wordListViewController animated:YES completion:nil];
         }
         else{
-            NSLog(@"Word list %@ selected", indexPath);
             Wordlist *wordlist = self.wordListFetchedResultsController.fetchedObjects[indexPath.row];
 
             WordsViewController *newWordsViewController = [[WordsViewController alloc] init];
             newWordsViewController.wordList = wordlist;
+            newWordsViewController.enableTodoMode = YES;
+            if([[SLSharedConfig sharedInstance].needsPostList.objectID isEqual:wordlist.objectID]){
+                NSLog(@"This only served as an indicator");
+                return;
+            }
+            if([[SLSharedConfig sharedInstance].manualList.objectID isEqual:wordlist.objectID]){
+                newWordsViewController.enableTodoMode = NO;
+            }
             UINavigationController *newNavigationController = [[UINavigationController alloc] initWithRootViewController:newWordsViewController];
             [self.mm_drawerController setCenterViewController:newNavigationController];
             [self.mm_drawerController closeDrawerAnimated:YES completion:nil];
