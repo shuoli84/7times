@@ -141,7 +141,7 @@ typedef NS_ENUM(NSInteger, RunningModel){
             [weakSelf switchToWordList:NO];
 
 
-            BOOL needAddWord = [self.wordList.objectID isEqual:[SLSharedConfig sharedInstance].manualList.objectID];
+            BOOL needAddWord = [weakSelf.wordList.objectID isEqual:[SLSharedConfig sharedInstance].manualList.objectID];
 
             if(needAddWord){
                 [weakSelf setToolbarItems:@[

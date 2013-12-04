@@ -41,7 +41,7 @@
 
         _timeIntervals = @[@0, @8, @18, @40, @(3 * 24 - 8), @(5 * 24 - 8), @(7 * 24 - 8), @(10 * 24 - 8), @(1024 * 24)];
         self.postDownloader = [[PostDownloader alloc] init];
-        [self.postDownloader startWithShouldBeginBlock:nil oneWordFinish:nil completion:nil];
+        [self.postDownloader start];
 
         self.timeFormmater = [[TTTTimeIntervalFormatter alloc] init];
 

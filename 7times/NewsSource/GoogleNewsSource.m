@@ -59,24 +59,29 @@
         for(MWFeedItem* item in rssItems){
             NSString *title = item.title;
 
-            Post *post = [Post MR_findFirstByAttribute:@"id" withValue:item.identifier];
-            if(post == nil){
-                post = [Post MR_createEntity];
-                post.id = item.identifier;
-                post.title = title;
-                post.source = @"Google News";
-                post.summary = item.summary;
-                post.date = item.date;
-                post.url = item.link;
+            Word *localWord = [word MR_inThreadContext];
+            BOOL alreadyInList = NO;
+            for(Post *post in localWord.post){
+                if ([post.id isEqualToString:item.identifier]){
+                    alreadyInList = YES;
+                    break;
+                }
             }
 
-            //Word *word1 = [Word MR_findFirstByAttribute:@"word" withValue:word.word];
-            Word *word1 = (Word*)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:word.objectID];
+            if(!alreadyInList){
+                Post *newPost = [Post MR_createEntity];
+                newPost.id = item.identifier;
+                newPost.title = title;
+                newPost.source = @"Google News";
+                newPost.summary = item.summary;
+                newPost.date = item.date;
+                newPost.url = item.link;
 
-            post.word = word1;
-            word1.postNumber = @(word1.postNumber.integerValue + 1);
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
+                newPost.word = localWord;
+                localWord.postNumber = @(localWord.postNumber.integerValue + 1);
+            }
         }
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
     }
 
     return returnValue;

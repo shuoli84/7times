@@ -45,11 +45,11 @@
     return self;
 }
 
-- (void)startWithShouldBeginBlock:(BOOL(^)())shouldBeginBlock oneWordFinish:(void (^)(NSString *word))oneWordFinish completion:(void (^)())completion {
+- (void)start {
     typeof(self) __weak weakSelf = self;
     self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
-            [weakSelf downloadWithOneWordFinish:oneWordFinish completion:completion];
+            [weakSelf downloadForWordList];
         });
     } repeats:YES];
     [self.timer fire];
@@ -73,7 +73,7 @@
     [NSThread sleepForTimeInterval:2];
 }
 
--(void)downloadWithOneWordFinish:(void(^)(NSString* word))oneWordFinish completion:(void(^)())completion{
+-(void)downloadForWordList{
     if(self.reachability.isReachableViaWiFi){
         NSLog(@"Start download posts for words");
         NSArray *wordArray = self.wordListNeedPosts;
@@ -86,9 +86,7 @@
                 // When the first check is valid, then user disable wifi, it may hit this
                 if(self.reachability.isReachableViaWiFi){
                     if([self.googleNewsSource download:word]){
-                        if(oneWordFinish){
-                            oneWordFinish(word.word);
-                        }
+                        NSLog(@"Succeeded");
                     }
                     else{
                         NSLog(@"Failed to download, break the download loop and try next time");
@@ -97,16 +95,8 @@
                 }
             }
         }
-        if(completion){
-            completion();
-        }
 
         NSLog(@"Posts download finished");
-    }
-    else{
-        if(completion){
-            completion();
-        }
     }
 }
 
