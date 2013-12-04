@@ -55,7 +55,7 @@
     }
 
     if(7 > dotNumber && _showPlaceHolder){
-        for (int i = dotNumber; i < 7; i++){
+        for (int i = dotNumber; i < MIN(7, _numberOfPlacesHolder); i++){
             [[UIColor lightGrayColor] setFill];
             [[UIBezierPath bezierPathWithOvalInRect:CGRectMake(x, y, (dotRadius) * 2, (dotRadius) * 2)] fill];
             x += dotRadius * 2 + spaceBetween;

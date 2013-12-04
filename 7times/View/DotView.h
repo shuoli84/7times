@@ -12,6 +12,7 @@
 @interface DotView : UIView
 @property (nonatomic, assign) int dotNumber;
 @property (nonatomic, assign) BOOL showPlaceHolder;
+@property (nonatomic, assign) int numberOfPlacesHolder;
 @property (nonatomic, assign) int maxDotNumber;
 @property (nonatomic, assign) float dotRadius;
 @property (nonatomic, assign) float spaceBetween;

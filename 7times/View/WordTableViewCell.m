@@ -84,6 +84,9 @@
     else{
         self.dotView.showPlaceHolder = NO;
     }
+
+    self.dotView.numberOfPlacesHolder = word.postNumber.integerValue;
+
     [self.dotView setNeedsDisplay];
 }
 @end
