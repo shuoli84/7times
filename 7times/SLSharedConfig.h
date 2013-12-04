@@ -21,6 +21,7 @@
 @property (nonatomic, strong) TTTTimeIntervalFormatter *timeFormmater;
 @property (nonatomic, strong) Wordlist *manualList;
 @property (nonatomic, strong) Wordlist *needsPostList;
+@property (nonatomic, strong) Wordlist *noPostDownloadedList;
 
 @property (nonatomic, strong) GoogleNewsScrubber *googleNewsScrubber;
 

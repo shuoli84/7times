@@ -47,7 +47,7 @@
         if(manualWordList == nil){
             manualWordList = [Wordlist MR_createEntity];
             manualWordList.name = @"Manual";
-
+            manualWordList.sortOrder = @(100);
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
         else{
@@ -63,12 +63,18 @@
             needsPostList.sortOrder = @(101);
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
         }
-        else{
-            needsPostList.sortOrder = @(101);
-            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-        }
 
         self.needsPostList = needsPostList;
+
+
+        Wordlist *noPostAbleDownloadList = [Wordlist MR_findFirstByAttribute:@"name" withValue:@"todo_NotAbleToDownload"];
+        if(noPostAbleDownloadList == nil){
+            noPostAbleDownloadList = [Wordlist MR_createEntity];
+            noPostAbleDownloadList.name = @"todo_NotAbleToDownload";
+            noPostAbleDownloadList.sortOrder = @(102);
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+        }
+        self.noPostDownloadedList = noPostAbleDownloadList;
 
         self.postDownloader = [[PostDownloader alloc] initWithWordList:self.needsPostList];
         [self.postDownloader start];

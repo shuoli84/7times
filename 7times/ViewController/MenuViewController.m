@@ -31,12 +31,11 @@
     [super viewDidLoad];
 
     self.menuItems = @[
-       // NSLocalizedString(@"Setting", @"Setting"),
         NSLocalizedString(@"Comment", @"Comment"),
         NSLocalizedString(@"Review", @"Review")
     ];
 
-    self.wordListFetchedResultsController = [Wordlist MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"NOT (name BEGINSWITH %@)", @"todo"] sortedBy:@"sortOrder" ascending:YES delegate:self];
+    self.wordListFetchedResultsController = [Wordlist MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"NOT (name BEGINSWITH %@) AND NOT (name BEGINSWITH %@)", @"todo", @"NeedsPost"] sortedBy:@"sortOrder" ascending:YES delegate:self];
 
     self.view.backgroundColor = [UIColor greenSeaColor];
     self.wordListTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];

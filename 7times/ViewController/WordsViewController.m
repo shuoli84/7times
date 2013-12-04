@@ -133,10 +133,18 @@
         if(model == RunningModelTodo){
             [weakSelf switchToWordList:YES];
 
-            UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
-                UIActionSheet *actionSheet = [UIActionSheet.alloc initWithTitle:NSLocalizedString(@"addWordFromList", @"从词库添加单词") delegate:weakSelf cancelButtonTitle:NSLocalizedString(@"giveup", @"放弃") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"next", @"顺序"), NSLocalizedString(@"random", @"随机"), nil];
-                [actionSheet showFromToolbar:weakSelf.navigationController.toolbar];
+            void (^showActivityBlock)()=^{
+                    UIActionSheet *actionSheet = [UIActionSheet.alloc
+                        initWithTitle:NSLocalizedString(@"addWordFromList", @"从词库添加单词")
+                             delegate:weakSelf
+                    cancelButtonTitle:NSLocalizedString(@"giveup", @"放弃")
+               destructiveButtonTitle:nil
+                    otherButtonTitles:NSLocalizedString(@"next", @"顺序"), NSLocalizedString(@"random", @"随机"), nil];
+                    [actionSheet showFromToolbar:weakSelf.navigationController.toolbar];
+            };
 
+            UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
+                showActivityBlock();
                 return;
             }];
 
@@ -146,6 +154,9 @@
                 [UIBarButtonItem flexibleSpaceItem],
             ] animated:YES];
 
+            if(weakSelf.wordFetchedResultsController.fetchedObjects.count == 0){
+                showActivityBlock();
+            }
         }
         else if(model == RunningModelAll){
             [weakSelf switchToWordList:NO];
@@ -194,6 +205,7 @@
 
 -(void)switchToWordList:(BOOL)autoList{
     self.wordFetchedResultsController = nil;
+    [self.wordListTableView reloadData];
     NSPredicate *predicate;
     NSString *cacheName;
     if(autoList){
@@ -323,12 +335,33 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Word *word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
+        BOOL addOneIntoDownloadList = NO;
         if(self.model == RunningModelAll){
             word.ignore = @(YES);
+            addOneIntoDownloadList = YES;
         }
         else{
+            if(word.checkNumber.integerValue == 0){
+                addOneIntoDownloadList = YES;
+            }
+
             [word checkItNow];
             [self.wordList.todoList removeWordsObject:word];
+        }
+
+        [word removeListsObject:[SLSharedConfig sharedInstance].needsPostList];
+
+        if(addOneIntoDownloadList){
+            NSPredicate *predicate = [NSPredicate
+                predicateWithFormat:@"postNumber == 0 AND (lists.name CONTAINS %@) AND (NOT %@ in lists.name) AND (NOT %@ IN lists.name )",
+                    self.wordList.name,
+                    [SLSharedConfig sharedInstance].noPostDownloadedList.name,
+                    [SLSharedConfig sharedInstance].needsPostList.name
+            ];
+            Word *wordNeedPost = [Word MR_findFirstWithPredicate:predicate sortedBy:@"sortOrder" ascending:YES];
+            if(wordNeedPost != nil){
+                [[SLSharedConfig sharedInstance].needsPostList addWordsObject:wordNeedPost];
+            }
         }
 
         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];

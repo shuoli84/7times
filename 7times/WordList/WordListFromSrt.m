@@ -9,6 +9,7 @@
 #import "Wordlist.h"
 #import "Word.h"
 #import "Post.h"
+#import "SLSharedConfig.h"
 
 
 @interface WordListFromSrt()
@@ -58,6 +59,10 @@
             word.sortOrder = @(sortOrder);
             [wordlist addWordsObject:word];
             sortOrder += 1;
+
+            if(sortOrder <= 50){
+                [[SLSharedConfig sharedInstance].needsPostList addWordsObject:word];
+            }
 
             for (NSDictionary *line in wordEntry[@"lines"]){
                 Post *post = [Post MR_createEntity];

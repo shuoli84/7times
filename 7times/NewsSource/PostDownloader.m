@@ -13,6 +13,7 @@
 #import "Word+Util.h"
 #import "Reachability.h"
 #import "SLSharedConfig.h"
+#import "Wordlist.h"
 
 @interface PostDownloader ()
 @property (nonatomic, strong) GoogleNewsSource *googleNewsSource;
@@ -28,13 +29,13 @@
 
 - (instancetype)initWithWordList:(Wordlist*)wordlist{
     if (self = [super init]){
-        self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"lists CONTAINS %@", wordlist] sortedBy:@"added" ascending:YES];
+        self.wordsFetchedResultsController = [Word MR_fetchAllGroupedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"lists.name CONTAINS %@", wordlist.name] sortedBy:@"added" ascending:YES];
 
         self.googleNewsSource = [[GoogleNewsSource alloc] init];
         _downloadQueue = dispatch_queue_create(NULL, NULL);
         _downloadQueueForSingleWord = dispatch_queue_create(NULL, NULL);
 
-        self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+        self.reachability = [Reachability reachabilityWithHostname:@"news.google.com"];
         self.reachability.reachableOnWWAN = NO;
 
         [self.reachability startNotifier];
@@ -77,6 +78,7 @@
 }
 
 -(void)downloadForWordList{
+    Wordlist *localNeedsPostList = [[SLSharedConfig sharedInstance].needsPostList MR_inThreadContext];
     if(self.reachability.isReachableViaWiFi){
         NSLog(@"Start download posts for words");
         NSArray *wordArray = self.wordListNeedPosts;
@@ -89,7 +91,7 @@
             if(self.reachability.isReachableViaWiFi){
                 if([self.googleNewsSource download:word]){
                     NSLog(@"Succeeded");
-                    [word removeListsObject:[SLSharedConfig sharedInstance].needsPostList];
+                    [word removeListsObject:localNeedsPostList];
 
                     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
                 }
@@ -109,6 +111,7 @@
         Word *localWord = [word MR_inThreadContext];
         NSLog(@"Start download posts for word: %@", localWord.word);
         [self.googleNewsSource download:localWord];
+        [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:nil];
         NSLog(@"Finish download for word: %@", localWord.word);
         
         if(completion){

@@ -12,6 +12,7 @@
 #import "MWFeedParser.h"
 #import "Post.h"
 #import "Wordlist.h"
+#import "SLSharedConfig.h"
 
 
 @implementation GoogleNewsSource {
@@ -56,10 +57,15 @@
     [_feedParser parse];
 
     if(returnValue){
+        Word *localWord = [word MR_inThreadContext];
+
+        if(rssItems.count == 0){
+            Wordlist *unableToDownloadList = [[SLSharedConfig sharedInstance].noPostDownloadedList MR_inThreadContext];
+            [unableToDownloadList addWordsObject:localWord];
+        }
         for(MWFeedItem* item in rssItems){
             NSString *title = item.title;
 
-            Word *localWord = [word MR_inThreadContext];
             BOOL alreadyInList = NO;
             for(Post *post in localWord.post){
                 if ([post.id isEqualToString:item.identifier]){
@@ -81,6 +87,9 @@
                 localWord.postNumber = @(localWord.postNumber.integerValue + 1);
             }
         }
+
+        Wordlist *downloadList = [[SLSharedConfig sharedInstance].needsPostList MR_inThreadContext];
+        [localWord removeListsObject:downloadList];
     }
 
     return returnValue;

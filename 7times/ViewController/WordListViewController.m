@@ -22,6 +22,7 @@
 #import "ODRefreshControl.h"
 #import "Wordlist.h"
 #import "WordListFromSrt.h"
+#import "SLSharedConfig.h"
 
 @interface WordListViewController () <UITableViewDataSource>
 @property(nonatomic, strong) FVDeclaration *viewDeclare;
@@ -191,12 +192,18 @@
 
                                 [wordlist addWordsObject:wordEntity];
 
+                                if(i <= 50){
+                                    [[SLSharedConfig sharedInstance].needsPostList addWordsObject:wordEntity];
+                                }
+
                                 if (i % 30 == 0) {
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         [SVProgressHUD showProgress:(float) i / (float) count status:NSLocalizedString(@"LoadingMessage", @"loading") maskType:SVProgressHUDMaskTypeGradient];
                                     });
                                 }
                             }
+
+
 
                             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
 
