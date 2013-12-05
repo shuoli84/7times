@@ -351,6 +351,14 @@
     return cell;
 }
 
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(self.model == RunningModelAll){
+        id<NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[section];
+        return sectionInfo.indexTitle;
+    }
+    return nil;
+}
+
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     return self.wordFetchedResultsController.sectionIndexTitles;
 }
