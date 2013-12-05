@@ -44,7 +44,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
 
-    self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:nil delegate:self];
+    self.postsFetchedResultsController = [Post MR_fetchAllSortedBy:@"source,date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"word=%@", self.word] groupBy:@"source" delegate:self];
     
     self.declare = [dec(@"root", CGRectZero) $:@[
         dec(@"Posts", CGRectMake(0, FVA(0), FVP(1.f), FVTillEnd), self.postsTable = ^{
@@ -142,8 +142,17 @@
     return cell.cellHeight;
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.postsFetchedResultsController.sections.count;
+}
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id<NSFetchedResultsSectionInfo> sectionInfo = self.postsFetchedResultsController.sections[section];
+    return NSLocalizedString(sectionInfo.name, @"section name");
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    id<NSFetchedResultsSectionInfo> sectionInfo = self.postsFetchedResultsController.sections[0];
+    id<NSFetchedResultsSectionInfo> sectionInfo = self.postsFetchedResultsController.sections[section];
     return sectionInfo.numberOfObjects;
 }
 
@@ -192,6 +201,28 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.postsTable endUpdates];
+}
+
+-(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    if([controller isEqual:self.postsFetchedResultsController]){
+        UITableView *tableView = self.postsTable;
+
+        switch (type){
+            case NSFetchedResultsChangeInsert:
+                [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+            case NSFetchedResultsChangeUpdate:
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+            case NSFetchedResultsChangeMove:
+                [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+                break;
+            case NSFetchedResultsChangeDelete:
+                [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+        }
+    }
 }
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {

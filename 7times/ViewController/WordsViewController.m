@@ -161,7 +161,6 @@
         else if(model == RunningModelAll){
             [weakSelf switchToWordList:NO];
 
-
             BOOL needAddWord = [weakSelf.wordList.objectID isEqual:[SLSharedConfig sharedInstance].manualList.objectID];
 
             if(needAddWord){
@@ -394,9 +393,13 @@
             return;
     }
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND checkNumber = 0 AND (lists CONTAINS %@)", self.wordList];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"(ignore = NULL OR ignore = FALSE) AND (checkNumber = 0 OR nextCheckTime <= %@) AND (lists CONTAINS %@)", [NSDate date], self.wordList];
 
-    NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+    NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"sortOrder" ascending:YES withPredicate:predicate];
+    [fetchRequest setSortDescriptors:@[
+        [NSSortDescriptor sortDescriptorWithKey:@"checkNumber" ascending:NO],
+        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
+    ]];
 
     if(!random){
         [fetchRequest setFetchLimit:25];
@@ -428,7 +431,16 @@
             int count = all.count;
 
             for(int i = 0; i < MIN(25, count); i++){
-                uint index = arc4random() % count;
+                Word* word = all[i];
+                if(word.checkNumber.integerValue > 0){
+                    [mutableSet addObject:word];
+                }
+            }
+
+            int restNumberOfWords = count - mutableSet.count;
+
+            for(int i = mutableSet.count; i < MIN(25, count); i++){
+                uint index = (arc4random() % restNumberOfWords + mutableSet.count) % count;
                 [mutableSet addObject:all[index]];
             }
         }

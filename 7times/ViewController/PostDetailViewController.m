@@ -71,8 +71,7 @@
             "</style>"
             "</head>"
         "<body><font>%@</font>%@</body>"
-        "</html>", [UIFont preferredFontSize], title, content];
-    NSLog(@"%@", html);
+        "</html>", [UIFont preferredFontSize], title, content?content:@""];
     [self.bodyWebView loadHTMLString:html baseURL:[NSURL URLWithString:self.post.url]];
 
     UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
