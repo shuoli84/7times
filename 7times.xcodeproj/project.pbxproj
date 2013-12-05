@@ -73,6 +73,7 @@
 		BE48EDDACE782AA8B244EBB3 /* PostDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E02B5B837D7E07B5640F /* PostDetailTableViewCell.m */; };
 		BE48EE19D5B663B290832AA4 /* ielts1200.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E1A92F1B5F299AD38B36 /* ielts1200.txt */; };
 		BE48EE43DB827502C2B10D1D /* UIFont+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE5261C575B028618BF8 /* UIFont+Util.m */; };
+		BE48EE6BD0A50A04592A5596 /* NSString+GroupByFirstLetter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E9EC3C8B2FA0B9B8CD27 /* NSString+GroupByFirstLetter.m */; };
 		BE48EEC5A6E4221085EBF7EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE48EB8EB9C38EA6ED921B0D /* InfoPlist.strings */; };
 		BE48EEE91E61F49F065E2D53 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE48E19C0E7A5F599E43BADF /* Default@2x.png */; };
 		BE48EF31AF557659D74E5A50 /* SevenTimesIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EAB8B532171201742529 /* SevenTimesIAPHelper.m */; };
@@ -166,6 +167,7 @@
 		BE48E9A0CCE6B10AF4D51B3A /* 7times logo@29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "7times logo@29.png"; sourceTree = "<group>"; };
 		BE48E9D04A8F74754AA3A672 /* Model.1. 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model.1. 3.xcdatamodel"; sourceTree = "<group>"; };
 		BE48E9D06EF612B4621C9D49 /* DotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotView.m; sourceTree = "<group>"; };
+		BE48E9EC3C8B2FA0B9B8CD27 /* NSString+GroupByFirstLetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+GroupByFirstLetter.m"; sourceTree = "<group>"; };
 		BE48E9EDF97146BF15DBF36A /* WordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordTableViewCell.m; sourceTree = "<group>"; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
 		BE48EA5913D04391957B0203 /* PostDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		BE48EE5261C575B028618BF8 /* UIFont+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Util.m"; sourceTree = "<group>"; };
 		BE48EE570814D505572044CE /* gmat.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gmat.txt; sourceTree = "<group>"; };
 		BE48EE8A9D2F00C74FCF36DD /* SevenTimesIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SevenTimesIAPHelper.h; sourceTree = "<group>"; };
+		BE48EEB071B3D4C4A399449A /* NSString+GroupByFirstLetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+GroupByFirstLetter.h"; sourceTree = "<group>"; };
 		BE48EEC92AC7E6A88D78706E /* UIFont+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Util.h"; sourceTree = "<group>"; };
 		BE48EEFE5A06E4C465CB5439 /* PostDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDownloader.m; sourceTree = "<group>"; };
 		BE48EF017A0FF1B622119D0B /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigViewController.h; sourceTree = "<group>"; };
@@ -346,6 +349,8 @@
 				BE48EBE6E8687D3D52C77B38 /* Word+Util.m */,
 				BE48E41C8B9A7E1F8B5723C7 /* UIBarButtonItem+flexibleSpaceItem.m */,
 				BE48ED181F819E98E12FB052 /* UIBarButtonItem+flexibleSpaceItem.h */,
+				BE48EEB071B3D4C4A399449A /* NSString+GroupByFirstLetter.h */,
+				BE48E9EC3C8B2FA0B9B8CD27 /* NSString+GroupByFirstLetter.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -702,6 +707,7 @@
 				BE48E23FF4E6304C420A40E1 /* MenuViewController.m in Sources */,
 				BE48EC33EB2F24A00B390786 /* ConfigViewController.m in Sources */,
 				BE48EA2FFDA9A71385053950 /* WordListFromSrt.m in Sources */,
+				BE48EE6BD0A50A04592A5596 /* NSString+GroupByFirstLetter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
