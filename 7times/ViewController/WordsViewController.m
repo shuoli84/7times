@@ -202,23 +202,31 @@
     }
 }
 
--(void)switchToWordList:(BOOL)autoList{
+- (void)switchToWordList:(BOOL)todoListMode {
     self.wordFetchedResultsController = nil;
     [self.wordListTableView reloadData];
     NSPredicate *predicate;
     NSString *cacheName;
-    if(autoList){
+    NSString *groupBy;
+    if (todoListMode) {
         predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", self.wordList.todoList];
         cacheName = [NSString stringWithFormat:@"cache_%@", self.wordList.todoList.name];
     }
     else{
         predicate = [NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND lists CONTAINS %@", self.wordList];
         cacheName = [NSString stringWithFormat:@"cache_all_%@", self.wordList.name];
+        groupBy = @"word.firstLetter";
     }
 
-    NSFetchRequest *fetchRequest = [Word MR_requestAllSortedBy:@"source,sortOrder,added" ascending:YES withPredicate:predicate];
+    NSFetchRequest *fetchRequest = [Word MR_requestAllWithPredicate:predicate];
+    [fetchRequest setSortDescriptors:@[
+        [NSSortDescriptor sortDescriptorWithKey:@"word" ascending:YES selector:@selector(caseInsensitiveCompare:)],
+        [NSSortDescriptor sortDescriptorWithKey:@"source" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"added" ascending:YES],
+    ]];
     [fetchRequest setFetchBatchSize:40];
-    self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:nil cacheName:cacheName];
+    self.wordFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread] sectionNameKeyPath:groupBy cacheName:cacheName];
     self.wordFetchedResultsController.delegate = self;
     [self.wordFetchedResultsController performFetch:nil];
 
@@ -252,6 +260,28 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.wordListTableView endUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    if ([controller isEqual:self.wordFetchedResultsController]) {
+        UITableView *tableView = self.wordListTableView;
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:sectionIndex];
+        switch (type) {
+            case NSFetchedResultsChangeInsert:
+                [tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+            case NSFetchedResultsChangeUpdate:
+                [tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+            case NSFetchedResultsChangeMove:
+                [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                [tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                break;
+            case NSFetchedResultsChangeDelete:
+                [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+                break;
+        }
+    }
 }
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
@@ -300,8 +330,13 @@
 }
 
 #pragma mark UITableViewDataSource & Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.wordFetchedResultsController.sections.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.wordFetchedResultsController.fetchedObjects.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[(uint) section];
+    return sectionInfo.numberOfObjects;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -314,6 +349,10 @@
         [weakSelf presentViewController:referenceLibraryViewController animated:YES completion:nil];
     };
     return cell;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.wordFetchedResultsController.sectionIndexTitles;
 }
 
 -(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath{
