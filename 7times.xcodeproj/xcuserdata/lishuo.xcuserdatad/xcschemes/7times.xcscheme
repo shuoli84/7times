@@ -67,8 +67,6 @@
             ReferencedContainer = "container:7times.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-com.apple.DebugSQL"
@@ -79,6 +77,8 @@
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       shouldUseLaunchSchemeArgsEnv = "YES"

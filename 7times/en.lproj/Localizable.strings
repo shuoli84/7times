@@ -43,9 +43,12 @@
 "Comment" = "Comment";
 "Review" = "Review";
 "Load" = "Load";
+"Loaded" = "Loaded";
 "Word list" = "Word list";
 "Tools" = "Tools";
 "The Big Bang 01" = "The Big Bang 01";
 "Manual" = "User";
 "NeedsPost" = "Downloading";
 "the-big-bang-01.words.json" = "The Big Bang Season 1";
+"the-big-bang-02-03.words.json" = "The Big Bang Season 2, 3";
+"the-big-bang-04-05.words.json" = "The Big Bang Season 4, 5";

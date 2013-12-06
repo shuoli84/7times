@@ -33,11 +33,6 @@
 }
 
 -(void)load{
-    if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:self.sourceId] != nil){
-        [SVProgressHUD showSuccessWithStatus:@"Already loaded"];
-        return;
-    }
-
     [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeBlack];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:_filename ofType:nil]];

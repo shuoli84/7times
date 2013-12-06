@@ -13,4 +13,5 @@
 
 @property (nonatomic, strong) NSDictionary* allWordLists;
 
+-(NSInteger)sortOrderForProduct:(NSString*)productIdentifier;
 @end

@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"ListTitle", @"WordLists");
-    
+
     [SevenTimesIAPHelper sharedInstance].transactionFinishBlock = ^(NSError *error){
         NSLog(@"In transaction finish block: %@", error.localizedDescription);
         [SVProgressHUD dismiss];
@@ -97,10 +97,24 @@
     NSLog(@"Reloading products");
     self.products = nil;
     [self.tableView reloadData];
+
+    typeof(self) __weak weakSelf = self;
     [[SevenTimesIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         NSLog(@"Request products completed");
         if (success) {
-            self.products = products;
+            self.products = [products sortedArrayUsingComparator:^NSComparisonResult(SKProduct *obj1, SKProduct *obj2) {
+                NSInteger sortOrder1 = [weakSelf.wordListManager sortOrderForProduct:obj1.productIdentifier];
+                NSInteger sortOrder2 = [weakSelf.wordListManager sortOrderForProduct:obj2.productIdentifier];
+                if(sortOrder1 < sortOrder2){
+                    return NSOrderedAscending;
+                }
+                else if(sortOrder1 == sortOrder2){
+                    return NSOrderedSame;
+                }
+                else{
+                    return NSOrderedDescending;
+                }
+            }];
             [self.tableView reloadData];
         }
 
@@ -240,14 +254,15 @@
 
     UIButton *button = (UIButton *) [cell viewWithTag:102];
 
-    LocalWordList *wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
-    if([Wordlist MR_findFirstByAttribute:@"sourceId" withValue:wordList.name] != nil){
-        [button setTitle:@"loaded" forState:UIControlStateNormal];
+    id wordList = [weakSelf.wordListManager.allWordLists objectForKey:product.productIdentifier];
+    if(([wordList isKindOfClass:[LocalWordList class]] && [Wordlist MR_findFirstByAttribute:@"sourceId" withValue:[wordList name]] != nil) || ([wordList isKindOfClass:[WordListFromSrt class] ] && [Wordlist MR_findFirstByAttribute:@"sourceId" withValue:[wordList sourceId]] != nil)
+        ){
+        [button setTitle:NSLocalizedString(@"Loaded", @"Loaded") forState:UIControlStateNormal];
         [button setEnabled:NO];
     }
     else{
         if ([[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-            [button setTitle:NSLocalizedString(@"LoadButton", @"load") forState:UIControlStateNormal];
+            [button setTitle:NSLocalizedString(@"Load", @"load") forState:UIControlStateNormal];
         } else {
             [button setTitle:priceTag forState:UIControlStateNormal];
         }

@@ -23,7 +23,10 @@
             @"com.menic.7times.gmat",
             @"com.menic.7times.gre",
             @"com.menic.7times.ielts1200",
+            @"com.menic.7times.ogden2000",
             @"com.menic.7times.the_big_bang_01",
+            @"com.menic.7times.the_big_bang_02_03",
+            @"com.menic.7times.the_big_bang_04_05",
             nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

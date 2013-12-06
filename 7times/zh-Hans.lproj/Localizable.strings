@@ -43,6 +43,7 @@
 "Comment" = "反馈意见";
 "Review" = "给这个应用打分";
 "Load" = "导入";
+"Loaded" = "已导入";
 "Word list" = "词表";
 "Tools" = "工具";
 "The Big Bang 01" = "生活大爆炸 第一季";
@@ -54,3 +55,5 @@
 "CET8" = "八级";
 "NeedsPost" = "下载中";
 "the-big-bang-01.words.json" = "生活大爆炸 第一季";
+"the-big-bang-02-03.words.json" = "生活大爆炸 第二，三季";
+"the-big-bang-04-05.words.json" = "生活大爆炸 第四，五季";

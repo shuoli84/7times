@@ -17,6 +17,8 @@
 		9C1C9C2F17DF081900BCC341 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1C9C0717DF081900BCC341 /* Foundation.framework */; };
 		9C1C9C3717DF081900BCC341 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3517DF081900BCC341 /* InfoPlist.strings */; };
 		9C1C9C3A17DF081900BCC341 /* _timesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C9C3917DF081900BCC341 /* _timesTests.m */; };
+		9C5B24661850D66F0095319A /* ogden2000.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C5B24641850D66F0095319A /* ogden2000.txt */; };
+		9C5B24671850D66F0095319A /* the-big-bang-02-03.words.json in Resources */ = {isa = PBXBuildFile; fileRef = 9C5B24651850D66F0095319A /* the-big-bang-02-03.words.json */; };
 		9C748669180539A5000C0E42 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C748668180539A5000C0E42 /* SystemConfiguration.framework */; };
 		9C74866B18053A2E000C0E42 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866A18053A2E000C0E42 /* Security.framework */; };
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
@@ -73,6 +75,7 @@
 		BE48EDDACE782AA8B244EBB3 /* PostDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E02B5B837D7E07B5640F /* PostDetailTableViewCell.m */; };
 		BE48EE19D5B663B290832AA4 /* ielts1200.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48E1A92F1B5F299AD38B36 /* ielts1200.txt */; };
 		BE48EE43DB827502C2B10D1D /* UIFont+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48EE5261C575B028618BF8 /* UIFont+Util.m */; };
+		BE48EE640A4418F4E570B4CC /* the-big-bang-04-05.words.json in Resources */ = {isa = PBXBuildFile; fileRef = BE48EA1D2074007EFCC38F0A /* the-big-bang-04-05.words.json */; };
 		BE48EE6BD0A50A04592A5596 /* NSString+GroupByFirstLetter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE48E9EC3C8B2FA0B9B8CD27 /* NSString+GroupByFirstLetter.m */; };
 		BE48EEC5A6E4221085EBF7EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE48EB8EB9C38EA6ED921B0D /* InfoPlist.strings */; };
 		BE48EEE91E61F49F065E2D53 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE48E19C0E7A5F599E43BADF /* Default@2x.png */; };
@@ -106,6 +109,8 @@
 		9C1C9C3617DF081900BCC341 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9C1C9C3917DF081900BCC341 /* _timesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _timesTests.m; sourceTree = "<group>"; };
 		9C56C1611830B03F00A8CD95 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9C5B24641850D66F0095319A /* ogden2000.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ogden2000.txt; sourceTree = "<group>"; };
+		9C5B24651850D66F0095319A /* the-big-bang-02-03.words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "the-big-bang-02-03.words.json"; sourceTree = "<group>"; };
 		9C748668180539A5000C0E42 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9C74866A18053A2E000C0E42 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -170,6 +175,7 @@
 		BE48E9EC3C8B2FA0B9B8CD27 /* NSString+GroupByFirstLetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+GroupByFirstLetter.m"; sourceTree = "<group>"; };
 		BE48E9EDF97146BF15DBF36A /* WordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordTableViewCell.m; sourceTree = "<group>"; };
 		BE48EA0106C59259FE320B37 /* SLSharedConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSharedConfig.m; sourceTree = "<group>"; };
+		BE48EA1D2074007EFCC38F0A /* the-big-bang-04-05.words.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = "the-big-bang-04-05.words.json"; sourceTree = "<group>"; };
 		BE48EA5913D04391957B0203 /* PostDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailTableViewCell.h; sourceTree = "<group>"; };
 		BE48EA9C5EDC4C06E6872A20 /* WordListManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordListManager.h; sourceTree = "<group>"; };
 		BE48EAA9043FC01C78BDF890 /* SLSharedConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSharedConfig.h; sourceTree = "<group>"; };
@@ -449,6 +455,8 @@
 		BE48EDF9BB89C535975656D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9C5B24641850D66F0095319A /* ogden2000.txt */,
+				9C5B24651850D66F0095319A /* the-big-bang-02-03.words.json */,
 				9CC0F882184D98370054981E /* the-big-bang-01.words.json */,
 				BE48E324CBA613E8CEC18A13 /* 7times logo@114.png */,
 				BE48E98317567E0F1C055F7D /* 7times logo@58.png */,
@@ -472,6 +480,7 @@
 				BE48EF100BEB791484DBA2EC /* Default.png */,
 				BE48E1C095907A2CF80A2155 /* 259-list.png */,
 				BE48E3841D94D5232E454DCC /* 259-list@2x.png */,
+				BE48EA1D2074007EFCC38F0A /* the-big-bang-04-05.words.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -562,6 +571,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C5B24671850D66F0095319A /* the-big-bang-02-03.words.json in Resources */,
 				BE48EDDA47B1DA5DEE8974BD /* 7times logo@114.png in Resources */,
 				BE48EFFC0AD4D9EA6F7B3945 /* 7times logo@58.png in Resources */,
 				BE48E6D5FAD2A918F4092EC8 /* 7times logo@29.png in Resources */,
@@ -580,11 +590,13 @@
 				BE48E737EE098F53A168DC9A /* splash@1136.png in Resources */,
 				BE48E64CABEA1B6C6DD9255F /* tofle.txt in Resources */,
 				BE48E76328429687E683C3CF /* sat.txt in Resources */,
+				9C5B24661850D66F0095319A /* ogden2000.txt in Resources */,
 				BE48E0ECDE26853585DD7BD4 /* Default-568h@2x.png in Resources */,
 				BE48EEE91E61F49F065E2D53 /* Default@2x.png in Resources */,
 				BE48E378FE3E6EC4C516A943 /* Default.png in Resources */,
 				BE48E21E9F23E2DA890F4703 /* 259-list.png in Resources */,
 				BE48EA79DEC23C8ADF624176 /* 259-list@2x.png in Resources */,
+				BE48EE640A4418F4E570B4CC /* the-big-bang-04-05.words.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
