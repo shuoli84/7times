@@ -23,13 +23,9 @@
 @property (nonatomic, strong) Wordlist *needsPostList;
 @property (nonatomic, strong) Wordlist *noPostDownloadedList;
 
-
 @property (nonatomic, strong) GoogleNewsScrubber *googleNewsScrubber;
 
 -(UIColor*)colorForCount:(int)count;
 
 +(SLSharedConfig *)sharedInstance;
-
--(void)say:(NSString*)sentence;
-
 @end

@@ -124,8 +124,6 @@
         shareButtonItem,
         [UIBarButtonItem flexibleSpaceItem],
     ]];
-    
-    [[SLSharedConfig sharedInstance] say:self.post.title];
 }
 
 -(void)viewWillLayoutSubviews {

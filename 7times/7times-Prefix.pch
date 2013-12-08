@@ -12,8 +12,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "CoreData+MagicalRecord.h"
+    #import "TestFlight.h"
 
+    #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
     #define IRATE_USE_STOREKIT 1
-    #define kWeiboRedirectURI @"https://api.weibo.com/oauth2/default.html"
 #endif
 

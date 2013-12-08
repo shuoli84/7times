@@ -15,7 +15,6 @@
 #import "GoogleNewsScrubber.h"
 
 @interface SLSharedConfig()
-
 @end
 
 @implementation SLSharedConfig {
@@ -101,11 +100,5 @@
 
     return _colors[(unsigned int)count];
 }
-
-
--(void)say:(NSString*)sentence{
-    NSLog(@"Say %@", sentence);
-}
-
 
 @end

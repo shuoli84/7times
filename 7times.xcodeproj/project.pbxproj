@@ -24,6 +24,10 @@
 		9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866C18053A3D000C0E42 /* AdSupport.framework */; };
 		9C74866F1807DC27000C0E42 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C74866E1807DC27000C0E42 /* CoreData.framework */; };
 		9CC0F883184D98370054981E /* the-big-bang-01.words.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CC0F882184D98370054981E /* the-big-bang-01.words.json */; };
+		9CDFA82F185450EA00C50993 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDFA829185450EA00C50993 /* libTestFlight.a */; };
+		9CDFA830185450EA00C50993 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9CDFA82A185450EA00C50993 /* README.md */; };
+		9CDFA831185450EA00C50993 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 9CDFA82B185450EA00C50993 /* release_notes.md */; };
+		9CDFA8331854514200C50993 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDFA8321854514200C50993 /* libz.dylib */; };
 		9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF0CA1D181116FB00658EBA /* StoreKit.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E0533C84EF7BC5723ADE /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EE570814D505572044CE /* gmat.txt */; };
@@ -118,6 +122,13 @@
 		9CC0F882184D98370054981E /* the-big-bang-01.words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "the-big-bang-01.words.json"; sourceTree = "<group>"; };
 		9CDFA8181853890D00C50993 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9CDFA81A1853891500C50993 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9CDFA829185450EA00C50993 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		9CDFA82A185450EA00C50993 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		9CDFA82B185450EA00C50993 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		9CDFA82C185450EA00C50993 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		9CDFA82D185450EA00C50993 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		9CDFA82E185450EA00C50993 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		9CDFA8321854514200C50993 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9CF0CA1D181116FB00658EBA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E028732DAA20E76B2C4D /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
@@ -222,6 +233,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDFA8331854514200C50993 /* libz.dylib in Frameworks */,
+				9CDFA82F185450EA00C50993 /* libTestFlight.a in Frameworks */,
 				BE48E8173FC3525D7C4AE08C /* libFlurry_4.2.4.a in Frameworks */,
 				9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */,
 				9C74866D18053A3D000C0E42 /* AdSupport.framework in Frameworks */,
@@ -252,6 +265,7 @@
 		9C1C9BF917DF081800BCC341 = {
 			isa = PBXGroup;
 			children = (
+				9CDFA828185450EA00C50993 /* TestFlightSDK2-2 */,
 				9C1C9C0B17DF081900BCC341 /* 7times */,
 				9C1C9C3217DF081900BCC341 /* 7timesTests */,
 				9C1C9C0417DF081900BCC341 /* Frameworks */,
@@ -274,6 +288,7 @@
 		9C1C9C0417DF081900BCC341 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CDFA8321854514200C50993 /* libz.dylib */,
 				9CDFA81A1853891500C50993 /* AVFoundation.framework */,
 				9CDFA8181853890D00C50993 /* AudioToolbox.framework */,
 				9CF0CA1D181116FB00658EBA /* StoreKit.framework */,
@@ -329,6 +344,19 @@
 				9C1C9C3517DF081900BCC341 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CDFA828185450EA00C50993 /* TestFlightSDK2-2 */ = {
+			isa = PBXGroup;
+			children = (
+				9CDFA829185450EA00C50993 /* libTestFlight.a */,
+				9CDFA82A185450EA00C50993 /* README.md */,
+				9CDFA82B185450EA00C50993 /* release_notes.md */,
+				9CDFA82C185450EA00C50993 /* TestFlight+AsyncLogging.h */,
+				9CDFA82D185450EA00C50993 /* TestFlight+ManualSessions.h */,
+				9CDFA82E185450EA00C50993 /* TestFlight.h */,
+			);
+			path = "TestFlightSDK2-2";
 			sourceTree = "<group>";
 		};
 		BE48E175728945A4B6DF5CB1 /* ViewController */ = {
@@ -579,6 +607,7 @@
 				BE48EDDA47B1DA5DEE8974BD /* 7times logo@114.png in Resources */,
 				BE48EFFC0AD4D9EA6F7B3945 /* 7times logo@58.png in Resources */,
 				BE48E6D5FAD2A918F4092EC8 /* 7times logo@29.png in Resources */,
+				9CDFA831185450EA00C50993 /* release_notes.md in Resources */,
 				BE48E1490E5D64C12F7E7861 /* 7times logo@57.png in Resources */,
 				BE48E629E4E1ADBF96A6ADA1 /* 7times logo@80.png in Resources */,
 				BE48E3A6C84CF571AC31514E /* 7times logo@120.png in Resources */,
@@ -590,6 +619,7 @@
 				BE48E464D2151599E78FF5C3 /* Localizable.strings in Resources */,
 				BE48EEC5A6E4221085EBF7EA /* InfoPlist.strings in Resources */,
 				BE48E5C5A51D1A5C5DFF013C /* splash@960.PNG in Resources */,
+				9CDFA830185450EA00C50993 /* README.md in Resources */,
 				9CC0F883184D98370054981E /* the-big-bang-01.words.json in Resources */,
 				BE48E737EE098F53A168DC9A /* splash@1136.png in Resources */,
 				BE48E64CABEA1B6C6DD9255F /* tofle.txt in Resources */,
@@ -840,8 +870,8 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Shuo Li (FENCCELT7Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shuo Li (FENCCELT7Z)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/lishuo/Developer/7times/7times/Framework,
@@ -851,13 +881,14 @@
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\\\\\"${PROJECT_DIR}/Flurry\\\\\\\"/**",
+					"\\\\\\\\\\\\\\\"${PROJECT_DIR}/Flurry\\\\\\\\\\\\\\\"/**",
 					/Users/lishuo/Developer/7times/7times,
 					/Users/lishuo/Developer/7times/7times/Flurry,
 					/Users/lishuo/Developer/7times/7times/7times/ThirdParty,
+					"/Users/lishuo/Developer/7times/7times/TestFlightSDK2-2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "518FD9F6-F44C-4B64-9F09-DFE9F278E322";
+				PROVISIONING_PROFILE = "0724FA0C-3136-4880-9004-DD55D1F64D19";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
@@ -880,10 +911,11 @@
 				INFOPLIST_FILE = "7times/7times-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\\\\\"${PROJECT_DIR}/Flurry\\\\\\\"/**",
+					"\\\\\\\\\\\\\\\"${PROJECT_DIR}/Flurry\\\\\\\\\\\\\\\"/**",
 					/Users/lishuo/Developer/7times/7times,
 					/Users/lishuo/Developer/7times/7times/Flurry,
 					/Users/lishuo/Developer/7times/7times/7times/ThirdParty,
+					"/Users/lishuo/Developer/7times/7times/TestFlightSDK2-2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "518FD9F6-F44C-4B64-9F09-DFE9F278E322";

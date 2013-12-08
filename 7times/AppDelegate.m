@@ -15,6 +15,7 @@
 #import "WordsViewController.h"
 #import "MenuViewController.h"
 #import "MMDrawerController.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -24,6 +25,8 @@
     [Flurry setCrashReportingEnabled:YES];
     [Flurry startSession:@"CB3JTGXRXMST9B99K452"];
     [Flurry setEventLoggingEnabled:YES];
+    
+    [TestFlight takeOff:@"3ba1ca23-15c4-4b4f-a1d3-c95a4acd5577"];
 
     [MagicalRecord setupAutoMigratingCoreDataStack];
 
