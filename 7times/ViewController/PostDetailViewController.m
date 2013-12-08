@@ -20,6 +20,7 @@
 #import "SLSharedConfig.h"
 #import "GoogleNewsScrubber.h"
 
+
 @interface PostDetailViewController()
 
 @property (nonatomic, strong) FVDeclaration *declaration;
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) UIWebView *bodyWebView;
 
 @property (nonatomic, strong) NSDate *startTime;
+
 @end
 
 @implementation PostDetailViewController {
@@ -39,7 +41,7 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-
+   
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     typeof(self) __weak weakSelf = self;
@@ -122,6 +124,8 @@
         shareButtonItem,
         [UIBarButtonItem flexibleSpaceItem],
     ]];
+    
+    [[SLSharedConfig sharedInstance] say:self.post.title];
 }
 
 -(void)viewWillLayoutSubviews {

@@ -37,6 +37,8 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[SLSharedConfig sharedInstance] say:self.word.word];
 
     self.postHeightCache = [NSMutableDictionary dictionaryWithCapacity:30];
 

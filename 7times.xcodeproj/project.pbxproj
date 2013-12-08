@@ -116,6 +116,8 @@
 		9C74866C18053A3D000C0E42 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		9C74866E1807DC27000C0E42 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9CC0F882184D98370054981E /* the-big-bang-01.words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "the-big-bang-01.words.json"; sourceTree = "<group>"; };
+		9CDFA8181853890D00C50993 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		9CDFA81A1853891500C50993 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9CF0CA1D181116FB00658EBA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E028732DAA20E76B2C4D /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
@@ -272,6 +274,8 @@
 		9C1C9C0417DF081900BCC341 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CDFA81A1853891500C50993 /* AVFoundation.framework */,
+				9CDFA8181853890D00C50993 /* AudioToolbox.framework */,
 				9CF0CA1D181116FB00658EBA /* StoreKit.framework */,
 				9C74866E1807DC27000C0E42 /* CoreData.framework */,
 				9C74866C18053A3D000C0E42 /* AdSupport.framework */,
@@ -838,6 +842,10 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/lishuo/Developer/7times/7times/Framework,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
@@ -849,7 +857,7 @@
 					/Users/lishuo/Developer/7times/7times/7times/ThirdParty,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "518FD9F6-F44C-4B64-9F09-DFE9F278E322";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
@@ -861,8 +869,12 @@
 			baseConfigurationReference = 6841FC7D7A04498584CCBE78 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shuo Li";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shuo Li";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/lishuo/Developer/7times/7times/Framework,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "7times/7times-Prefix.pch";
 				INFOPLIST_FILE = "7times/7times-Info.plist";
@@ -874,7 +886,7 @@
 					/Users/lishuo/Developer/7times/7times/7times/ThirdParty,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "518FD9F6-F44C-4B64-9F09-DFE9F278E322";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;

@@ -14,8 +14,13 @@
 #import "Wordlist.h"
 #import "GoogleNewsScrubber.h"
 
+@interface SLSharedConfig()
+
+@end
+
 @implementation SLSharedConfig {
 }
+
 +(SLSharedConfig *)sharedInstance{
     static SLSharedConfig *sharedInstance;
     static dispatch_once_t predicate;
@@ -96,4 +101,11 @@
 
     return _colors[(unsigned int)count];
 }
+
+
+-(void)say:(NSString*)sentence{
+    NSLog(@"Say %@", sentence);
+}
+
+
 @end
