@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, RunningModel){
-    RunningModelAll,
-    RunningModelTodo,
-};
 
 @class Wordlist;
 @interface WordsViewController : UIViewController

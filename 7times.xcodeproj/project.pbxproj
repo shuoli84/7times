@@ -28,6 +28,7 @@
 		9CDFA830185450EA00C50993 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9CDFA82A185450EA00C50993 /* README.md */; };
 		9CDFA831185450EA00C50993 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 9CDFA82B185450EA00C50993 /* release_notes.md */; };
 		9CDFA8331854514200C50993 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CDFA8321854514200C50993 /* libz.dylib */; };
+		9CDFA83A1854CF4200C50993 /* WordViewControllerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFA8391854CF4200C50993 /* WordViewControllerModel.m */; };
 		9CF0CA1E181116FB00658EBA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF0CA1D181116FB00658EBA /* StoreKit.framework */; };
 		B03CBD163C7D4B169253E2F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAF01890F64411B98FBC99F /* libPods.a */; };
 		BE48E0533C84EF7BC5723ADE /* gmat.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE48EE570814D505572044CE /* gmat.txt */; };
@@ -129,6 +130,8 @@
 		9CDFA82D185450EA00C50993 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		9CDFA82E185450EA00C50993 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		9CDFA8321854514200C50993 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9CDFA8381854CF4200C50993 /* WordViewControllerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordViewControllerModel.h; sourceTree = "<group>"; };
+		9CDFA8391854CF4200C50993 /* WordViewControllerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordViewControllerModel.m; sourceTree = "<group>"; };
 		9CF0CA1D181116FB00658EBA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B97D08A668EB491E9F8B48AA /* libPods-7timesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7timesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE48E028732DAA20E76B2C4D /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
@@ -370,6 +373,8 @@
 				BE48EF6C355B6823C59C5F02 /* PostDetailViewController.h */,
 				BE48E137A4588B33DE1C4696 /* WordsViewController.m */,
 				BE48E47F58C0F3208068175C /* WordsViewController.h */,
+				9CDFA8381854CF4200C50993 /* WordViewControllerModel.h */,
+				9CDFA8391854CF4200C50993 /* WordViewControllerModel.m */,
 				BE48E5D0A2E26DD8824213C9 /* MenuViewController.h */,
 				BE48E99D19EE3376175ECC4B /* MenuViewController.m */,
 			);
@@ -747,6 +752,7 @@
 				BE48ECAB4239DB4859D2BC37 /* LocalWordList.m in Sources */,
 				BE48EACAD5BECB13E763E4FC /* DotView.m in Sources */,
 				BE48E722A2C813BAE5840EDC /* WordTableViewCell.m in Sources */,
+				9CDFA83A1854CF4200C50993 /* WordViewControllerModel.m in Sources */,
 				BE48EDDACE782AA8B244EBB3 /* PostDetailTableViewCell.m in Sources */,
 				BE48EDBAEC770B8887380CC8 /* PostBriefTableViewCell.m in Sources */,
 				BE48E2DE925F8332729A6167 /* Wordlist+TodoList.m in Sources */,

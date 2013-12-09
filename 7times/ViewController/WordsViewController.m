@@ -26,6 +26,7 @@
 #import "WordListViewController.h"
 #import "Wordlist+TodoList.h"
 #import "PostDownloader.h"
+#import "WordViewControllerModel.h"
 
 
 @interface WordsViewController () <UIAlertViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
@@ -36,7 +37,7 @@
 
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
-@property (nonatomic, assign) RunningModel model; //all or auto
+@property (nonatomic, strong) WordViewControllerModel *model; //all or auto
 
 @property (nonatomic, strong) Binding* modelChangeBind;
 
@@ -48,6 +49,8 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.model = [[WordViewControllerModel alloc]init];
 
     if(self.wordList == nil){
         self.wordList = [Wordlist MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"not name beginswith %@", @"todo"] sortedBy:@"sortOrder" ascending:YES];
@@ -55,10 +58,10 @@
     }
 
     if(self.enableTodoMode){
-        self.model = RunningModelTodo;
+        self.model.mode = RunningModelTodo;
     }
     else{
-        self.model = RunningModelAll;
+        self.model.mode = RunningModelAll;
     }
 
     self.navigationController.navigationBar.tintColor = [UIColor greenSeaColor];
@@ -71,7 +74,7 @@
     self.navigationController.automaticallyAdjustsScrollViewInsets = YES;
 
     typeof(self) __weak weakSelf = self;
-    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"259-list.png"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"259-list.png"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         [weakSelf.navigationController.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     }];
     self.navigationItem.leftBarButtonItem = menuBarButtonItem;
@@ -114,12 +117,12 @@
 
         self.listSegmentedControl = segmentedControl;
 
-        [segmentedControl addEventHandler:^(UISegmentedControl * sender) {
+        [segmentedControl bk_addEventHandler:^(UISegmentedControl * sender) {
             if(sender.selectedSegmentIndex == 0){
-                weakSelf.model = RunningModelTodo;
+                weakSelf.model.mode = RunningModelTodo;
             }
             else{
-                weakSelf.model = RunningModelAll;
+                weakSelf.model.mode = RunningModelAll;
             }
         } forControlEvents:UIControlEventValueChanged];
 
@@ -127,7 +130,7 @@
         self.navigationItem.titleView = segmentedControl;
     }
 
-    self.modelChangeBind = binding(self, @"model", ^(NSObject *value){
+    self.modelChangeBind = binding(self.model, @"mode", ^(NSObject *value){
         NSLog(@"Binding called");
         RunningModel model = (RunningModel)[(NSNumber *)value integerValue];
         if(model == RunningModelTodo){
@@ -143,7 +146,7 @@
                     [actionSheet showFromToolbar:weakSelf.navigationController.toolbar];
             };
 
-            UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
+            UIBarButtonItem *pickWordsButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"+25" style:UIBarButtonItemStylePlain handler:^(id sender) {
                 showActivityBlock();
                 return;
             }];
@@ -238,7 +241,7 @@
     word = [word stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     if(word.length == 0){
-        [UIAlertView alertViewWithTitle:@"Failed to add" message:@"No letter contained"];
+        [UIAlertView bk_alertViewWithTitle:@"Failed to add" message:@"No letter contained"];
         return;
     }
 
@@ -315,7 +318,7 @@
     NSString* allTitle = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordList.words.count];
     [self.listSegmentedControl setTitle:allTitle forSegmentAtIndex:1];
 
-    if(self.model == RunningModelAll){
+    if(self.model.mode == RunningModelAll){
         self.title = allTitle;
     }
     else{
@@ -352,7 +355,7 @@
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(self.model == RunningModelAll){
+    if(self.model.mode == RunningModelAll){
         id<NSFetchedResultsSectionInfo> sectionInfo = self.wordFetchedResultsController.sections[section];
         return sectionInfo.indexTitle;
     }
@@ -382,7 +385,7 @@
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Word *word = [self.wordFetchedResultsController objectAtIndexPath:indexPath];
         BOOL addOneIntoDownloadList = NO;
-        if(self.model == RunningModelAll){
+        if(self.model.mode == RunningModelAll){
             word.ignore = @(YES);
             addOneIntoDownloadList = YES;
         }
@@ -415,10 +418,10 @@
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.model == RunningModelAll){
+    if(self.model.mode == RunningModelAll){
         return NSLocalizedString(@"Ignore", @"Ignore");
     }
-    else if(self.model == RunningModelTodo) {
+    else if(self.model.mode == RunningModelTodo) {
         return NSLocalizedString(@"Remembered", @"Remembered");
     }
 
@@ -461,7 +464,7 @@
 
     if(all.count == 0){
         typeof(self) __weak weakSelf =  self;
-        [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"No more new words", @"No more new words") message:NSLocalizedString(@"There is no more new words, add some from word list", @"There is no more new words, add some from word list") cancelButtonTitle:NSLocalizedString(@"Got It", @"Got It") otherButtonTitles:@[NSLocalizedString(@"Word List", @"Word List")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"No more new words", @"No more new words") message:NSLocalizedString(@"There is no more new words, add some from word list", @"There is no more new words, add some from word list") cancelButtonTitle:NSLocalizedString(@"Got It", @"Got It") otherButtonTitles:@[NSLocalizedString(@"Word List", @"Word List")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if(buttonIndex == 1){
                 WordListViewController *wordListViewController = [[WordListViewController alloc] init];
                 [weakSelf.navigationController pushViewController:wordListViewController animated:YES];

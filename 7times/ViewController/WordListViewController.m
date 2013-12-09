@@ -13,7 +13,7 @@
 #import "UIControl+BlocksKit.h"
 #import "WordListManager.h"
 #import "LocalWordList.h"
-#import "NSObject+AssociatedObjects.h"
+#import "NSObject+BKAssociatedObjects.h"
 #import "Word.h"
 #import "SVProgressHUD.h"
 #import "Flurry.h"
@@ -49,7 +49,7 @@
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
 
     typeof(self) __weak weakSelf = self;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"BackButton", @"Back button") style:UIBarButtonItemStylePlain handler:^(id sender) {
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"BackButton", @"Back button") style:UIBarButtonItemStylePlain handler:^(id sender) {
         [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
 
@@ -153,7 +153,7 @@
                 button.backgroundColor = [UIColor colorWithRed:231.f / 255.f green:76 / 255.f blue:60 / 255.f alpha:1.f];
                 button.tag = 102;
 
-                [button addEventHandler:^(UIButton *sender) {
+                [button bk_addEventHandler:^(UIButton *sender) {
                     NSIndexPath *idx = [weakTV indexPathForCell:weakCell];
                     SKProduct *product = weakSelf.products[(uint) idx.row];
                     if (![[SevenTimesIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
@@ -241,7 +241,7 @@
         ]];
 
         [declaration setupViewTreeInto:cell];
-        [cell associateValue:declaration withKey:&declarationKey];
+        [cell bk_associateValue:declaration withKey:&declarationKey];
     }
 
     SKProduct *product = (SKProduct *) self.products[(uint) indexPath.row];
@@ -268,7 +268,7 @@
         }
     }
 
-    FVDeclaration *declaration = [cell associatedValueForKey:&declarationKey];
+    FVDeclaration *declaration = [cell bk_associatedValueForKey:&declarationKey];
     declaration.unExpandedFrame = CGRectMake(0, 0, tableView.bounds.size.width, tableView.rowHeight);
     [declaration updateViewFrame];
 

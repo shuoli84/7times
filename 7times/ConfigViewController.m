@@ -28,7 +28,7 @@
     UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:@"Settings"];
 
     typeof(self) __weak weakSelf = self;
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain handler:^(id sender) {
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"Back" style:UIBarButtonItemStylePlain handler:^(id sender) {
         [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
 
@@ -88,7 +88,7 @@
     NSString *tag = item[2];
 
     cell.textLabel.text = name;
-    [cell.contentView eachSubview:^(UIView *view) {
+    [cell.contentView bk_eachSubview:^(UIView *view) {
         [view removeFromSuperview];
     }];
 

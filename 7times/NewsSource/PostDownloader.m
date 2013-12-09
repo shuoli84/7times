@@ -47,7 +47,7 @@
 - (void)start {
     typeof(self) __weak weakSelf = self;
 
-    self.timer = [NSTimer timerWithTimeInterval:60 block:^(NSTimer* time) {
+    self.timer = [NSTimer bk_timerWithTimeInterval:60 block:^(NSTimer* time) {
         dispatch_async(_downloadQueue, ^{
             [weakSelf downloadForWordList];
         });

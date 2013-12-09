@@ -119,7 +119,7 @@
             MFMessageComposeViewController *messageComposeViewController = [[MFMessageComposeViewController alloc] init];
             if([MFMessageComposeViewController canSendText]){
                 messageComposeViewController.recipients = @[@"menic84@msn.com"];
-                [messageComposeViewController setCompletionBlock:^(MFMessageComposeViewController *controller, MessageComposeResult result) {
+                [messageComposeViewController bk_setCompletionBlock:^(MFMessageComposeViewController *controller, MessageComposeResult result) {
                     [controller dismissViewControllerAnimated:YES completion:nil];
                 }];
                 [self presentViewController:messageComposeViewController animated:YES completion:^{

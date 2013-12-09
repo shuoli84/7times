@@ -76,7 +76,7 @@
         "</html>", [UIFont preferredFontSize], title, content?content:@""];
     [self.bodyWebView loadHTMLString:html baseURL:[NSURL URLWithString:self.post.url]];
 
-    UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
+    UIBarButtonItem *lookupButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
         if(weakSelf.wordReferenceViewController){
             [weakSelf presentViewController:weakSelf.wordReferenceViewController animated:YES completion:nil];
         }
@@ -86,7 +86,7 @@
         }
     }];
 
-    UIBarButtonItem *openLinkButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay handler:^(id sender) {
+    UIBarButtonItem *openLinkButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemPlay handler:^(id sender) {
         NSURL *url = [NSURL URLWithString:weakSelf.post.url];
         if (url.dictionaryForQueryString[@"url"]) {
             url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
@@ -102,7 +102,7 @@
         weakSelf.navigationController.toolbarHidden = YES;
     }];
 
-    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
         NSURL *url = [NSURL URLWithString:weakSelf.post.url];
         if (url.dictionaryForQueryString[@"url"]){
             url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];

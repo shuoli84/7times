@@ -52,7 +52,7 @@
 
         [self.declaration setupViewTreeInto:self.contentView];
 
-        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             if (state == UIGestureRecognizerStateRecognized){
                 if(weakSelf.showDefinitionBlock){
                     weakSelf.showDefinitionBlock(weakSelf.word.word);

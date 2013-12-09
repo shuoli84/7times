@@ -23,7 +23,7 @@
 
     if(self){
         NSArray *words = [string componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n"]];
-        words = [words map:^id(NSString* word) {
+        words = [words bk_map:^id(NSString* word) {
             return [word stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         }];
 

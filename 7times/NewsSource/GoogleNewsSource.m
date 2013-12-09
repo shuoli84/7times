@@ -7,6 +7,7 @@
 
 
 #import <BlocksKit/A2DynamicDelegate.h>
+#import <BlocksKit/NSObject+A2DynamicDelegate.h>
 #import "GoogleNewsSource.h"
 #import "Word.h"
 #import "MWFeedParser.h"
@@ -36,7 +37,7 @@
     _feedParser.feedParseType = ParseTypeFull;
     _feedParser.connectionType = ConnectionTypeSynchronously;
 
-    A2DynamicDelegate *delegate = [_feedParser dynamicDelegateForProtocol:@protocol(MWFeedParserDelegate)];
+    A2DynamicDelegate *delegate = [_feedParser bk_dynamicDelegateForProtocol:@protocol(MWFeedParserDelegate)];
 
     /*
     Due to NSXmlParser is not reentree, we can't do xml parse inside the delegate. So store the item into the
