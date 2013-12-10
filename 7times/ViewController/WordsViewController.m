@@ -362,7 +362,7 @@
     //Get total num and touched num
     int total = [self totalNumberWithIgnored:NO];
     int checkedNumber = [self checkedNumberForWordList];
-    NSString *progressInfo = [NSString stringWithFormat:@"%d/%d    %.0f%%", checkedNumber, total, (float)checkedNumber/(float)total * 100];
+    NSString *progressInfo = [NSString stringWithFormat:@"%d/%d  %.1f%%", checkedNumber, total, (float)checkedNumber/(float)total * 100];
     self.infoLable.text = progressInfo;
 }
 

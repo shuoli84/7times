@@ -53,7 +53,6 @@
 
     [self.declaration setupViewTreeInto:self.view];
     [self.declaration updateViewFrame];
-    //Remove the first Td element
 
     NSString *content = self.post.summary;
     NSString *title = self.post.title;
@@ -63,6 +62,7 @@
         content = [[SLSharedConfig sharedInstance].googleNewsScrubber scrubContent:content];
     }
     
+    NSLog(@"Title: %@", title);
     NSLog(@"Content: %@", content);
 
     NSString *html = [NSString stringWithFormat:
@@ -73,7 +73,7 @@
             "font{font-size:%f;font-family:arial,sans-serif;}"
             "</style>"
             "</head>"
-        "<body><p><font>%@</font></p>%@</body>"
+        "<body><p style=\"white-space:pre-wrap\"><font>%@</font></p>%@</body>"
         "</html>", [UIFont preferredFontSize], title, content?content:@""];
     [self.bodyWebView loadHTMLString:html baseURL:[NSURL URLWithString:self.post.url]];
 
@@ -109,7 +109,7 @@
             url = [NSURL URLWithString:url.dictionaryForQueryString[@"url"]];
         }
 
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"TheArticleGoodForWord", @"这篇文章%@ %@\n有助于背单词%@"), weakSelf.post.title, url.absoluteString, weakSelf.post.word.word];
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"TheArticleGoodForWord", @"这篇文章%@ %@\n有助于背单词%@"), weakSelf.post.word.word, weakSelf.post.title, url.absoluteString?url.absoluteString:@""];
         UIActivityViewController *activityViewController = [[UIActivityViewController alloc]
             initWithActivityItems:@[message]
             applicationActivities:nil];

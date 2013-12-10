@@ -22,7 +22,7 @@
 "Ok" = "知道了";
 "Words" = "词表";
 "Ignore" = "忽略";
-"TheArticleGoodForWord" = "这篇文章%@ %@\n有助于背单词%@ 来自7times";
+"TheArticleGoodForWord" = "%@: %@\n%@ 来自7times";
 "RememberingWord" = "在背单词%@ 来自7times";
 "All" = "全部";
 "Todo" = "进行中";

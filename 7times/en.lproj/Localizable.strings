@@ -22,8 +22,8 @@
 "Ok" = "Ok";
 "Words" = "Words";
 "Ignore" = "Ignore";
-"TheArticleGoodForWord" = "The article: %@ %@\ngood for remembering %@ from 7times";
-"RememberingWord" = "Working on word %@ from 7times";
+"TheArticleGoodForWord" = "%@: %@\n%@ from 7times";
+"RememberingWord" = "Working \"%@\" from 7times";
 "All" = "All";
 "Todo" = "Todo";
 "all (%d)" = "Words (%d)";
