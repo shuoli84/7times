@@ -28,7 +28,9 @@
     NSArray *matches = [regex matchesInString:content options:0 range:NSMakeRange(0, content.length)];
     if(matches.count >= 1){
         NSTextCheckingResult *match = matches[matches.count - 1];
-        content = [content substringWithRange:match.range];
+        NSRange range = [match rangeAtIndex:match.numberOfRanges-1];
+        content = [content substringWithRange:range];
+        
     }
 
     content = [content stringByReplacingOccurrencesOfString:@"<div style=\"padding-top:0.8em;\">" withString:@""];
@@ -39,6 +41,15 @@
 
     NSRegularExpression *nobr = [NSRegularExpression regularExpressionWithPattern:@"(<nobr.*?nobr>)" options:0 error:nil];
     content = [nobr stringByReplacingMatchesInString:content options:0 range:NSMakeRange(0, content.length) withTemplate:@""];
+    
+    NSRegularExpression *font = [NSRegularExpression regularExpressionWithPattern:@"<div class=\"lh\">(<br />)*(.*)</div>" options:0 error:nil];
+    matches = [font matchesInString:content options:0 range:NSMakeRange(0, content.length)];
+    
+    if (matches.count >= 1){
+        NSTextCheckingResult *match = matches[matches.count - 1];
+        content = [content substringWithRange:
+                   [match rangeAtIndex:match.numberOfRanges - 1]];
+    }
 
     return content;
 }

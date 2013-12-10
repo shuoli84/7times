@@ -58,17 +58,18 @@
     NSString *content = self.post.summary;
     NSString *title = self.post.title;
 
-    NSLog(@"Original content: %@", content);
-
     if([self.post.source isEqualToString:@"Google News"]){
         title = [[SLSharedConfig sharedInstance].googleNewsScrubber scrubTitle:title];
         content = [[SLSharedConfig sharedInstance].googleNewsScrubber scrubContent:content];
     }
+    
+    NSLog(@"Content: %@", content);
 
     NSString *html = [NSString stringWithFormat:
         @"<html>"
             "<head>"
             "<style type=\"text/css\">"
+                      
             "font{font-size:%f;font-family:arial,sans-serif;}"
             "</style>"
             "</head>"
