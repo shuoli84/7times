@@ -35,6 +35,8 @@
 @property (nonatomic, strong) UITableView *wordListTableView;
 @property (nonatomic, strong) UISegmentedControl *listSegmentedControl;
 
+@property (nonatomic, strong) UILabel *infoLable;
+
 @property (nonatomic, strong) NSFetchedResultsController *wordFetchedResultsController;
 
 @property (nonatomic, strong) WordViewControllerModel *model; //all or auto
@@ -129,7 +131,13 @@
         segmentedControl.selectedSegmentIndex = 0;
         self.navigationItem.titleView = segmentedControl;
     }
-
+    
+    
+    UILabel *infoLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
+    infoLabel.textAlignment = NSTextAlignmentCenter;
+    infoLabel.textColor = [UIColor greenSeaColor];
+    self.infoLable = infoLabel;
+    
     self.modelChangeBind = binding(self.model, @"mode", ^(NSObject *value){
         NSLog(@"Binding called");
         RunningModel model = (RunningModel)[(NSNumber *)value integerValue];
@@ -163,19 +171,25 @@
         }
         else if(model == RunningModelAll){
             [weakSelf switchToWordList:NO];
+            
+            NSMutableArray *buttonItems = [NSMutableArray array];
 
             BOOL needAddWord = [weakSelf.wordList.objectID isEqual:[SLSharedConfig sharedInstance].manualList.objectID];
-
+            
+            [buttonItems addObject:[UIBarButtonItem flexibleSpaceItem]];
             if(needAddWord){
-                [weakSelf setToolbarItems:@[
-                    [UIBarButtonItem flexibleSpaceItem],
+                [buttonItems addObjectsFromArray:@[
                     newWordButtonItem,
                     [UIBarButtonItem flexibleSpaceItem],
-                ] animated:YES];
+                    ]];
             }
-            else{
-                [weakSelf setToolbarItems:@[]];
-            }
+            
+            UIBarButtonItem *progressTag = [[UIBarButtonItem alloc]initWithCustomView:infoLabel];
+            
+            [buttonItems addObject:progressTag];
+            [buttonItems addObject:[UIBarButtonItem flexibleSpaceItem]];
+            
+            [weakSelf setToolbarItems:buttonItems animated:YES];
         }
     });
 }
@@ -203,6 +217,22 @@
             @"word":word
         }];
     }
+}
+
+-(int)checkedNumberForWordList{
+    return [Word MR_countOfEntitiesWithPredicate:[NSPredicate predicateWithFormat:@"(ignore = NULL OR ignore = NO) AND checkNumber > 0 AND lists CONTAINS %@", self.wordList]];
+}
+
+-(int)totalNumberWithIgnored:(BOOL)withIgnored{
+    NSPredicate *predicate;
+    if(withIgnored){
+        predicate = [NSPredicate predicateWithFormat:@"lists CONTAINS %@", self.wordList];
+    }
+    else{
+        predicate = [NSPredicate predicateWithFormat:@"(ignore == NULL OR ignore == NO) AND lists CONTAINS %@", self.wordList];
+    }
+    
+    return [Word MR_countOfEntitiesWithPredicate:predicate];
 }
 
 - (void)switchToWordList:(BOOL)todoListMode {
@@ -235,6 +265,7 @@
 
     [self.wordListTableView reloadData];
     [self updateTitle];
+    [self updateInfoLabel];
 }
 
 -(void)addWord:(NSString*)word{
@@ -308,6 +339,7 @@
     }
     
     [self updateTitle];
+    [self updateInfoLabel];
 }
 
 -(void)updateTitle{
@@ -315,7 +347,7 @@
 
     [self.listSegmentedControl setTitle:todoTitle forSegmentAtIndex:0];
 
-    NSString* allTitle = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), self.wordList.words.count];
+    NSString* allTitle = [NSString stringWithFormat:NSLocalizedString(@"all (%d)", @"all (%d)"), [self totalNumberWithIgnored:NO]];
     [self.listSegmentedControl setTitle:allTitle forSegmentAtIndex:1];
 
     if(self.model.mode == RunningModelAll){
@@ -324,6 +356,14 @@
     else{
         self.title = todoTitle;
     }
+}
+
+-(void)updateInfoLabel{
+    //Get total num and touched num
+    int total = [self totalNumberWithIgnored:NO];
+    int checkedNumber = [self checkedNumberForWordList];
+    NSString *progressInfo = [NSString stringWithFormat:@"%d/%d    %.0f%%", checkedNumber, total, (float)checkedNumber/(float)total * 100];
+    self.infoLable.text = progressInfo;
 }
 
 - (IBAction)addWordAction:(id)sender {
