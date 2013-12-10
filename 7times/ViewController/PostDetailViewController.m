@@ -72,7 +72,7 @@
             "font{font-size:%f;font-family:arial,sans-serif;}"
             "</style>"
             "</head>"
-        "<body><font>%@</font>%@</body>"
+        "<body><p><font>%@</font></p>%@</body>"
         "</html>", [UIFont preferredFontSize], title, content?content:@""];
     [self.bodyWebView loadHTMLString:html baseURL:[NSURL URLWithString:self.post.url]];
 
